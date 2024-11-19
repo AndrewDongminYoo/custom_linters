@@ -1,62 +1,51 @@
 # Go Router Linter
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
-[![License: MIT][license_badge]][license_link]
+`go_router_linter` is a custom linting package designed to enhance code quality and consistency when using the `go_router` package in Dart and Flutter applications. It encourages best practices by identifying and suggesting improvements for common patterns.
 
-A Very Good Project created by Very Good CLI.
+## Features
 
-## Installation 💻
+- **Lint Rule: Use `context.go()` Instead of `GoRouter.of(context).go()`**
+  - Detects instances where `GoRouter.of(context).go()` is used and suggests replacing it with the more concise `context.go()`.
 
-**❗ In order to start using Go Router Linter you must have the [Dart SDK][dart_install_link] installed on your machine.**
+## Installation
 
-Install via `dart pub add`:
+To integrate `go_router_linter` into your project, follow these steps:
 
-```sh
-dart pub add go_router_linter
-```
+1. **Add Dependency**
 
----
+   In your `pubspec.yaml` file, include `go_router_linter` under `dev_dependencies`:
 
-## Continuous Integration 🤖
+   ```yaml
+   dev_dependencies:
+     go_router_linter: ^0.1.0
+   ```
 
-Go Router Linter comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
+2. **Update `analysis_options.yaml`**
 
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
+   Enable the custom lint rule by adding the following to your `analysis_options.yaml` file:
 
----
+   ```yaml
+   analyzer:
+     plugins:
+       - custom_lint
 
-## Running Tests 🧪
+   custom_lint:
+     rules:
+       - use_context_directly_for_go_router
+   ```
 
-To run all unit tests:
+## Usage
 
-```sh
-dart pub global activate coverage 1.2.0
-dart test --coverage=coverage
-dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info
-```
+After setting up, the linter will automatically analyze your code and provide warnings or suggestions based on the defined rules. For example, if `GoRouter.of(context).go()` is detected, the linter will recommend using `context.go()` instead.
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+## Contributing
 
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
+Contributions are welcome! If you have ideas for new lint rules or improvements, please open an issue or submit a pull request on our [GitHub repository](https://github.com/AndrewDongminYoo/custom_linters).
 
-# Open Coverage Report
-open coverage/index.html
-```
+## License
 
-[dart_install_link]: https://dart.dev/get-dart
-[github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
-[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
-[mason_link]: https://github.com/felangel/mason
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_coverage_link]: https://github.com/marketplace/actions/very-good-coverage
-[very_good_ventures_link]: https://verygood.ventures
-[very_good_ventures_link_light]: https://verygood.ventures#gh-light-mode-only
-[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/AndrewDongminYoo/custom_linters/blob/main/LICENSE) file for details.
+
+## Acknowledgements
+
+Special thanks to the Dart and Flutter communities for their continuous support and contributions.
