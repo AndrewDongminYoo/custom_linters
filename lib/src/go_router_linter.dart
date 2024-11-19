@@ -32,7 +32,8 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
   /// This is used for `// ignore: code` and enabling/disabling the lint
   static const LintCode _code = LintCode(
     name: 'use_context_directly_for_go_router',
-    problemMessage: 'Use context.go instead of GoRouter.of(context).go.',
+    problemMessage: 'Use GoRouterHelper extension.',
+    url: 'https://github.com/flutter/packages/blob/main/packages/go_router/lib/src/misc/extensions.dart',
   );
 
   @override
@@ -47,7 +48,13 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
           (node.target! as Identifier).name == 'GoRouter' &&
           node.argumentList.arguments.length == 1 &&
           node.argumentList.arguments.first is SimpleIdentifier) {
-        reporter.atNode(node, code);
+        // Ensure the parent is a MethodInvocation
+        if (node.parent is MethodInvocation) {
+          final parent = node.parent! as MethodInvocation;
+          if (parent.methodName.name.isNotEmpty) {
+            reporter.atNode(parent, code);
+          }
+        }
       }
     });
   }
