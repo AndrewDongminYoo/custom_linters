@@ -1,7 +1,54 @@
-/// {@template go_router_linter}
-/// A Very Good Project created by Very Good CLI.
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/error/listener.dart';
+import 'package:custom_lint_builder/custom_lint_builder.dart';
+
+/// This is the entrypoint of our custom linter
+PluginBase createPlugin() => _GoRouterLintPlugin();
+
+/// A plugin class is used to list all the assists/lints defined by a plugin.
+class _GoRouterLintPlugin extends PluginBase {
+  /// We list all the custom warnings/infos/errors
+  @override
+  List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
+        const UseContextDirectlyForGoRouter(),
+      ];
+}
+
+/// {@template use_context_directly_for_go_router}
+/// A custom lint rule that checks for the use of `GoRouter.of(context).go()`
+/// instead of `context.go()`.
+///
+/// This lint rule is part of the `go_router_linter` plugin, which provides
+/// a set of custom lints for the Go Router library.
+/// The purpose of this lint is to encourage the use of the more concise
+/// and idiomatic `context.go()` method instead of
+/// the longer `GoRouter.of(context).go()` form.
 /// {@endtemplate}
-class GoRouterLinter {
-  /// {@macro go_router_linter}
-  const GoRouterLinter();
+class UseContextDirectlyForGoRouter extends DartLintRule {
+  /// {@macro use_context_directly_for_go_router}
+  const UseContextDirectlyForGoRouter() : super(code: _code);
+
+  /// Metadata about the warning that will show-up in the IDE.
+  /// This is used for `// ignore: code` and enabling/disabling the lint
+  static const LintCode _code = LintCode(
+    name: 'use_context_directly_for_go_router',
+    problemMessage: 'Use context.go instead of GoRouter.of(context).go.',
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((MethodInvocation node) {
+      if (node.methodName.name == 'of' &&
+          node.target is Identifier &&
+          (node.target! as Identifier).name == 'GoRouter' &&
+          node.argumentList.arguments.length == 1 &&
+          node.argumentList.arguments.first is SimpleIdentifier) {
+        reporter.atNode(node, code);
+      }
+    });
+  }
 }
