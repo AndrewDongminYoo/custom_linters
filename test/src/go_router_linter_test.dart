@@ -8,26 +8,7 @@ void main() {
     test('reports error for GoRouter.of(context)', () {
       final rule = UseContextDirectlyForGoRouter();
       expect(rule.code.name, equals('use_context_directly_for_go_router'));
-      expect(
-        rule.code.problemMessage,
-        equals('Use context.go instead of GoRouter.of(context).go.'),
-      );
-    });
-
-    group('run', () {
-      test('detects GoRouter.of with context argument', () {
-        final rule = UseContextDirectlyForGoRouter();
-        expect(rule, isNotNull);
-      });
-
-      test('code property returns correct LintCode', () {
-        final rule = UseContextDirectlyForGoRouter();
-        expect(rule.code.name, equals('use_context_directly_for_go_router'));
-        expect(
-          rule.code.problemMessage,
-          equals('Use context.go instead of GoRouter.of(context).go.'),
-        );
-      });
+      expect(rule.code.problemMessage, equals('Use GoRouterHelper extension.'));
     });
 
     group('_GoRouterLintPlugin', () {
