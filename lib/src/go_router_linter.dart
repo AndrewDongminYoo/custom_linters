@@ -33,7 +33,8 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
   static const LintCode _code = LintCode(
     name: 'use_context_directly_for_go_router',
     problemMessage: 'Use GoRouterHelper extension.',
-    url: 'https://github.com/flutter/packages/blob/main/packages/go_router/lib/src/misc/extensions.dart',
+    url:
+        'https://github.com/flutter/packages/blob/main/packages/go_router/lib/src/misc/extensions.dart',
   );
 
   @override
