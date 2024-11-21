@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:go_router_linter/src/lint_code_extension.dart';
 
 /// This is the entrypoint of our custom linter
 PluginBase createPlugin() => _GoRouterLintPlugin();
@@ -28,13 +29,10 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
   /// {@macro use_context_directly_for_go_router}
   const UseContextDirectlyForGoRouter() : super(code: _code);
 
-  /// Metadata about the warning that will show-up in the IDE.
-  /// This is used for `// ignore: code` and enabling/disabling the lint
+  /// Metadata about the warning that will show up in the IDE.
   static const LintCode _code = LintCode(
     name: 'use_context_directly_for_go_router',
     problemMessage: 'Use GoRouterHelper extension.',
-    url:
-        'https://github.com/flutter/packages/blob/main/packages/go_router/lib/src/misc/extensions.dart',
   );
 
   @override
@@ -53,7 +51,12 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
         if (node.parent is MethodInvocation) {
           final parent = node.parent! as MethodInvocation;
           if (parent.methodName.name.isNotEmpty) {
-            reporter.atNode(parent, code);
+            // Get the method name (e.g., `go`, `push`)
+            final name = parent.methodName.name;
+            // Generate a dynamic problem message
+            final message =
+                'Use context.$name instead of GoRouter.of(context).$name.';
+            reporter.atNode(parent, code.copyWith(problemMessage: message));
           }
         }
       }
