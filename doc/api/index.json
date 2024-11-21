@@ -1,0 +1,67 @@
+[
+  {
+    "name": "go_router_linter",
+    "qualifiedName": "go_router_linter",
+    "href": "go_router_linter/go_router_linter-library.html",
+    "kind": 9,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A Very Good Project created by Very Good CLI."
+  },
+  {
+    "name": "UseContextDirectlyForGoRouter",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter",
+    "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html",
+    "kind": 3,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  },
+  {
+    "name": "UseContextDirectlyForGoRouter",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.UseContextDirectlyForGoRouter",
+    "href": "go_router_linter/UseContextDirectlyForGoRouter/UseContextDirectlyForGoRouter.html",
+    "kind": 2,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
+    "enclosedBy": {
+      "name": "UseContextDirectlyForGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html"
+    }
+  },
+  {
+    "name": "run",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.run",
+    "href": "go_router_linter/UseContextDirectlyForGoRouter/run.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Emits lints for a given file.",
+    "enclosedBy": {
+      "name": "UseContextDirectlyForGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html"
+    }
+  },
+  {
+    "name": "createPlugin",
+    "qualifiedName": "go_router_linter.createPlugin",
+    "href": "go_router_linter/createPlugin.html",
+    "kind": 8,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "This is the entrypoint of our custom linter",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  }
+]
