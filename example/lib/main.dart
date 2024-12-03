@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       /// The route configuration.
       routerConfig: GoRouter(
         routes: <RouteBase>[
-          // expect_lint: missing_go_route_name
+          // expect_lint: missing_go_route_name_property
           GoRoute(
             path: '/',
             builder: (BuildContext context, GoRouterState state) {
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             },
             routes: <RouteBase>[
               // ! GoRoute definition should include a `name` property. Add a `name` property to this GoRoute.
-              // expect_lint: missing_go_route_name
+              // expect_lint: missing_go_route_name_property
               GoRoute(
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {

@@ -5,19 +5,19 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
-/// {@template should_include_name_property}
+/// {@template missing_go_route_name_property}
 /// A lint rule that checks if GoRoute definitions include a `name` property.
-/// 
+///
 /// This rule is part of the custom lint rules for the GoRouter package.
 /// It ensures that all GoRoute definitions have a `name` property set,
 /// which is required for proper routing functionality.
 /// {@endtemplate}
-class ShouldIncludeNameProperty extends DartLintRule {
-  /// {@macro should_include_name_property}
-  const ShouldIncludeNameProperty() : super(code: _code);
+class MissingGoRouteNameProperty extends DartLintRule {
+  /// {@macro missing_go_route_name_property}
+  const MissingGoRouteNameProperty() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'missing_go_route_name',
+    name: 'missing_go_route_name_property',
     problemMessage: 'GoRoute definition should include a `name` property.',
     correctionMessage: 'Add a `name` property to this GoRoute.',
   );
@@ -58,7 +58,7 @@ class _GoRouteVisitor extends RecursiveAstVisitor<void> {
 
       // If name property is missing, report an error
       if (!hasNameProperty) {
-        reporter.atNode(node, ShouldIncludeNameProperty._code);
+        reporter.atNode(node, MissingGoRouteNameProperty._code);
       }
     }
 
