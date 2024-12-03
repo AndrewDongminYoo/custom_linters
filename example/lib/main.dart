@@ -2,7 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:go_router/go_router.dart';
 
 /// This sample app shows an app with two screens.
@@ -26,12 +29,15 @@ class MyApp extends StatelessWidget {
       /// The route configuration.
       routerConfig: GoRouter(
         routes: <RouteBase>[
+          // expect_lint: missing_go_route_name
           GoRoute(
             path: '/',
             builder: (BuildContext context, GoRouterState state) {
               return const HomeScreen();
             },
             routes: <RouteBase>[
+              // ! GoRoute definition should include a `name` property. Add a `name` property to this GoRoute.
+              // expect_lint: missing_go_route_name
               GoRoute(
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {

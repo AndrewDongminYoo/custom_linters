@@ -2,6 +2,7 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
+import 'package:go_router_linter/src/should_include_name_property.dart';
 import 'package:go_router_linter/src/use_context_directly_for_go_router.dart';
 
 /// This is the entrypoint of our custom linter
@@ -13,5 +14,6 @@ class _GoRouterLintPlugin extends PluginBase {
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
         const UseContextDirectlyForGoRouter(),
+        const ShouldIncludeNameProperty(),
       ];
 }
