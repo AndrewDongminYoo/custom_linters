@@ -9,9 +9,11 @@
     />
     <meta
       name="description"
-      content="go_router_linter library API docs, for the Dart programming language."
+      content="API docs for the RouteMethodExtension extension from the go_router_linter library, for the Dart programming language."
     />
-    <title>go_router_linter library - Dart API</title>
+    <title>
+      RouteMethodExtension extension - go_router_linter library - Dart API
+    </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -41,9 +43,14 @@
       >
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../index.html">go_router_linter</a></li>
-        <li class="self-crumb">go_router_linter.dart</li>
+        <li>
+          <a href="../go_router_linter/go_router_linter-library.html"
+            >go_router_linter.dart</a
+          >
+        </li>
+        <li class="self-crumb">RouteMethodExtension extension</li>
       </ol>
-      <div class="self-name">go_router_linter</div>
+      <div class="self-name">RouteMethodExtension</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -70,90 +77,56 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar=""
-        data-below-sidebar="go_router_linter&#47;go_router_linter-library-sidebar.html"
+        data-above-sidebar="go_router_linter&#47;go_router_linter-library-sidebar.html"
+        data-below-sidebar="go_router_linter&#47;RouteMethodExtension-extension-sidebar.html"
       >
         <div>
           <h1>
-            <span class="kind-library">go_router_linter</span>
-            library
+            <span class="kind-class">RouteMethodExtension</span> extension
           </h1>
         </div>
 
         <section class="desc markdown">
-          <p>A Very Good Project created by Very Good CLI.</p>
+          <p>
+            A way to add extensions to Strings to make it easy to identify the
+            methods involved in routing (go, push, goNamed, pushNamed, etc.).
+            This simplifies the methodName comparison logic in existing code and
+            makes it easy to extend as new route methods are added.
+          </p>
         </section>
 
-        <section class="summary offset-anchor" id="classes">
-          <h2>Classes</h2>
-
-          <dl>
-            <dt id="AvoidHardcodedRoutes">
-              <span class="name"
-                ><a href="../go_router_linter/AvoidHardcodedRoutes-class.html"
-                  >AvoidHardcodedRoutes</a
-                ></span
-              >
-            </dt>
-            <dd>A lint rule that checks for hardcoded route strings.</dd>
-
-            <dt id="MissingGoRouteNameProperty">
-              <span class="name"
-                ><a
-                  href="../go_router_linter/MissingGoRouteNameProperty-class.html"
-                  >MissingGoRouteNameProperty</a
-                ></span
-              >
-            </dt>
+        <section>
+          <dl class="dl-horizontal">
+            <dt>on</dt>
             <dd>
-              A lint rule that checks if GoRoute definitions include a
-              <code>name</code> property.
-            </dd>
-
-            <dt id="UseContextDirectlyForGoRouter">
-              <span class="name"
-                ><a
-                  href="../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-                  >UseContextDirectlyForGoRouter</a
-                ></span
-              >
-            </dt>
-            <dd>
-              A custom lint rule that checks for the use of
-              <code>GoRouter.of(context).go()</code> instead of
-              <code>context.go()</code>.
+              <ul class="comma-separated clazz-relationships">
+                <li>
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                    >String</a
+                  >
+                </li>
+              </ul>
             </dd>
           </dl>
         </section>
 
-        <section class="summary offset-anchor" id="extensions">
-          <h2>Extensions</h2>
-
-          <dl>
-            <dt id="LintCodeCopyWithExtension">
+        <section class="summary offset-anchor" id="instance-properties">
+          <h2>Properties</h2>
+          <dl class="properties">
+            <dt id="isRouteMethod" class="property">
               <span class="name"
-                ><a href="../go_router_linter/LintCodeCopyWithExtension.html"
-                  >LintCodeCopyWithExtension</a
+                ><a
+                  href="../go_router_linter/RouteMethodExtension/isRouteMethod.html"
+                  >isRouteMethod</a
                 ></span
               >
-              on
-              <a
-                href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/LintCode-class.html"
-                >LintCode</a
-              >
-            </dt>
-            <dd>nodoc</dd>
-
-            <dt id="RouteMethodExtension">
-              <span class="name"
-                ><a href="../go_router_linter/RouteMethodExtension.html"
-                  >RouteMethodExtension</a
+              <span class="signature"
+                >&#8594;
+                <a
+                  href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                  >bool</a
                 ></span
-              >
-              on
-              <a
-                href="https://api.flutter.dev/flutter/dart-core/String-class.html"
-                >String</a
               >
             </dt>
             <dd>
@@ -161,31 +134,8 @@
               methods involved in routing (go, push, goNamed, pushNamed, etc.).
               This simplifies the methodName comparison logic in existing code
               and makes it easy to extend as new route methods are added.
+              <div class="features"><span class="feature">no setter</span></div>
             </dd>
-          </dl>
-        </section>
-
-        <section class="summary offset-anchor" id="functions">
-          <h2>Functions</h2>
-
-          <dl class="callables">
-            <dt id="createPlugin" class="callable">
-              <span class="name"
-                ><a href="../go_router_linter/createPlugin.html"
-                  >createPlugin</a
-                ></span
-              ><span class="signature"
-                >(<wbr />)
-                <span class="returntype parameter"
-                  >&#8594;
-                  <a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/PluginBase-class.html"
-                    >PluginBase</a
-                  ></span
-                >
-              </span>
-            </dt>
-            <dd>This is the entrypoint of our custom linter</dd>
           </dl>
         </section>
       </div>
@@ -208,27 +158,23 @@
 
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../index.html">go_router_linter</a></li>
-          <li class="self-crumb">go_router_linter.dart</li>
-        </ol>
-
-        <h5>
-          <span class="package-name">go_router_linter</span>
-          <span class="package-kind">package</span>
-        </h5>
-        <ol>
-          <li class="section-title">Libraries</li>
           <li>
             <a href="../go_router_linter/go_router_linter-library.html"
               >go_router_linter</a
             >
           </li>
+          <li class="self-crumb">RouteMethodExtension extension</li>
         </ol>
+
+        <h5>go_router_linter library</h5>
+        <div id="dartdoc-sidebar-left-content"></div>
       </div>
 
-      <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-        <h5>go_router_linter library</h5>
-      </div>
-      <!--/sidebar-offcanvas-right-->
+      <div
+        id="dartdoc-sidebar-right"
+        class="sidebar sidebar-offcanvas-right"
+      ></div>
+      <!--/.sidebar-offcanvas-->
     </main>
 
     <footer>

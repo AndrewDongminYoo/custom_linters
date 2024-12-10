@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.5 - 2024-12-11
+
+### Added
+
+- added a rule to prevent hardcoded strings from being used as URLs in go_router
+
+### Fixed
+
+- 📝 updating documentation for new lint rules
+
+### Changed
+
+- upgrade example flutter project dependencies
+- upgrade test package
+- separate directories for dart files by purpose
+- ⚡️ modify rule to prevent hardcoded URLs from being used even when using GoRouter
+- ⚡️ added string helper methods to support other routing functions
+
 ## 0.1.4 - 2024-12-03
 
 ### Added

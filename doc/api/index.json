@@ -9,6 +9,48 @@
     "desc": "A Very Good Project created by Very Good CLI."
   },
   {
+    "name": "AvoidHardcodedRoutes",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes",
+    "href": "go_router_linter/AvoidHardcodedRoutes-class.html",
+    "kind": 3,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A lint rule that checks for hardcoded route strings.",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  },
+  {
+    "name": "AvoidHardcodedRoutes",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.AvoidHardcodedRoutes",
+    "href": "go_router_linter/AvoidHardcodedRoutes/AvoidHardcodedRoutes.html",
+    "kind": 2,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A lint rule that checks for hardcoded route strings.",
+    "enclosedBy": {
+      "name": "AvoidHardcodedRoutes",
+      "kind": 3,
+      "href": "go_router_linter/AvoidHardcodedRoutes-class.html"
+    }
+  },
+  {
+    "name": "run",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.run",
+    "href": "go_router_linter/AvoidHardcodedRoutes/run.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Emits lints for a given file.",
+    "enclosedBy": {
+      "name": "AvoidHardcodedRoutes",
+      "kind": 3,
+      "href": "go_router_linter/AvoidHardcodedRoutes-class.html"
+    }
+  },
+  {
     "name": "LintCodeCopyWithExtension",
     "qualifiedName": "go_router_linter.LintCodeCopyWithExtension",
     "href": "go_router_linter/LintCodeCopyWithExtension.html",
@@ -76,6 +118,34 @@
       "name": "MissingGoRouteNameProperty",
       "kind": 3,
       "href": "go_router_linter/MissingGoRouteNameProperty-class.html"
+    }
+  },
+  {
+    "name": "RouteMethodExtension",
+    "qualifiedName": "go_router_linter.RouteMethodExtension",
+    "href": "go_router_linter/RouteMethodExtension.html",
+    "kind": 6,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A way to add extensions to Strings to make it easy to identify the methods\ninvolved in routing (go, push, goNamed, pushNamed, etc.).\nThis simplifies the methodName comparison logic in existing code and\nmakes it easy to extend as new route methods are added.",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  },
+  {
+    "name": "isRouteMethod",
+    "qualifiedName": "go_router_linter.RouteMethodExtension.isRouteMethod",
+    "href": "go_router_linter/RouteMethodExtension/isRouteMethod.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A way to add extensions to Strings to make it easy to identify the methods\ninvolved in routing (go, push, goNamed, pushNamed, etc.).\nThis simplifies the methodName comparison logic in existing code and\nmakes it easy to extend as new route methods are added.",
+    "enclosedBy": {
+      "name": "RouteMethodExtension",
+      "kind": 6,
+      "href": "go_router_linter/RouteMethodExtension.html"
     }
   },
   {

@@ -1,6 +1,6 @@
 name: go_router_linter
 description: A custom lint rule that checks for the use of GoRouterHelper.
-version: 0.1.4+1
+version: 0.1.5
 
 repository: https://github.com/AndrewDongminYoo/custom_linters
 

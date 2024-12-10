@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the run method from the UseContextDirectlyForGoRouter class, for the Dart programming language."
+      content="API docs for the run method from the AvoidHardcodedRoutes class, for the Dart programming language."
     />
     <title>
-      run method - UseContextDirectlyForGoRouter class - go_router_linter
-      library - Dart API
+      run method - AvoidHardcodedRoutes class - go_router_linter library - Dart
+      API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -54,9 +54,8 @@
           >
         </li>
         <li>
-          <a
-            href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-            >UseContextDirectlyForGoRouter</a
+          <a href="../../go_router_linter/AvoidHardcodedRoutes-class.html"
+            >AvoidHardcodedRoutes</a
           >
         </li>
         <li class="self-crumb">run method</li>
@@ -88,7 +87,7 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="go_router_linter&#47;UseContextDirectlyForGoRouter-class-sidebar.html"
+        data-above-sidebar="go_router_linter&#47;AvoidHardcodedRoutes-class-sidebar.html"
         data-below-sidebar=""
       >
         <div>
@@ -152,8 +151,7 @@
         <section class="desc markdown">
           <p>Emits lints for a given file.</p>
           <p>
-            <a
-              href="../../go_router_linter/UseContextDirectlyForGoRouter/run.html"
+            <a href="../../go_router_linter/AvoidHardcodedRoutes/run.html"
               >run</a
             >
             will only be invoked with files respecting
@@ -172,25 +170,8 @@ void run(
   ErrorReporter reporter,
   CustomLintContext context,
 ) {
-  context.registry.addMethodInvocation((MethodInvocation node) {
-    if (node.methodName.name == &#39;of&#39; &amp;&amp;
-        node.target is Identifier &amp;&amp;
-        (node.target! as Identifier).name == &#39;GoRouter&#39; &amp;&amp;
-        node.argumentList.arguments.length == 1 &amp;&amp;
-        node.argumentList.arguments.first is SimpleIdentifier) {
-      &#47;&#47; Ensure the parent is a MethodInvocation
-      if (node.parent is MethodInvocation) {
-        final parent = node.parent! as MethodInvocation;
-        if (parent.methodName.name.isNotEmpty) {
-          &#47;&#47; Get the method name (e.g., `go`, `push`)
-          final name = parent.methodName.name;
-          &#47;&#47; Generate a dynamic problem message
-          final message =
-              &#39;Use context.$name instead of GoRouter.of(context).$name.&#39;;
-          reporter.atNode(parent, code.copyWith(problemMessage: message));
-        }
-      }
-    }
+  resolver.getResolvedUnitResult().then((unit) {
+    unit.unit.visitChildren(_AvoidHardcodedRoutesVisitor(reporter, context));
   });
 }</code></pre>
         </section>
@@ -220,15 +201,14 @@ void run(
             >
           </li>
           <li>
-            <a
-              href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-              >UseContextDirectlyForGoRouter</a
+            <a href="../../go_router_linter/AvoidHardcodedRoutes-class.html"
+              >AvoidHardcodedRoutes</a
             >
           </li>
           <li class="self-crumb">run method</li>
         </ol>
 
-        <h5>UseContextDirectlyForGoRouter class</h5>
+        <h5>AvoidHardcodedRoutes class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
       <!--/.sidebar-offcanvas-->
