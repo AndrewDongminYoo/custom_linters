@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           // ! Use context.push instead of GoRouter.of(context).push.
-          // expect_lint: use_context_directly_for_go_router
+          // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
           onPressed: () => GoRouter.of(context).push('/details'),
           child: const Text('Go to the Details screen'),
         ),
@@ -89,7 +89,7 @@ class DetailsScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           // ! Use context.go instead of GoRouter.of(context).go.
-          // expect_lint: use_context_directly_for_go_router
+          // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
           onPressed: () => GoRouter.of(context).go('/'),
           child: const Text('Go back to the Home screen'),
         ),

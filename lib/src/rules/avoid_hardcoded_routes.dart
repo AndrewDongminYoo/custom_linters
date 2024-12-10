@@ -44,13 +44,22 @@ class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    // Check if the target is `context` and the method is `go` or `push`
-    final target = node.target;
-    if (target is SimpleIdentifier && target.name == 'context') {
-      final methodName = node.methodName.name;
-      if (methodName == 'go' || methodName == 'push') {
-        // Check arguments for hardcoded strings
+    final methodName = node.methodName.name;
+    if (methodName == 'go' || methodName == 'push') {
+      // Verify that the call target is a GoRouter
+      // Example: GoRouter.of(context).go('/details')
+      final target = node.target;
+      final targetType = target?.staticType;
+      final isGoRouterCall =
+          targetType != null && targetType.element?.name == 'GoRouter';
+
+      // Check for existing context.go(), context.push()
+      final isContextExtension =
+          target is SimpleIdentifier && target.name == 'context';
+
+      if (isGoRouterCall || isContextExtension) {
         for (final argument in node.argumentList.arguments) {
+          // Check arguments for hardcoded strings
           if (argument is StringLiteral) {
             reporter.atNode(argument, AvoidHardcodedRoutes._code);
           }
@@ -72,7 +81,7 @@ class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
       for (final arg in arguments) {
         if (arg is NamedExpression) {
           final paramName = arg.name.label.name;
-          // path 또는 name 속성에 대해 검사
+          // Inspect against the path or name property
           if (paramName == 'path' || paramName == 'name') {
             if (arg.expression is StringLiteral) {
               reporter.atNode(arg.expression, AvoidHardcodedRoutes._code);
