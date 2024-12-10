@@ -8,11 +8,10 @@
 
 #### 1. Ensure `GoRoute` Includes a `name` Property
 
-- Detects `GoRoute` definitions missing the `name` property and suggests adding it for better readability and routing consistency.
-
 - **Lint Code:** `missing_go_route_name_property`
+- **What it does:** Detects `GoRoute` definitions missing the `name` property and suggests adding it for better readability and routing consistency.
 
-- **Example:**
+**Example:**
 
 ```dart
 // Bad
@@ -31,7 +30,55 @@ GoRoute(
 
 #### 2. Use `context.go()` Instead of `GoRouter.of(context).go()`
 
-- Detects instances where `GoRouter.of(context).go()` is used and suggests replacing it with the more concise `context.go()`.
+- **Lint Code:** `use_context_directly_for_go_router`
+- **What it does:** Detects instances where `GoRouter.of(context).go()` is used and suggests replacing it with the more concise `context.go()`.
+
+**Example:**
+
+```dart
+// Bad
+GoRouter.of(context).go('/home');
+
+// Good
+context.go('/home');
+```
+
+#### 3. Avoid Hardcoded Routes
+
+- **Lint Code:** `avoid_hardcoded_routes`
+- **What it does:** Detects when hardcoded route strings are used directly in:
+
+  - `context.go()`, `context.push()`, `context.goNamed()`, `context.pushNamed()`, etc.
+  - `GoRouter.of(context).go()`, `GoRouter.of(context).push()`, `GoRouter.of(context).goNamed()`, `GoRouter.of(context).pushNamed()`, etc.
+  - `GoRoute` definitions (`path` and `name` properties)
+
+  and suggests using constants or enums instead.
+
+**Examples:**
+
+```dart
+// Bad: Hardcoded string in go()
+context.go('/profile');
+
+// Good: Use a constant or enum
+context.go(AppRoutes.profile);
+```
+
+```dart
+// Bad: Hardcoded string in GoRoute definition
+GoRoute(
+  path: '/details',
+  name: 'details',
+  builder: (context, state) => DetailsPage(),
+);
+
+// Good: Use a constant or enum
+GoRoute(
+  path: AppRoutes.detailsPath,
+  name: DetailsPage.name,
+  builder: (context, state) => DetailsPage(),
+);
+```
 
 ## Installation
 
@@ -59,11 +106,12 @@ custom_lint:
   rules:
     - missing_go_route_name_property
     - use_context_directly_for_go_router
+    - avoid_hardcoded_routes
 ```
 
 ## Usage
 
-After setting up, the linter will automatically analyze your code and provide warnings or suggestions based on the defined rules. For example:
+After setting up, the linter will automatically analyze your code and provide warnings or suggestions based on the defined rules.
 
 ### Missing `name` Property
 
@@ -93,6 +141,16 @@ The linter will suggest replacing it with:
 ```dart
 context.go('/home');
 ```
+
+### Avoiding Hardcoded Routes
+
+If a hardcoded route string is detected in `context.go('/profile')`:
+
+> Avoid hardcoded route paths. Use constants or enums for routes.
+
+If a hardcoded route string is detected in a `GoRoute` definition:
+
+> Avoid hardcoded route paths. Use constants or enums for routes.
 
 ## Contributing
 
