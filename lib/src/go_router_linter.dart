@@ -2,6 +2,7 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
+import 'package:go_router_linter/src/rules/avoid_hardcoded_routes.dart';
 import 'package:go_router_linter/src/rules/missing_go_route_name_property.dart';
 import 'package:go_router_linter/src/rules/use_context_directly_for_go_router.dart';
 
@@ -15,5 +16,6 @@ class _GoRouterLintPlugin extends PluginBase {
   List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
         const UseContextDirectlyForGoRouter(),
         const MissingGoRouteNameProperty(),
+        const AvoidHardcodedRoutes(),
       ];
 }
