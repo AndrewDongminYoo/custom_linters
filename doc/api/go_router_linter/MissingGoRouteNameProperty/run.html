@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the UseContextDirectlyForGoRouter constructor from Class UseContextDirectlyForGoRouter from the go_router_linter library, for the Dart programming language."
+      content="API docs for the run method from the MissingGoRouteNameProperty class, for the Dart programming language."
     />
     <title>
-      UseContextDirectlyForGoRouter constructor - UseContextDirectlyForGoRouter
-      - go_router_linter library - Dart API
+      run method - MissingGoRouteNameProperty class - go_router_linter library -
+      Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -54,16 +54,13 @@
           >
         </li>
         <li>
-          <a
-            href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-            >UseContextDirectlyForGoRouter</a
+          <a href="../../go_router_linter/MissingGoRouteNameProperty-class.html"
+            >MissingGoRouteNameProperty</a
           >
         </li>
-        <li class="self-crumb">
-          UseContextDirectlyForGoRouter const constructor
-        </li>
+        <li class="self-crumb">run method</li>
       </ol>
-      <div class="self-name">UseContextDirectlyForGoRouter</div>
+      <div class="self-name">run</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -90,41 +87,93 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="go_router_linter&#47;UseContextDirectlyForGoRouter-class-sidebar.html"
+        data-above-sidebar="go_router_linter&#47;MissingGoRouteNameProperty-class-sidebar.html"
         data-below-sidebar=""
       >
         <div>
-          <h1>
-            <span class="kind-constructor">UseContextDirectlyForGoRouter</span>
-            constructor
-          </h1>
+          <h1><span class="kind-method">run</span> method</h1>
         </div>
 
         <section class="multi-line-signature">
-          const
-          <span class="name">UseContextDirectlyForGoRouter</span>(<wbr />)
+          <div>
+            <ol class="annotation-list">
+              <li>
+                @<a
+                  href="https://api.flutter.dev/flutter/dart-core/override-constant.html"
+                  >override</a
+                >
+              </li>
+            </ol>
+          </div>
+
+          <span class="returntype">void</span>
+          <span class="name">run</span>(<wbr />
+          <ol class="parameter-list single-line">
+            <li>
+              <span class="parameter" id="run-param-resolver"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintResolver-class.html"
+                    >CustomLintResolver</a
+                  ></span
+                >
+                <span class="parameter-name">resolver</span>,
+              </span>
+            </li>
+            <li>
+              <span class="parameter" id="run-param-reporter"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://pub.dev/documentation/analyzer/6.7.0/error_listener/ErrorReporter-class.html"
+                    >ErrorReporter</a
+                  ></span
+                >
+                <span class="parameter-name">reporter</span>,
+              </span>
+            </li>
+            <li>
+              <span class="parameter" id="run-param-context"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintContext-class.html"
+                    >CustomLintContext</a
+                  ></span
+                >
+                <span class="parameter-name">context</span></span
+              >
+            </li>
+          </ol>
+          )
+
+          <div class="features"><span class="feature">override</span></div>
         </section>
 
         <section class="desc markdown">
+          <p>Emits lints for a given file.</p>
           <p>
-            A custom lint rule that checks for the use of
-            <code>GoRouter.of(context).go()</code> instead of
-            <code>context.go()</code>.
-          </p>
-          <p>
-            This lint rule is part of the <code>go_router_linter</code> plugin,
-            which provides a set of custom lints for the Go Router library. The
-            purpose of this lint is to encourage the use of the more concise and
-            idiomatic <code>context.go()</code> method instead of the longer
-            <code>GoRouter.of(context).go()</code> form.
+            <a href="../../go_router_linter/MissingGoRouteNameProperty/run.html"
+              >run</a
+            >
+            will only be invoked with files respecting
+            <a
+              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/DartLintRule/filesToAnalyze.html"
+              >filesToAnalyze</a
+            >
           </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">const UseContextDirectlyForGoRouter() : super(code: _code);</code></pre>
+          <pre class="language-dart"><code class="language-dart">@override
+void run(
+  CustomLintResolver resolver,
+  ErrorReporter reporter,
+  CustomLintContext context,
+) {
+  resolver.getResolvedUnitResult().then((unit) {
+    unit.unit.visitChildren(_GoRouteVisitor(reporter, context));
+  });
+}</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -153,19 +202,17 @@
           </li>
           <li>
             <a
-              href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-              >UseContextDirectlyForGoRouter</a
+              href="../../go_router_linter/MissingGoRouteNameProperty-class.html"
+              >MissingGoRouteNameProperty</a
             >
           </li>
-          <li class="self-crumb">
-            UseContextDirectlyForGoRouter const constructor
-          </li>
+          <li class="self-crumb">run method</li>
         </ol>
 
-        <h5>UseContextDirectlyForGoRouter class</h5>
+        <h5>MissingGoRouteNameProperty class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
 
       <div
         id="dartdoc-sidebar-right"

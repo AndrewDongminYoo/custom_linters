@@ -77,19 +77,50 @@
             for common patterns.
           </p>
           <h2 id="features">Features</h2>
+          <h3 id="current-rules">Current Rules</h3>
+          <h4 id="1-ensure-goroute-includes-a-name-property">
+            1. Ensure <code>GoRoute</code> Includes a <code>name</code> Property
+          </h4>
           <ul>
             <li>
-              <strong
-                >Lint Rule: Use <code>context.go()</code> Instead of
-                <code>GoRouter.of(context).go()</code></strong
-              >
-              <ul>
-                <li>
-                  Detects instances where
-                  <code>GoRouter.of(context).go()</code> is used and suggests
-                  replacing it with the more concise <code>context.go()</code>.
-                </li>
-              </ul>
+              <p>
+                Detects <code>GoRoute</code> definitions missing the
+                <code>name</code> property and suggests adding it for better
+                readability and routing consistency.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Lint Code:</strong>
+                <code>missing_go_route_name_property</code>
+              </p>
+            </li>
+            <li>
+              <p><strong>Example:</strong></p>
+            </li>
+          </ul>
+          <pre class="language-dart"><code class="language-dart">// Bad
+GoRoute(
+  path: '/home',
+  builder: (context, state) =&gt; HomePage(),
+);
+
+// Good
+GoRoute(
+  path: '/home',
+  name: 'home',
+  builder: (context, state) =&gt; HomePage(),
+);
+</code></pre>
+          <h4 id="2-use-contextgo-instead-of-gorouterofcontextgo">
+            2. Use <code>context.go()</code> Instead of
+            <code>GoRouter.of(context).go()</code>
+          </h4>
+          <ul>
+            <li>
+              Detects instances where <code>GoRouter.of(context).go()</code> is
+              used and suggests replacing it with the more concise
+              <code>context.go()</code>.
             </li>
           </ul>
           <h2 id="installation">Installation</h2>
@@ -97,45 +128,67 @@
             To integrate <code>go_router_linter</code> into your project, follow
             these steps:
           </p>
-          <ol>
-            <li>
-              <p><strong>Add Dependency</strong></p>
-              <p>
-                In your <code>pubspec.yaml</code> file, include
-                <code>go_router_linter</code> under
-                <code>dev_dependencies</code>:
-              </p>
-              <pre
-                class="language-yaml"
-              ><code class="language-yaml">dev_dependencies:
+          <h3 id="1-add-dependency">1. Add Dependency</h3>
+          <p>
+            In your <code>pubspec.yaml</code> file, include
+            <code>go_router_linter</code> under <code>dev_dependencies</code>:
+          </p>
+          <pre
+            class="language-yaml"
+          ><code class="language-yaml">dev_dependencies:
   go_router_linter: ^0.1.0
 </code></pre>
-            </li>
-            <li>
-              <p>
-                <strong>Update <code>analysis_options.yaml</code></strong>
-              </p>
-              <p>
-                Enable the custom lint rule by adding the following to your
-                <code>analysis_options.yaml</code> file:
-              </p>
-              <pre class="language-yaml"><code class="language-yaml">analyzer:
+          <h3 id="2-update-analysis_optionsyaml">
+            2. Update <code>analysis_options.yaml</code>
+          </h3>
+          <p>
+            Enable the custom lint rules by adding the following to your
+            <code>analysis_options.yaml</code> file:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">analyzer:
   plugins:
     - custom_lint
 
 custom_lint:
   rules:
+    - missing_go_route_name_property
     - use_context_directly_for_go_router
 </code></pre>
-            </li>
-          </ol>
           <h2 id="usage">Usage</h2>
           <p>
             After setting up, the linter will automatically analyze your code
             and provide warnings or suggestions based on the defined rules. For
-            example, if <code>GoRouter.of(context).go()</code> is detected, the
-            linter will recommend using <code>context.go()</code> instead.
+            example:
           </p>
+          <h3 id="missing-name-property">Missing <code>name</code> Property</h3>
+          <p>
+            If a <code>GoRoute</code> definition does not include the
+            <code>name</code> property:
+          </p>
+          <pre class="language-dart"><code class="language-dart">GoRoute(
+  path: '/profile',
+  builder: (context, state) =&gt; ProfilePage(),
+);
+</code></pre>
+          <p>The linter will produce the following suggestion:</p>
+          <blockquote>
+            <p>
+              GoRoute definition should include a <code>name</code> property.
+            </p>
+          </blockquote>
+          <h3 id="using-gorouterofcontextgo">
+            Using <code>GoRouter.of(context).go()</code>
+          </h3>
+          <p>If <code>GoRouter.of(context).go()</code> is detected:</p>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">GoRouter.of(context).go('/home');
+</code></pre>
+          <p>The linter will suggest replacing it with:</p>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">context.go('/home');
+</code></pre>
           <h2 id="contributing">Contributing</h2>
           <p>
             Contributions are welcome! If you have ideas for new lint rules or
@@ -216,7 +269,7 @@ custom_lint:
     </main>
 
     <footer>
-      <span class="no-break"> go_router_linter 0.1.1+1 </span>
+      <span class="no-break"> go_router_linter 0.1.4+1 </span>
     </footer>
 
     <script src="static-assets/highlight.pack.js?v1"></script>

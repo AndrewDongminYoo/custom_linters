@@ -9,6 +9,76 @@
     "desc": "A Very Good Project created by Very Good CLI."
   },
   {
+    "name": "LintCodeCopyWithExtension",
+    "qualifiedName": "go_router_linter.LintCodeCopyWithExtension",
+    "href": "go_router_linter/LintCodeCopyWithExtension.html",
+    "kind": 6,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "nodoc",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  },
+  {
+    "name": "copyWith",
+    "qualifiedName": "go_router_linter.LintCodeCopyWithExtension.copyWith",
+    "href": "go_router_linter/LintCodeCopyWithExtension/copyWith.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "nodoc",
+    "enclosedBy": {
+      "name": "LintCodeCopyWithExtension",
+      "kind": 6,
+      "href": "go_router_linter/LintCodeCopyWithExtension.html"
+    }
+  },
+  {
+    "name": "MissingGoRouteNameProperty",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty",
+    "href": "go_router_linter/MissingGoRouteNameProperty-class.html",
+    "kind": 3,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A lint rule that checks if GoRoute definitions include a name property.",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/go_router_linter-library.html"
+    }
+  },
+  {
+    "name": "MissingGoRouteNameProperty",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.MissingGoRouteNameProperty",
+    "href": "go_router_linter/MissingGoRouteNameProperty/MissingGoRouteNameProperty.html",
+    "kind": 2,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "A lint rule that checks if GoRoute definitions include a name property.",
+    "enclosedBy": {
+      "name": "MissingGoRouteNameProperty",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouteNameProperty-class.html"
+    }
+  },
+  {
+    "name": "run",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.run",
+    "href": "go_router_linter/MissingGoRouteNameProperty/run.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Emits lints for a given file.",
+    "enclosedBy": {
+      "name": "MissingGoRouteNameProperty",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouteNameProperty-class.html"
+    }
+  },
+  {
     "name": "UseContextDirectlyForGoRouter",
     "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter",
     "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html",
