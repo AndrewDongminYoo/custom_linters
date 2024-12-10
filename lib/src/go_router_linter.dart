@@ -2,8 +2,8 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
-import 'package:go_router_linter/src/missing_go_route_name_property.dart';
-import 'package:go_router_linter/src/use_context_directly_for_go_router.dart';
+import 'package:go_router_linter/src/rules/missing_go_route_name_property.dart';
+import 'package:go_router_linter/src/rules/use_context_directly_for_go_router.dart';
 
 /// This is the entrypoint of our custom linter
 PluginBase createPlugin() => _GoRouterLintPlugin();

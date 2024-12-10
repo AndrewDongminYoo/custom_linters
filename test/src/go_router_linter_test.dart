@@ -3,7 +3,7 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
 import 'package:go_router_linter/src/go_router_linter.dart';
-import 'package:go_router_linter/src/use_context_directly_for_go_router.dart';
+import 'package:go_router_linter/src/rules/use_context_directly_for_go_router.dart';
 
 // 🧪 Test imports:
 import 'package:test/test.dart';

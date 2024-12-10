@@ -4,7 +4,7 @@ import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
-import 'package:go_router_linter/src/lint_code_extension.dart';
+import 'package:go_router_linter/src/helpers/lint_code_extension.dart';
 
 /// {@template use_context_directly_for_go_router}
 /// A custom lint rule that checks for the use of `GoRouter.of(context).go()`
