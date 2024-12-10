@@ -5,6 +5,9 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
+// 🌎 Project imports:
+import 'package:go_router_linter/src/helpers/route_methods_extension.dart';
+
 /// {@template avoid_hardcoded_routes}
 /// A lint rule that checks for hardcoded route strings.
 ///
@@ -45,7 +48,7 @@ class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
   @override
   void visitMethodInvocation(MethodInvocation node) {
     final methodName = node.methodName.name;
-    if (methodName == 'go' || methodName == 'push') {
+    if (methodName.isRouteMethod) {
       // Verify that the call target is a GoRouter
       // Example: GoRouter.of(context).go('/details')
       final target = node.target;
