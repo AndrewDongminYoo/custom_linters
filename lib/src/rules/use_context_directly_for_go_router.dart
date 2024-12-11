@@ -47,7 +47,7 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
             // Generate a dynamic problem message
             final message =
                 'Use context.$name instead of GoRouter.of(context).$name.';
-            reporter.atNode(parent, code.copyWith(problemMessage: message));
+            reporter.atNode(parent, code.copyWith(correctionMessage: message));
           }
         }
       }

@@ -28,7 +28,6 @@ Generated from [highlight.js](https://highlightjs.org/download) on 2021-07-13.
 - kotlin
 - markdown
 - objective-c
-- plaintext
 - shell
 - swift
 - yaml

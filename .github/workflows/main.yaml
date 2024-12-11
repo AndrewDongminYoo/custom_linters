@@ -24,5 +24,24 @@ jobs:
       includes: "**/*.md"
       modified_files_only: false
 
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+  dart-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: ✨ Check Formatting
+        run: dart format --set-exit-if-changed
+
+      - name: 🕵️ Analyze
+        run: dart analyze --fatal-infos --fatal-warnings
+
+      - name: 📊 Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v3
