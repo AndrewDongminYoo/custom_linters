@@ -51,3 +51,6 @@ jobs:
 
       - name: 🕵️ Analyze
         run: flutter analyze lib test
+
+      - name: 🧪 Run Tests
+        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
