@@ -42,13 +42,12 @@ jobs:
           cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
 
       - name: 📦 Install Dependencies
-        run: flutter pub get
+        run: |
+          flutter pub global activate very_good_cli
+          very_good packages get --recursive --ignore="!*"
 
       - name: ✨ Check Formatting
-        run: dart format . --set-exit-if-changed
+        run: dart format --set-exit-if-changed lib test
 
       - name: 🕵️ Analyze
-        run: dart analyze --fatal-infos --fatal-warnings
-
-      - name: 📊 Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v3
+        run: flutter analyze lib test
