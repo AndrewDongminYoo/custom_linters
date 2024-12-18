@@ -2,8 +2,7 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
-import 'package:go_router_linter/src/go_router_lint_plugin.dart';
-import 'package:go_router_linter/src/rules/use_context_directly_for_go_router.dart';
+import 'package:go_router_linter/go_router_linter.dart';
 
 // 🧪 Test imports:
 import 'package:test/test.dart';
@@ -31,8 +30,10 @@ void main() {
           ),
         );
         expect(rules, isA<List<LintRule>>());
-        expect(rules, hasLength(1));
-        expect(rules.first, isA<UseContextDirectlyForGoRouter>());
+        expect(rules, hasLength(3));
+        expect(rules[0], isA<UseContextDirectlyForGoRouter>());
+        expect(rules[1], isA<MissingGoRouteNameProperty>());
+        expect(rules[2], isA<AvoidHardcodedRoutes>());
       });
     });
   });
