@@ -6,7 +6,7 @@ import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
-import 'package:go_router_linter/src/helpers/route_methods_extension.dart';
+import 'package:go_router_linter/src/extensions/route_methods_extension.dart';
 
 /// {@template avoid_hardcoded_routes}
 /// A lint rule that checks for hardcoded route strings.
