@@ -81,7 +81,109 @@
         </div>
 
         <section class="desc markdown">
-          <p>A Very Good Project created by Very Good CLI.</p>
+          <h1 id="go_router_linter">go_router_linter</h1>
+          <p>
+            The <code>go_router_linter</code> package provides custom lint rules
+            to improve code quality and maintain consistency when using the
+            <code>go_router</code> package in Dart/Flutter projects.
+          </p>
+          <h2 id="key-features">Key Features</h2>
+          <ul>
+            <li>
+              <p>
+                <strong>Avoid Hardcoded Routes</strong>
+                (<code>avoid_hardcoded_routes</code>): Detects hardcoded route
+                strings in <code>context.go()</code>,
+                <code>context.push()</code> and related methods, as well as in
+                <code>GoRoute</code> definitions. Encourages the use of
+                constants or enums.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong
+                  >Ensure <code>GoRoute</code> Includes a
+                  <code>name</code> Property</strong
+                >
+                (<code>missing_go_route_name_property</code>): Ensures every
+                <code>GoRoute</code> has a <code>name</code> property, improving
+                readability and maintainability.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong
+                  >Use <code>context.go()</code> Instead of
+                  <code>GoRouter.of(context).go()</code></strong
+                >
+                (<code>use_context_directly_for_go_router</code>): Suggests the
+                more concise and idiomatic <code>context.go()</code> calls.
+              </p>
+            </li>
+          </ul>
+          <h2 id="structure">Structure</h2>
+          <ul>
+            <li>
+              <p><strong>Extensions</strong>:</p>
+              <ul>
+                <li>
+                  <code>lint_code_extension.dart</code>: Provides a
+                  <code>copyWith()</code> method for creating modified copies of
+                  <code>LintCode</code> instances.
+                </li>
+                <li>
+                  <code>route_methods_extension.dart</code>: Adds a helper
+                  extension on <code>String</code> to easily identify
+                  route-related methods (<code>go</code>, <code>push</code>,
+                  <code>goNamed</code>, <code>pushNamed</code>, etc.).
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>Rules</strong>:</p>
+              <ul>
+                <li>
+                  <code>avoid_hardcoded_routes.dart</code>: Checks for hardcoded
+                  route strings in route methods and
+                  <code>GoRoute</code> definitions.
+                </li>
+                <li>
+                  <code>missing_go_route_name_property.dart</code>: Ensures
+                  <code>GoRoute</code> definitions include a <code>name</code>.
+                </li>
+                <li>
+                  <code>use_context_directly_for_go_router.dart</code>: Advises
+                  using <code>context.go()</code> instead of
+                  <code>GoRouter.of(context).go()</code>.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>Plugin Entrypoint</strong>:</p>
+              <ul>
+                <li>
+                  <code>go_router_linter.dart</code>: Defines the plugin and
+                  registers all available lint rules.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h2 id="getting-started">Getting Started</h2>
+          <p>
+            To use these lint rules, add <code>go_router_linter</code> as a dev
+            dependency and configure it in your
+            <code>analysis_options.yaml</code>:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">analyzer:
+  plugins:
+    - custom_lint
+
+custom_lint:
+  rules:
+    - missing_go_route_name_property
+    - use_context_directly_for_go_router
+    - avoid_hardcoded_routes
+</code></pre>
         </section>
 
         <section class="summary offset-anchor" id="classes">
@@ -142,7 +244,14 @@
                 >LintCode</a
               >
             </dt>
-            <dd>nodoc</dd>
+            <dd>
+              An extension that provides a method for creating modified copies
+              of a
+              <a
+                href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/LintCode-class.html"
+                >LintCode</a
+              >.
+            </dd>
 
             <dt id="RouteMethodExtension">
               <span class="name"
@@ -232,7 +341,7 @@
     </main>
 
     <footer>
-      <span class="no-break"> go_router_linter 0.1.5 </span>
+      <span class="no-break"> go_router_linter 0.1.5+1 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

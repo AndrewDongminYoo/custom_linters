@@ -163,7 +163,48 @@
         </section>
 
         <section class="desc markdown">
-          <p>nodoc</p>
+          <p>
+            An extension that provides a method for creating modified copies of
+            a
+            <a
+              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/LintCode-class.html"
+              >LintCode</a
+            >.
+          </p>
+          <p>
+            This allows you to selectively replace certain properties of a
+            <code>LintCode</code> instance without having to manually
+            instantiate a new <code>LintCode</code> object each time.
+          </p>
+          <p>
+            Creates a copy of the current
+            <a
+              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/LintCode-class.html"
+              >LintCode</a
+            >
+            with updated fields. Any field left as <code>null</code> remains
+            unchanged from the original instance.
+          </p>
+          <ul>
+            <li>
+              <code>name</code>: The new name for the <code>LintCode</code>.
+            </li>
+            <li>
+              <code>problemMessage</code>: The new problem message associated
+              with the <code>LintCode</code>
+            </li>
+            <li>
+              <code>correctionMessage</code>: The new correction message for
+              this <code>LintCode</code>.
+            </li>
+            <li>
+              <code>uniqueName</code>: The new unique name for disambiguation.
+            </li>
+            <li>
+              <code>url</code>: The updated URL linking to further documentation
+              or details.
+            </li>
+          </ul>
         </section>
 
         <section class="summary source-code" id="source">
@@ -238,7 +279,7 @@
     </main>
 
     <footer>
-      <span class="no-break"> go_router_linter 0.1.5 </span>
+      <span class="no-break"> go_router_linter 0.1.5+1 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

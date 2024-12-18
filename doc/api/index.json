@@ -4,16 +4,14 @@
     "qualifiedName": "go_router_linter",
     "href": "go_router_linter/go_router_linter-library.html",
     "kind": 9,
-    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "A Very Good Project created by Very Good CLI."
+    "desc": "go_router_linter"
   },
   {
     "name": "AvoidHardcodedRoutes",
     "qualifiedName": "go_router_linter.AvoidHardcodedRoutes",
     "href": "go_router_linter/AvoidHardcodedRoutes-class.html",
     "kind": 3,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A lint rule that checks for hardcoded route strings.",
     "enclosedBy": {
@@ -27,7 +25,6 @@
     "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.AvoidHardcodedRoutes",
     "href": "go_router_linter/AvoidHardcodedRoutes/AvoidHardcodedRoutes.html",
     "kind": 2,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A lint rule that checks for hardcoded route strings.",
     "enclosedBy": {
@@ -55,9 +52,8 @@
     "qualifiedName": "go_router_linter.LintCodeCopyWithExtension",
     "href": "go_router_linter/LintCodeCopyWithExtension.html",
     "kind": 6,
-    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "nodoc",
+    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
@@ -71,7 +67,7 @@
     "kind": 10,
     "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "nodoc",
+    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
     "enclosedBy": {
       "name": "LintCodeCopyWithExtension",
       "kind": 6,
@@ -83,7 +79,6 @@
     "qualifiedName": "go_router_linter.MissingGoRouteNameProperty",
     "href": "go_router_linter/MissingGoRouteNameProperty-class.html",
     "kind": 3,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A lint rule that checks if GoRoute definitions include a name property.",
     "enclosedBy": {
@@ -97,7 +92,6 @@
     "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.MissingGoRouteNameProperty",
     "href": "go_router_linter/MissingGoRouteNameProperty/MissingGoRouteNameProperty.html",
     "kind": 2,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A lint rule that checks if GoRoute definitions include a name property.",
     "enclosedBy": {
@@ -125,7 +119,6 @@
     "qualifiedName": "go_router_linter.RouteMethodExtension",
     "href": "go_router_linter/RouteMethodExtension.html",
     "kind": 6,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A way to add extensions to Strings to make it easy to identify the methods\ninvolved in routing (go, push, goNamed, pushNamed, etc.).\nThis simplifies the methodName comparison logic in existing code and\nmakes it easy to extend as new route methods are added.",
     "enclosedBy": {
@@ -153,7 +146,6 @@
     "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter",
     "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html",
     "kind": 3,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
     "enclosedBy": {
@@ -167,7 +159,6 @@
     "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.UseContextDirectlyForGoRouter",
     "href": "go_router_linter/UseContextDirectlyForGoRouter/UseContextDirectlyForGoRouter.html",
     "kind": 2,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
     "enclosedBy": {
@@ -195,7 +186,6 @@
     "qualifiedName": "go_router_linter.createPlugin",
     "href": "go_router_linter/createPlugin.html",
     "kind": 8,
-    "overriddenDepth": 0,
     "packageRank": 0,
     "desc": "This is the entrypoint of our custom linter",
     "enclosedBy": {

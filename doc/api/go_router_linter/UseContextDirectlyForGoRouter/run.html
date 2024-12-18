@@ -125,7 +125,7 @@
               <span class="parameter" id="run-param-reporter"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/6.7.0/error_listener/ErrorReporter-class.html"
+                    href="https://pub.dev/documentation/analyzer/6.11.0/error_listener/ErrorReporter-class.html"
                     >ErrorReporter</a
                   ></span
                 >
@@ -187,7 +187,7 @@ void run(
           &#47;&#47; Generate a dynamic problem message
           final message =
               &#39;Use context.$name instead of GoRouter.of(context).$name.&#39;;
-          reporter.atNode(parent, code.copyWith(problemMessage: message));
+          reporter.atNode(parent, code.copyWith(correctionMessage: message));
         }
       }
     }
@@ -241,7 +241,7 @@ void run(
     </main>
 
     <footer>
-      <span class="no-break"> go_router_linter 0.1.5 </span>
+      <span class="no-break"> go_router_linter 0.1.5+1 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

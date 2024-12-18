@@ -30,7 +30,6 @@
 
   <body data-base-href="" data-using-base-href="false" class="light-theme">
     <div id="overlay-under-drawer"></div>
-
     <header id="title">
       <span
         id="sidenav-left-toggle"
@@ -83,22 +82,17 @@
           </h4>
           <ul>
             <li>
-              <p>
-                Detects <code>GoRoute</code> definitions missing the
-                <code>name</code> property and suggests adding it for better
-                readability and routing consistency.
-              </p>
+              <strong>Lint Code:</strong>
+              <code>missing_go_route_name_property</code>
             </li>
             <li>
-              <p>
-                <strong>Lint Code:</strong>
-                <code>missing_go_route_name_property</code>
-              </p>
-            </li>
-            <li>
-              <p><strong>Example:</strong></p>
+              <strong>What it does:</strong> Detects
+              <code>GoRoute</code> definitions missing the
+              <code>name</code> property and suggests adding it for better
+              readability and routing consistency.
             </li>
           </ul>
+          <p><strong>Example:</strong></p>
           <pre class="language-dart"><code class="language-dart">// Bad
 GoRoute(
   path: '/home',
@@ -118,11 +112,79 @@ GoRoute(
           </h4>
           <ul>
             <li>
-              Detects instances where <code>GoRouter.of(context).go()</code> is
-              used and suggests replacing it with the more concise
-              <code>context.go()</code>.
+              <strong>Lint Code:</strong>
+              <code>use_context_directly_for_go_router</code>
+            </li>
+            <li>
+              <strong>What it does:</strong> Detects instances where
+              <code>GoRouter.of(context).go()</code> is used and suggests
+              replacing it with the more concise <code>context.go()</code>.
             </li>
           </ul>
+          <p><strong>Example:</strong></p>
+          <pre class="language-dart"><code class="language-dart">// Bad
+GoRouter.of(context).go('/home');
+
+// Good
+context.go('/home');
+</code></pre>
+          <h4 id="3-avoid-hardcoded-routes">3. Avoid Hardcoded Routes</h4>
+          <ul>
+            <li>
+              <p>
+                <strong>Lint Code:</strong> <code>avoid_hardcoded_routes</code>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>What it does:</strong> Detects when hardcoded route
+                strings are used directly in:
+              </p>
+              <ul>
+                <li>
+                  <code>context.go()</code>, <code>context.push()</code>,
+                  <code>context.goNamed()</code>,
+                  <code>context.pushNamed()</code>, etc.
+                </li>
+                <li>
+                  <code>GoRouter.of(context).go()</code>,
+                  <code>GoRouter.of(context).push()</code>,
+                  <code>GoRouter.of(context).goNamed()</code>,
+                  <code>GoRouter.of(context).pushNamed()</code>, etc.
+                </li>
+                <li>
+                  <code>GoRoute</code> definitions (<code>path</code> and
+                  <code>name</code> properties)
+                </li>
+              </ul>
+              <p>and suggests using constants or enums instead.</p>
+            </li>
+          </ul>
+          <p><strong>Examples:</strong></p>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">// Bad: Hardcoded string in go()
+context.go('/profile');
+
+// Good: Use a constant or enum
+context.go(AppRoutes.profile);
+</code></pre>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">// Bad: Hardcoded string in GoRoute definition
+GoRoute(
+  path: '/details',
+  name: 'details',
+  builder: (context, state) =&gt; DetailsPage(),
+);
+
+// Good: Use a constant or enum
+GoRoute(
+  path: AppRoutes.detailsPath,
+  name: DetailsPage.name,
+  builder: (context, state) =&gt; DetailsPage(),
+);
+</code></pre>
           <h2 id="installation">Installation</h2>
           <p>
             To integrate <code>go_router_linter</code> into your project, follow
@@ -153,12 +215,12 @@ custom_lint:
   rules:
     - missing_go_route_name_property
     - use_context_directly_for_go_router
+    - avoid_hardcoded_routes
 </code></pre>
           <h2 id="usage">Usage</h2>
           <p>
             After setting up, the linter will automatically analyze your code
-            and provide warnings or suggestions based on the defined rules. For
-            example:
+            and provide warnings or suggestions based on the defined rules.
           </p>
           <h3 id="missing-name-property">Missing <code>name</code> Property</h3>
           <p>
@@ -189,6 +251,25 @@ custom_lint:
             class="language-dart"
           ><code class="language-dart">context.go('/home');
 </code></pre>
+          <h3 id="avoiding-hardcoded-routes">Avoiding Hardcoded Routes</h3>
+          <p>
+            If a hardcoded route string is detected in
+            <code>context.go('/profile')</code>:
+          </p>
+          <blockquote>
+            <p>
+              Avoid hardcoded route paths. Use constants or enums for routes.
+            </p>
+          </blockquote>
+          <p>
+            If a hardcoded route string is detected in a
+            <code>GoRoute</code> definition:
+          </p>
+          <blockquote>
+            <p>
+              Avoid hardcoded route paths. Use constants or enums for routes.
+            </p>
+          </blockquote>
           <h2 id="contributing">Contributing</h2>
           <p>
             Contributions are welcome! If you have ideas for new lint rules or
@@ -223,12 +304,11 @@ custom_lint:
                 ></span
               >
             </dt>
-            <dd>A Very Good Project created by Very Good CLI.</dd>
+            <dd>go_router_linter</dd>
           </dl>
         </section>
       </div>
       <!-- /.main-content -->
-
       <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
         <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
         <header id="header-search-sidebar" class="hidden-l">
@@ -243,7 +323,6 @@ custom_lint:
             />
           </form>
         </header>
-
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li class="self-crumb">go_router_linter package</li>
         </ol>
@@ -261,15 +340,13 @@ custom_lint:
           </li>
         </ol>
       </div>
-
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
       ></div>
     </main>
-
     <footer>
-      <span class="no-break"> go_router_linter 0.1.5 </span>
+      <span class="no-break"> go_router_linter 0.1.5+1 </span>
     </footer>
 
     <script src="static-assets/highlight.pack.js?v1"></script>
