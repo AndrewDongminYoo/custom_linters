@@ -11,9 +11,6 @@ dependencies:
   analyzer: ^6.11.0
   custom_lint_builder: ^0.7.0
 
-dependency_overrides:
-  analyzer: ^7.1.0
-
 dev_dependencies:
   test: ^1.25.14
   very_good_analysis: ^7.0.0
