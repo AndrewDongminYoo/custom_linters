@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: go_router_linter
+dependency_overrides:
+  go_router_linter:
+    path: ..
