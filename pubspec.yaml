@@ -1,0 +1,10 @@
+name: custom_linters
+description: Custom lint configuration files to use for Flutter development
+version: 1.0.0
+
+environment:
+  sdk: ^3.6.0
+
+dev_dependencies:
+  melos: ^6.2.0
+  very_good_analysis: ^7.0.0
