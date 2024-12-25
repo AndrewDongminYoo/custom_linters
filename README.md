@@ -7,11 +7,11 @@ Currently, this repository includes:
 
 ## Contents
 
-- **packages/**
+- **`packages/`**
   - [go_router_linter](./packages/go_router_linter): Contains the rules and tests for `go_router_linter`.
-- **analysis_options.yaml**
+- **`analysis_options.yaml`**
   - Root-level lint and analyzer settings for shared rules across packages.
-- **melos.yaml**
+- **`melos.yaml`**
   - Configuration file for managing multiple packages within this monorepo.
 
 ## Getting Started
@@ -42,9 +42,9 @@ Currently, this repository includes:
 
 4.  Pub commands:
 
-    • Get dependencies: `dart pub get`
-    • Run tests: `dart pub test`
-    • Analyze code: `dart analyze`
+    - Get dependencies: `dart pub get`
+    - Run tests: `dart pub test`
+    - Analyze code: `dart analyze`
 
     Or use Melos commands (if configured), for example:
 
