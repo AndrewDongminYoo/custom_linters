@@ -2,3 +2,5 @@
 extends: markdownlint/style/prettier
 # MD024/no-duplicate-heading : Multiple headings with the same content
 MD024: false
+# MD033/no-inline-html : Inline HTML
+MD033: false
