@@ -27,5 +27,9 @@ pubspec.lock
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter
 
+# Exclude the following files from the API docs
+!**/doc/api/static-assets/docs.dart.js
+!**/doc/api/static-assets/docs.dart.js.map
+
 .idea/.name
 *.iml
