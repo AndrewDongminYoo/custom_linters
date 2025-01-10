@@ -26,8 +26,9 @@ class MatchingClassAndFileName extends DartLintRule {
 
   /// Metadata about the diagnostic that appears in the IDE.
   ///
-  /// The initial [problemMessage] is general, but it may be overwritten
-  /// dynamically in [run] when the class name does not match the file name.
+  /// The initial [LintCode.problemMessage] is general,
+  /// but it may be overwritten dynamically in [run]
+  /// when the class name does not match the file name.
   static const _code = LintCode(
     name: 'matching_class_and_file_name',
     problemMessage:
