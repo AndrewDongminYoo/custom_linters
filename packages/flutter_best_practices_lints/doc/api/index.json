@@ -1,0 +1,211 @@
+[
+  {
+    "name": "flutter_best_practices_lints",
+    "qualifiedName": "flutter_best_practices_lints",
+    "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html",
+    "kind": 9,
+    "packageRank": 0,
+    "desc": "flutter_best_practices_lints"
+  },
+  {
+    "name": "ClassDeclarationExtension",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension.html",
+    "kind": 6,
+    "packageRank": 0,
+    "desc": "An extension on ClassDeclaration that provides utility getters\nto determine whether the class is a private State-related class\n(common in Flutter) or an abstract class.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  },
+  {
+    "name": "isAbstract",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.isAbstract",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/isAbstract.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Returns true if this ClassDeclaration is declared as abstract.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
+    }
+  },
+  {
+    "name": "isStateClass",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.isStateClass",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/isStateClass.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "An extension on ClassDeclaration that provides utility getters\nto determine whether the class is a private State-related class\n(common in Flutter) or an abstract class.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
+    }
+  },
+  {
+    "name": "FlutterBestPracticesPlugin",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin",
+    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "A plugin class is used to list all the assists/lints defined by a plugin.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  },
+  {
+    "name": "FlutterBestPracticesPlugin",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.FlutterBestPracticesPlugin",
+    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/FlutterBestPracticesPlugin.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "",
+    "enclosedBy": {
+      "name": "FlutterBestPracticesPlugin",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
+    }
+  },
+  {
+    "name": "getLintRules",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.getLintRules",
+    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/getLintRules.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "We list all the custom warnings/infos/errors",
+    "enclosedBy": {
+      "name": "FlutterBestPracticesPlugin",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
+    }
+  },
+  {
+    "name": "LintCodeCopyWithExtension",
+    "qualifiedName": "flutter_best_practices_lints.LintCodeCopyWithExtension",
+    "href": "flutter_best_practices_lints/LintCodeCopyWithExtension.html",
+    "kind": 6,
+    "packageRank": 0,
+    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  },
+  {
+    "name": "copyWith",
+    "qualifiedName": "flutter_best_practices_lints.LintCodeCopyWithExtension.copyWith",
+    "href": "flutter_best_practices_lints/LintCodeCopyWithExtension/copyWith.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
+    "enclosedBy": {
+      "name": "LintCodeCopyWithExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/LintCodeCopyWithExtension.html"
+    }
+  },
+  {
+    "name": "MatchingClassAndFileName",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName",
+    "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  },
+  {
+    "name": "MatchingClassAndFileName",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.MatchingClassAndFileName",
+    "href": "flutter_best_practices_lints/MatchingClassAndFileName/MatchingClassAndFileName.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "enclosedBy": {
+      "name": "MatchingClassAndFileName",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html"
+    }
+  },
+  {
+    "name": "run",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.run",
+    "href": "flutter_best_practices_lints/MatchingClassAndFileName/run.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "enclosedBy": {
+      "name": "MatchingClassAndFileName",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html"
+    }
+  },
+  {
+    "name": "SingleClassPerFile",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile",
+    "href": "flutter_best_practices_lints/SingleClassPerFile-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  },
+  {
+    "name": "SingleClassPerFile",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.SingleClassPerFile",
+    "href": "flutter_best_practices_lints/SingleClassPerFile/SingleClassPerFile.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "enclosedBy": {
+      "name": "SingleClassPerFile",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/SingleClassPerFile-class.html"
+    }
+  },
+  {
+    "name": "run",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.run",
+    "href": "flutter_best_practices_lints/SingleClassPerFile/run.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "enclosedBy": {
+      "name": "SingleClassPerFile",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/SingleClassPerFile-class.html"
+    }
+  },
+  {
+    "name": "createPlugin",
+    "qualifiedName": "flutter_best_practices_lints.createPlugin",
+    "href": "flutter_best_practices_lints/createPlugin.html",
+    "kind": 8,
+    "packageRank": 0,
+    "desc": "This is the entrypoint of our custom linter",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+    }
+  }
+]

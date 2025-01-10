@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="flutter_best_practices_lints API docs, for the Dart programming language."
+    />
+    <title>flutter_best_practices_lints - Dart API docs</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="static-assets/github.css?v1" />
+    <link rel="stylesheet" href="static-assets/styles.css?v1" />
+    <link rel="icon" href="static-assets/favicon.png?v1" />
+  </head>
+
+  <body data-base-href="" data-using-base-href="false" class="light-theme">
+    <div id="overlay-under-drawer"></div>
+    <header id="title">
+      <span
+        id="sidenav-left-toggle"
+        class="material-symbols-outlined"
+        role="button"
+        tabindex="0"
+        >menu</span
+      >
+      <ol class="breadcrumbs gt-separated dark hidden-xs">
+        <li class="self-crumb">flutter_best_practices_lints package</li>
+      </ol>
+      <div class="self-name">flutter_best_practices_lints</div>
+      <form class="search navbar-right" role="search">
+        <input
+          type="text"
+          id="search-box"
+          autocomplete="off"
+          disabled
+          class="form-control typeahead"
+          placeholder="Loading search..."
+        />
+      </form>
+      <div class="toggle" id="theme-button" title="Toggle brightness">
+        <label for="theme">
+          <input type="checkbox" id="theme" value="light-theme" />
+          <span id="dark-theme-button" class="material-symbols-outlined">
+            dark_mode
+          </span>
+          <span id="light-theme-button" class="material-symbols-outlined">
+            light_mode
+          </span>
+        </label>
+      </div>
+    </header>
+    <main>
+      <div id="dartdoc-main-content" class="main-content">
+        <section class="desc markdown">
+          <h1 id="flutter-best-practices-lints">
+            Flutter Best Practices Lints
+          </h1>
+          <p>
+            <code>flutter_best_practices_lints</code> is a custom linting
+            package designed to enhance code quality and maintain consistency in
+            Flutter applications. By enforcing best practices in file structure
+            and class naming, it helps keep your project organized, readable,
+            and easy to navigate.
+          </p>
+          <h2 id="features">Features</h2>
+          <h3 id="current-rules">Current Rules</h3>
+          <h4 id="1-single-class-per-file">1. Single Class per File</h4>
+          <ul>
+            <li>
+              <strong>Lint Code:</strong> <code>single_class_per_file</code>
+            </li>
+            <li>
+              <strong>What it does:</strong> Ensures that each file contains
+              only one class declaration.
+              <ul>
+                <li>
+                  Excludes Flutter <code>State</code> classes (i.e., classes
+                  ending with <code>State</code> and prefixed with
+                  <code>_</code>).
+                </li>
+                <li>
+                  Encourages better separation of concerns and organization.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <details>
+            <summary>Example</summary>
+            <p><strong>Bad (multiple classes in one file):</strong></p>
+            <pre
+              class="language-dart"
+            ><code class="language-dart">class MyFirstClass {}
+
+class MySecondClass {}
+</code></pre>
+            <p><strong>Good (each class in its own file):</strong></p>
+            <pre
+              class="language-dart"
+            ><code class="language-dart">// my_first_class.dart
+class MyFirstClass {}
+
+// my_second_class.dart
+class MySecondClass {}
+</code></pre>
+          </details>
+          <h4 id="2-matching-class-and-file-name">
+            2. Matching Class and File Name
+          </h4>
+          <ul>
+            <li>
+              <strong>Lint Code:</strong>
+              <code>matching_class_and_file_name</code>
+            </li>
+            <li>
+              <strong>What it does:</strong> Checks that the main class name (in
+              PascalCase) matches the file name (in snake_case).
+              <ul>
+                <li>
+                  Excludes private <code>State</code> classes (e.g.,
+                  <code>_MyHomePageState</code>) and abstract classes.
+                </li>
+                <li>
+                  Helps keep your codebase consistent and files easy to
+                  discover.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <details>
+            <summary>Example</summary>
+            <p>
+              <strong>File:</strong> <code>my_home_page.dart</code>
+              <strong>Bad (mismatched class name):</strong>
+            </p>
+            <pre
+              class="language-dart"
+            ><code class="language-dart">class MyHomepage {}  // Should be `MyHomePage`
+</code></pre>
+            <p><strong>Good (matching file and class name):</strong></p>
+            <pre
+              class="language-dart"
+            ><code class="language-dart">class MyHomePage {}
+</code></pre>
+          </details>
+          <h2 id="installation">Installation</h2>
+          <p>
+            To integrate <code>flutter_best_practices_lints</code> into your
+            project, follow these steps:
+          </p>
+          <h3 id="1-add-the-dependency">1. Add the Dependency</h3>
+          <p>
+            In your <code>pubspec.yaml</code>, include
+            <code>flutter_best_practices_lints</code> under
+            <code>dev_dependencies</code>:
+          </p>
+          <pre
+            class="language-yaml"
+          ><code class="language-yaml">dev_dependencies:
+  flutter_best_practices_lints: ^0.1.0
+</code></pre>
+          <p>
+            <em
+              >(Note: Replace <code>^0.1.0</code> with the actual version you're
+              using.)</em
+            >
+          </p>
+          <h3 id="2-update-analysis_optionsyaml">
+            2. Update <code>analysis_options.yaml</code>
+          </h3>
+          <p>
+            Enable the custom lint rules by adding or updating your
+            <code>analysis_options.yaml</code>:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">analyzer:
+  plugins:
+    - custom_lint
+
+custom_lint:
+  rules:
+    - matching_class_and_file_name
+    - single_class_per_file
+</code></pre>
+          <h2 id="usage">Usage</h2>
+          <p>
+            After configuring your project, the linter automatically checks your
+            files and provides warnings or suggestions based on the defined
+            rules.
+          </p>
+          <ul>
+            <li>
+              When you have multiple classes in the same file, it will suggest
+              splitting them.
+            </li>
+            <li>
+              When a class name doesn't match the file name (in
+              <code>snake_case</code> → <code>PascalCase</code> format), it
+              prompts you to rename either the class or the file.
+            </li>
+          </ul>
+          <h3 id="example-lint-warnings">Example Lint Warnings</h3>
+          <p><strong>Multiple classes warning:</strong></p>
+          <pre
+            class="language-log"
+          ><code class="language-log">lib/multiple_classes.dart:10:1 • A file should contain only one class declaration. • single_class_per_file • INFO
+</code></pre>
+          <p><strong>Mismatched class and file name warning:</strong></p>
+          <pre
+            class="language-log"
+          ><code class="language-log">&lt;!-- cSpell:ignore Mywidget --&gt;
+lib/widgets/my_widget.dart:7:7 • Class name Mywidget must match the file name "my_widget" • matching_class_and_file_name • INFO
+</code></pre>
+          <h2 id="contributing">Contributing</h2>
+          <p>
+            Contributions are welcome! If you have ideas for new lint rules,
+            improvements, or bug fixes, feel free to open an issue or submit a
+            pull request on our
+            <a href="https://github.com/AndrewDongminYoo/custom_linters"
+              >GitHub repository</a
+            >.
+          </p>
+          <h2 id="license">License</h2>
+          <p>
+            This project is licensed under the MIT License. See the
+            <a href="LICENSE">LICENSE</a> file for details.
+          </p>
+          <h2 id="acknowledgments">Acknowledgments</h2>
+          <ul>
+            <li>
+              Thanks to the Dart and Flutter communities for their ongoing
+              support and for sharing best practices.
+            </li>
+            <li>
+              Inspired by other linting tools like
+              <a href="https://pub.dev/packages/go_router_linter"
+                ><code>go_router_linter</code></a
+              >
+              and
+              <a href="https://pub.dev/packages/custom_lint"
+                ><code>custom_lint</code></a
+              >.
+            </li>
+          </ul>
+        </section>
+
+        <section class="summary">
+          <h2>Libraries</h2>
+          <dl>
+            <dt id="flutter_best_practices_lints">
+              <span class="name"
+                ><a
+                  href="flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+                  >flutter_best_practices_lints</a
+                ></span
+              >
+            </dt>
+            <dd>flutter_best_practices_lints</dd>
+          </dl>
+        </section>
+      </div>
+      <!-- /.main-content -->
+      <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+        <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+        <header id="header-search-sidebar" class="hidden-l">
+          <form class="search-sidebar" role="search">
+            <input
+              type="text"
+              id="search-sidebar"
+              autocomplete="off"
+              disabled
+              class="form-control typeahead"
+              placeholder="Loading search..."
+            />
+          </form>
+        </header>
+        <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+          <li class="self-crumb">flutter_best_practices_lints package</li>
+        </ol>
+
+        <h5 class="hidden-xs">
+          <span class="package-name">flutter_best_practices_lints</span>
+          <span class="package-kind">package</span>
+        </h5>
+        <ol>
+          <li class="section-title">Libraries</li>
+          <li>
+            <a
+              href="flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+              >flutter_best_practices_lints</a
+            >
+          </li>
+        </ol>
+      </div>
+      <div
+        id="dartdoc-sidebar-right"
+        class="sidebar sidebar-offcanvas-right"
+      ></div>
+    </main>
+    <footer>
+      <span class="no-break"> flutter_best_practices_lints 0.1.0+1 </span>
+    </footer>
+
+    <script src="static-assets/highlight.pack.js?v1"></script>
+    <script src="static-assets/docs.dart.js"></script>
+  </body>
+</html>
