@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
+// 📦 Package imports:
 import 'package:test/test.dart';
+
+// 🌎 Project imports:
+import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
 
 void main() {
   group('FlutterBestPracticesLints', () {
