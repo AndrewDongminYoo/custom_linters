@@ -6,10 +6,10 @@ import 'package:flutter_best_practices_lints/src/rules/matching_class_and_file_n
 import 'package:flutter_best_practices_lints/src/rules/single_class_per_file.dart';
 
 /// This is the entrypoint of our custom linter
-PluginBase createPlugin() => FlutterBestPracticesLints();
+PluginBase createPlugin() => FlutterBestPracticesPlugin();
 
 /// A plugin class is used to list all the assists/lints defined by a plugin.
-class FlutterBestPracticesLints extends PluginBase {
+class FlutterBestPracticesPlugin extends PluginBase {
   /// We list all the custom warnings/infos/errors
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[

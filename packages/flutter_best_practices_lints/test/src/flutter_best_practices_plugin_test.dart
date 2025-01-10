@@ -7,7 +7,7 @@ import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
 void main() {
   group('FlutterBestPracticesLints', () {
     test('can be instantiated', () {
-      expect(FlutterBestPracticesLints(), isNotNull);
+      expect(FlutterBestPracticesPlugin(), isNotNull);
     });
   });
 }
