@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:example/my_home_page.dart';
+import 'package:flutter_best_practice_example/my_home_page.dart';
 
 void main() {
   runApp(const MyApp());
