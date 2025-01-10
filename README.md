@@ -57,8 +57,8 @@ Currently, this repository includes:
    Or use Melos commands (if configured), for example:
 
    ```bash
-   melos run analyze
-   melos run test
+   melos analyze -c 5
+   melos test
    ```
 
 ## Contributing

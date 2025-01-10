@@ -2,8 +2,16 @@ name: custom_linters
 
 packages:
   - packages/**
-
+  
 scripts:
   generate:
     run: melos exec --depends-on=build_runner -- "dart run build_runner build -d"
     description: Build all generated files for Dart & Flutter packages in this project.
+
+  test:selective_unit_test:
+    run: melos exec --dir-exists=test --fail-fast -- "flutter test --no-pub --coverage"
+    description: Run Flutter tests for a specific package in this project.
+
+  format:
+    run: melos exec -- "dart fix --apply ; dart format ."
+    description: Format all Dart files in this project.
