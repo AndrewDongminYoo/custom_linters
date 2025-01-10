@@ -1,56 +1,126 @@
 # Flutter Best Practices Lints
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
-[![License: MIT][license_badge]][license_link]
+`flutter_best_practices_lints` is a custom linting package designed to enhance code quality and maintain consistency in Flutter applications. By enforcing best practices in file structure and class naming, it helps keep your project organized, readable, and easy to navigate.
 
-Lint rules that reflect best practices in Flutter development.
+## Features
 
-## Installation 💻
+### Current Rules
 
-**❗ In order to start using Flutter Best Practices Lints you must have the [Dart SDK][dart_install_link] installed on your machine.**
+#### 1. Single Class per File
 
-Install via `dart pub add`:
+- **Lint Code:** `single_class_per_file`
+- **What it does:** Ensures that each file contains only one class declaration.
+  - Excludes Flutter `State` classes (i.e., classes ending with `State` and prefixed with `_`).
+  - Encourages better separation of concerns and organization.
 
-```sh
-dart pub add flutter_best_practices_lints
+<details>
+<summary>Example</summary>
+
+**Bad (multiple classes in one file):**
+
+```dart
+class MyFirstClass {}
+
+class MySecondClass {}
 ```
 
----
+**Good (each class in its own file):**
 
-## Continuous Integration 🤖
+```dart
+// my_first_class.dart
+class MyFirstClass {}
 
-Flutter Best Practices Lints comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
-
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
-
----
-
-## Running Tests 🧪
-
-To run all unit tests:
-
-```sh
-dart pub global activate coverage 1.2.0
-dart test --coverage=coverage
-dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info
+// my_second_class.dart
+class MySecondClass {}
 ```
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+</details>
 
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
+#### 2. Matching Class and File Name
 
-# Open Coverage Report
-open coverage/index.html
+- **Lint Code:** `matching_class_and_file_name`
+- **What it does:** Checks that the main class name (in PascalCase) matches the file name (in snake_case).
+  - Excludes private `State` classes (e.g., `_MyHomePageState`) and abstract classes.
+  - Helps keep your codebase consistent and files easy to discover.
+
+<details>
+<summary>Example</summary>
+
+**File:** `my_home_page.dart`
+**Bad (mismatched class name):**
+
+```dart
+class MyHomepage {}  // Should be `MyHomePage`
 ```
 
-[dart_install_link]: https://dart.dev/get-dart
-[github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_coverage_link]: https://github.com/marketplace/actions/very-good-coverage
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
+**Good (matching file and class name):**
+
+```dart
+class MyHomePage {}
+```
+
+</details>
+
+## Installation
+
+To integrate `flutter_best_practices_lints` into your project, follow these steps:
+
+### 1. Add the Dependency
+
+In your `pubspec.yaml`, include `flutter_best_practices_lints` under `dev_dependencies`:
+
+```yaml
+dev_dependencies:
+  flutter_best_practices_lints: ^0.1.0
+```
+
+_(Note: Replace `^0.1.0` with the actual version you're using.)_
+
+### 2. Update `analysis_options.yaml`
+
+Enable the custom lint rules by adding or updating your `analysis_options.yaml`:
+
+```yaml
+analyzer:
+  plugins:
+    - custom_lint
+
+custom_lint:
+  rules:
+    - matching_class_and_file_name
+    - single_class_per_file
+```
+
+## Usage
+
+After configuring your project, the linter automatically checks your files and provides warnings or suggestions based on the defined rules.
+
+- When you have multiple classes in the same file, it will suggest splitting them.
+- When a class name doesn't match the file name (in `snake_case` → `PascalCase` format), it prompts you to rename either the class or the file.
+
+### Example Lint Warnings
+
+**Multiple classes warning:**
+
+```log
+lib/multiple_classes.dart:10:1 • A file should contain only one class declaration. • single_class_per_file • INFO
+```
+
+**Mismatched class and file name warning:**
+
+```log
+lib/widgets/my_widget.dart:7:7 • Class name Mywidget must match the file name "my_widget" • matching_class_and_file_name • INFO
+```
+
+## Contributing
+
+Contributions are welcome! If you have ideas for new lint rules, improvements, or bug fixes, feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/AndrewDongminYoo/custom_linters).
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to the Dart and Flutter communities for their ongoing support and for sharing best practices.
+- Inspired by other linting tools like [`go_router_linter`](https://pub.dev/packages/go_router_linter) and [`custom_lint`](https://pub.dev/packages/custom_lint).
