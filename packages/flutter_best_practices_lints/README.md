@@ -109,6 +109,7 @@ lib/multiple_classes.dart:10:1 • A file should contain only one class declarat
 **Mismatched class and file name warning:**
 
 ```log
+<!-- cSpell:ignore Mywidget -->
 lib/widgets/my_widget.dart:7:7 • Class name Mywidget must match the file name "my_widget" • matching_class_and_file_name • INFO
 ```
 
