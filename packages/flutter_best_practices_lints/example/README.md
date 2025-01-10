@@ -81,6 +81,7 @@ Analyzing...
    - **Fix:** Move `MyHomePage2` to a new file or combine the functionality into the main class if appropriate.
 
 2. **`matching_class_and_file_name`**
+   <!-- cSpell:ignore MyhomePage -->
    - If you rename `MyHomePage` or the file itself so they no longer match (e.g., file: `my_home_page.dart`, class: `MyhomePage`), you’ll see a lint message advising you to align the two.
    - **Fix:** Ensure the file name is `my_home_page.dart` and the class name is `MyHomePage`.
 
@@ -105,6 +106,7 @@ By introducing these small “mistakes” in the code, you can see exactly how *
 - Also includes a second class, `MyHomePage2`, which demonstrates how `single_class_per_file` will be triggered.
 - **Lint Trigger:**
   - `MyHomePage2` violates `single_class_per_file`.
+  <!-- cSpell:ignore Myhomepage -->
   - If `MyHomePage` had a mismatched name (e.g., `Myhomepage`), it would violate `matching_class_and_file_name`.
 
 ---

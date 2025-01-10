@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - update dependencies for `go_router_linter` and `melos`
-- remove overriden dependencies
+- remove overridden dependencies
 
 ## 0.1.8 - 2024-12-24
 
