@@ -1,6 +1,6 @@
 name: go_router_linter
 description: A custom linting package designed to enhance code quality and consistency when using the `go_router` package
-version: 0.1.8
+version: 0.1.9
 
 repository: https://github.com/AndrewDongminYoo/custom_linters
 
