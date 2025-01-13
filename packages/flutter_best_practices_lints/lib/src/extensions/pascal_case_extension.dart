@@ -23,8 +23,7 @@ extension PascalCaseExtension on String {
 
     // 2. Replace all non-alphanumeric characters with a single space.
     //    E.g.: "word1@#$%word2" becomes "word1 word2".
-    final replaced =
-        replaceAll(RegExp('[^a-zA-Z0-9]+'), ' ');
+    final replaced = replaceAll(RegExp('[^a-zA-Z0-9]+'), ' ');
 
     // 3. Split the string on whitespace (treating multiple spaces as one)
     //    and extract only non-empty words.
@@ -44,8 +43,7 @@ extension PascalCaseExtension on String {
     for (final word in words) {
       final lower = word.toLowerCase();
       // Capitalize only the first letter, the rest remain in lowercase.
-      final capitalized =
-          lower[0].toUpperCase() + lower.substring(1);
+      final capitalized = lower[0].toUpperCase() + lower.substring(1);
       buffer.write(capitalized);
     }
 
