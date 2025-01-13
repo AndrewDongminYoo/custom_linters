@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/src/extensions/class_declaration_extension.dart';
 import 'package:flutter_best_practices_lints/src/extensions/lint_code_extension.dart';
+import 'package:flutter_best_practices_lints/src/extensions/pascal_case_extension.dart';
 
 /// {@template matching_class_and_file_name}
 /// A custom lint rule that checks whether the main class name (in PascalCase)
@@ -49,15 +50,7 @@ class MatchingClassAndFileName extends DartLintRule {
     context.registry.addCompilationUnit((CompilationUnit node) {
       final filePath = node.declaredElement!.source.fullName;
       final fileName = path.basenameWithoutExtension(filePath);
-
-      String snakeToPascal(String snakeCase) {
-        return snakeCase.split('_').map((segment) {
-          if (segment.isEmpty) return '';
-          return segment[0].toUpperCase() + segment.substring(1);
-        }).join();
-      }
-
-      final expectedClassName = snakeToPascal(fileName);
+      final expectedClassName = fileName.toPascalCase();
 
       // Filter out classes that are recognized as Flutter State classes
       // or declared abstract.
