@@ -13,11 +13,14 @@ extension ClassDeclarationExtension on ClassDeclaration {
   /// Specifically, it verifies two conditions:
   /// 1. The class name starts with an underscore (`_`).
   /// 2. The class name ends with the substring `State`.
+  /// 3. The class extends `State` class.
   ///
   /// This is typically used in Flutter to detect private `State` subclasses.
   bool get isStateClass {
     final className = name.lexeme;
-    return className.startsWith('_') && className.endsWith('State');
+    return className.startsWith('_') &&
+        className.endsWith('State') &&
+        extendsClause != null;
   }
 
   /// Returns `true` if this [ClassDeclaration] is declared as `abstract`.
