@@ -1,6 +1,6 @@
 name: flutter_best_practices_lints
 description: Lint rules that reflect best practices in Flutter development.
-version: 0.1.1+1
+version: 0.1.2+1
 
 repository: https://github.com/AndrewDongminYoo/custom_linters
 

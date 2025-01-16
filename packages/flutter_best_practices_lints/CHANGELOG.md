@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.2+1 - 2025-01-16
+
+### Changed
+
+- **Module Paths & Run Configurations**: Updated run configurations and module paths for clarity and consistency, preventing unnecessary inspection of directories such as `test`.
+- **isStateClass Logic Improvement**: Enhanced the check in `ClassDeclarationExtension` to validate that the target class actually extends Flutter’s `State` class by confirming the superclass element and its library URI.
+- **State Class Adjustment**: Modified the sample `State` class to behave like a typical Flutter widget by changing it to an abstract class.
+
+### Added
+
+- **Example Classes for `State`**: Added additional example classes to demonstrate how the lint rules target `State` classes.
+
+### Documentation
+
+- **isStateClass Docs Update**: Updated documentation for the `isStateClass` getter to clarify its logic and usage.
+
 ## 0.1.1+1 - 2025-01-16
 
 ### Added
