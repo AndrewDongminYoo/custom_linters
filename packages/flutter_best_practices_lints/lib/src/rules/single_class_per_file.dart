@@ -2,6 +2,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:path/path.dart' as path;
 
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/src/extensions/class_declaration_extension.dart';
@@ -40,6 +41,13 @@ class SingleClassPerFile extends DartLintRule {
     ErrorReporter reporter,
     CustomLintContext context,
   ) {
+    // Get the path of the current file.
+    final filePath = resolver.path;
+
+    // If the file path is not included in the lib folder,
+    // it will not be checked.
+    if (!path.split(filePath).contains('lib')) return;
+
     context.registry.addCompilationUnit((CompilationUnit node) {
       final classDeclarations = node.declarations
           .whereType<ClassDeclaration>()

@@ -47,6 +47,13 @@ class MatchingClassAndFileName extends DartLintRule {
     ErrorReporter reporter,
     CustomLintContext context,
   ) {
+    // Get the path of the current file.
+    final filePath = resolver.path;
+
+    // If the file path is not included in the lib folder,
+    // it will not be checked.
+    if (!path.split(filePath).contains('lib')) return;
+
     context.registry.addCompilationUnit((CompilationUnit node) {
       final filePath = node.declaredElement!.source.fullName;
       final fileName = path.basenameWithoutExtension(filePath);
