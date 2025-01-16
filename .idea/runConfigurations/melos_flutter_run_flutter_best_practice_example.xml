@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Flutter Run -&gt; 'example'" type="FlutterRunConfigurationType" factoryName="Flutter">
+  <configuration default="false" name="Flutter Run -&gt; 'flutter_best_practice_example'" type="FlutterRunConfigurationType" factoryName="Flutter">
     <option name="filePath" value="$PROJECT_DIR$/packages/flutter_best_practices_lints/example/lib/main.dart" />
     <method v="2" />
   </configuration>
