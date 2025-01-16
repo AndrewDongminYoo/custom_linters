@@ -15,6 +15,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
   /// 2. The class name ends with the substring `State`.
   /// 3. The class extends a class whose element name is `State`,
   ///    and its library URI starts with `package:flutter/`.
+  /// (Usually import from `package:flutter/src/widgets/framework.dart`)
   ///
   /// This is typically used in Flutter to detect private `State` subclasses.
   bool get isStateClass {
