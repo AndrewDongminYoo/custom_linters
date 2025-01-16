@@ -113,7 +113,7 @@
               <span class="parameter" id="run-param-resolver"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.1/custom_lint_core/CustomLintResolver-class.html"
+                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintResolver-class.html"
                     >CustomLintResolver</a
                   ></span
                 >
@@ -124,7 +124,7 @@
               <span class="parameter" id="run-param-reporter"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/7.1.0/error_listener/ErrorReporter-class.html"
+                    href="https://pub.dev/documentation/analyzer/6.11.0/error_listener/ErrorReporter-class.html"
                     >ErrorReporter</a
                   ></span
                 >
@@ -135,7 +135,7 @@
               <span class="parameter" id="run-param-context"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.1/custom_lint_core/CustomLintContext-class.html"
+                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintContext-class.html"
                     >CustomLintContext</a
                   ></span
                 >
@@ -183,18 +183,17 @@ void run(
   ErrorReporter reporter,
   CustomLintContext context,
 ) {
+  &#47;&#47; Get the path of the current file.
+  final filePath = resolver.path;
+
+  &#47;&#47; If the file path is not included in the lib folder,
+  &#47;&#47; it will not be checked.
+  if (!path.split(filePath).contains(&#39;lib&#39;)) return;
+
   context.registry.addCompilationUnit((CompilationUnit node) {
     final filePath = node.declaredElement!.source.fullName;
     final fileName = path.basenameWithoutExtension(filePath);
-
-    String snakeToPascal(String snakeCase) {
-      return snakeCase.split(&#39;_&#39;).map((segment) {
-        if (segment.isEmpty) return &#39;&#39;;
-        return segment[0].toUpperCase() + segment.substring(1);
-      }).join();
-    }
-
-    final expectedClassName = snakeToPascal(fileName);
+    final expectedClassName = fileName.toPascalCase();
 
     &#47;&#47; Filter out classes that are recognized as Flutter State classes
     &#47;&#47; or declared abstract.
@@ -266,7 +265,7 @@ void run(
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.0+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

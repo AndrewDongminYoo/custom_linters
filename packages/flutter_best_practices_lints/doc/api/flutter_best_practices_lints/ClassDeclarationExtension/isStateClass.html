@@ -111,7 +111,7 @@
             <p>
               An extension on
               <a
-                href="https://pub.dev/documentation/analyzer/7.1.0/dart_ast_ast/ClassDeclaration-class.html"
+                href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
               that provides utility getters to determine whether the class is a
@@ -121,11 +121,11 @@
             <p>
               Checks if this
               <a
-                href="https://pub.dev/documentation/analyzer/7.1.0/dart_ast_ast/ClassDeclaration-class.html"
+                href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
               is considered a <code>State</code> class. Specifically, it
-              verifies two conditions:
+              verifies the following conditions:
             </p>
             <ol>
               <li>
@@ -133,6 +133,12 @@
               </li>
               <li>
                 The class name ends with the substring <code>State</code>.
+              </li>
+              <li>
+                The class extends a class whose element name is
+                <code>State</code>, and its library URI starts with
+                <code>package:flutter/</code>. (Usually import from
+                <code>package:flutter/src/widgets/framework.dart</code>)
               </li>
             </ol>
             <p>
@@ -146,8 +152,34 @@
             <pre
               class="language-dart"
             ><code class="language-dart">bool get isStateClass {
+  &#47;&#47; (1) Check if the class name follows the naming convention.
   final className = name.lexeme;
-  return className.startsWith(&#39;_&#39;) &amp;&amp; className.endsWith(&#39;State&#39;);
+  if (!className.startsWith(&#39;_&#39;) || !className.endsWith(&#39;State&#39;)) {
+    return false;
+  }
+
+  &#47;&#47; (2) Ensure the class has an extends clause.
+  if (extendsClause == null) return false;
+
+  &#47;&#47; (3) Retrieve the superclass node.
+  final superclassNode = extendsClause!.superclass;
+
+  &#47;&#47; (4) Retrieve the static type&#39;s element of the superclass.
+  final superType = superclassNode.type;
+  if (superType == null) return false;
+  final superElement = superType.element;
+  if (superElement == null) return false;
+
+  &#47;&#47; (5) Check that the superclass element&#39;s name is exactly &#39;State&#39;.
+  if (superElement.name != &#39;State&#39;) return false;
+
+  &#47;&#47; (6) Optionally, confirm that the superclass comes from the Flutter.
+  final libraryUri = superElement.library?.source.uri.toString();
+  if (libraryUri == null || !libraryUri.startsWith(&#39;package:flutter&#47;&#39;)) {
+    return false;
+  }
+
+  return true;
 }</code></pre>
           </section>
         </section>
@@ -187,7 +219,7 @@
         <h5>
           ClassDeclarationExtension extension on
           <a
-            href="https://pub.dev/documentation/analyzer/7.1.0/dart_ast_ast/ClassDeclaration-class.html"
+            href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
             >ClassDeclaration</a
           >
         </h5>
@@ -201,7 +233,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.0+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>
