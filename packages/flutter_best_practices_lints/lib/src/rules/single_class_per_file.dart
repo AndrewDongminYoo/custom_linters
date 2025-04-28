@@ -8,15 +8,10 @@ import 'package:path/path.dart' as path;
 import 'package:flutter_best_practices_lints/src/extensions/class_declaration_extension.dart';
 
 /// {@template single_class_per_file}
-/// A custom lint rule that ensures a file contains only one class declaration.
-///
-/// This rule is part of the `flutter_best_practices_lints` plugin.
-/// Having multiple classes in a single file can make code organization hard.
-/// By restricting a file to a single main class, you encourage better
-/// project structure and maintainability.
-///
-/// - Excludes classes recognized as Flutter `State` classes
-///   (for example, `_MyWidgetState`).
+/// Validates that each Dart file declares only one public class,
+/// except when exactly two public classes exist and one is abstract
+/// while the other extends or implements it (common for interface+impl),
+/// or when a StatefulWidget and its private State coexist.
 /// {@endtemplate}
 class SingleClassPerFile extends DartLintRule {
   /// {@macro single_class_per_file}
@@ -24,42 +19,48 @@ class SingleClassPerFile extends DartLintRule {
       : super(
           code: const LintCode(
             name: 'single_class_per_file',
-            problemMessage: 'A file should contain only one class declaration.',
+            problemMessage: 'A file should contain only one public class declaration.',
             correctionMessage: 'Split the classes into separate files.',
           ),
         );
 
-  /// {@macro single_class_per_file}
-  ///
-  /// This method collects all class declarations in a file (except those
-  /// recognized as Flutter `State` subclasses) and checks if more than
-  /// one class remains. If multiple classes are found, a lint diagnostic
-  /// is raised for each class beyond the first.
   @override
   void run(
     CustomLintResolver resolver,
     ErrorReporter reporter,
     CustomLintContext context,
   ) {
-    // Get the path of the current file.
+    // Only enforce for 'lib/' sources
     final filePath = resolver.path;
-
-    // If the file path is not included in the lib folder,
-    // it will not be checked.
     if (!path.split(filePath).contains('lib')) return;
 
     context.registry.addCompilationUnit((CompilationUnit node) {
-      final classDeclarations = node.declarations
-          .whereType<ClassDeclaration>()
-          .where((element) => !element.isStateClass);
+      final allClasses = node.declarations.whereType<ClassDeclaration>().toList();
+      // Public classes do not start with '_'
+      final publicClasses = allClasses.where((cls) => !cls.name.lexeme.startsWith('_')).toList();
 
-      // If there's more than one class (excluding State classes),
-      // report a lint diagnostic.
-      if (classDeclarations.length > 1) {
-        for (var i = 1; i < classDeclarations.length; i++) {
-          final decl = classDeclarations.elementAt(i);
-          reporter.atNode(decl, code);
+      if (publicClasses.length <= 1) return; // Zero or one public class is fine
+
+      // Allow exactly two if one is abstract and the other extends/implements it
+      if (publicClasses.length == 2) {
+        final first = publicClasses[0];
+        final second = publicClasses[1];
+        final firstIsAbstract = first.isAbstract;
+        final secondIsAbstract = second.isAbstract;
+        final firstUsedBySecond =
+            second.implementsInterface(first.name.lexeme) || second.extendsClass(first.name.lexeme);
+        final secondUsedByFirst =
+            first.implementsInterface(second.name.lexeme) || first.extendsClass(second.name.lexeme);
+
+        // If one class is an abstract definition and the other builds on it, allow both
+        if ((firstIsAbstract && firstUsedBySecond) || (secondIsAbstract && secondUsedByFirst)) {
+          return;
         }
+      }
+
+      // For any extra public classes beyond allowed, issue lint
+      for (var i = 1; i < publicClasses.length; i++) {
+        reporter.atNode(publicClasses[i], code);
       }
     });
   }
