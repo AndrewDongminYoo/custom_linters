@@ -56,17 +56,13 @@ class MatchingClassAndFileName extends DartLintRule {
       final expectedClassName = fileName.toPascalCase();
 
       // Collect all class declarations excluding private State classes
-      final classDeclarations = node.declarations
-          .whereType<ClassDeclaration>()
-          .where((cls) => !cls.isStateClass)
-          .toList();
+      final classDeclarations =
+          node.declarations.whereType<ClassDeclaration>().where((cls) => !cls.isStateClass).toList();
 
       if (classDeclarations.isEmpty) return; // Nothing to check
 
       // Identify classes matching the expected primary name
-      final primaryClasses = classDeclarations
-          .where((cls) => cls.name.lexeme == expectedClassName)
-          .toList();
+      final primaryClasses = classDeclarations.where((cls) => cls.name.lexeme == expectedClassName).toList();
 
       // Single public class case
       if (classDeclarations.length == 1) {
@@ -88,8 +84,7 @@ class MatchingClassAndFileName extends DartLintRule {
       if (primaryClasses.isNotEmpty) {
         // Warn on any classes not matching and not related to primary
         for (final cls in classDeclarations.where((c) => c.name.lexeme != expectedClassName)) {
-          final isRelated = primaryClasses
-              .any((primary) => cls.isRelatedTo(primary.name.lexeme));
+          final isRelated = primaryClasses.any((primary) => cls.isRelatedTo(primary.name.lexeme));
           if (!isRelated) {
             reporter.atNode(
               cls,

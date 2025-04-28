@@ -130,8 +130,7 @@ void main() {
         expect(mockRegularClass.isAbstract, isFalse);
       });
 
-      test('returns false for private State class without abstract keyword',
-          () {
+      test('returns false for private State class without abstract keyword', () {
         final mockStateClass = generateClassDeclarationImpl(
           name: StringToken(TokenType.STRING, '_AwesomeWidgetState', 0),
           leftBracket: Token(TokenType.OPEN_CURLY_BRACKET, 0),
