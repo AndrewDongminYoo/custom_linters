@@ -9,10 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the createPlugin function from the flutter_best_practices_lints library, for the Dart programming language."
+      content="API docs for the implementsInterface method from the ClassDeclarationExtension extension, for the Dart programming language."
     />
     <title>
-      createPlugin function - flutter_best_practices_lints library - Dart API
+      implementsInterface method - ClassDeclarationExtension extension -
+      flutter_best_practices_lints library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -25,12 +26,16 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../static-assets/github.css?v1" />
-    <link rel="stylesheet" href="../static-assets/styles.css?v1" />
-    <link rel="icon" href="../static-assets/favicon.png?v1" />
+    <link rel="stylesheet" href="../../static-assets/github.css?v1" />
+    <link rel="stylesheet" href="../../static-assets/styles.css?v1" />
+    <link rel="icon" href="../../static-assets/favicon.png?v1" />
   </head>
 
-  <body data-base-href="../" data-using-base-href="false" class="light-theme">
+  <body
+    data-base-href="../../"
+    data-using-base-href="false"
+    class="light-theme"
+  >
     <div id="overlay-under-drawer"></div>
     <header id="title">
       <span
@@ -41,15 +46,21 @@
         >menu</span
       >
       <ol class="breadcrumbs gt-separated dark hidden-xs">
-        <li><a href="../index.html">flutter_best_practices_lints</a></li>
+        <li><a href="../../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a href="../flutter_best_practices_lints"
+          <a href="../../flutter_best_practices_lints"
             >flutter_best_practices_lints.dart</a
           >
         </li>
-        <li class="self-crumb">createPlugin function</li>
+        <li>
+          <a
+            href="../../flutter_best_practices_lints/ClassDeclarationExtension.html"
+            >ClassDeclarationExtension</a
+          >
+        </li>
+        <li class="self-crumb">implementsInterface method</li>
       </ol>
-      <div class="self-name">createPlugin</div>
+      <div class="self-name">implementsInterface</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -76,32 +87,56 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="flutter_best_practices_lints&#47;flutter_best_practices_lints-library-sidebar.html"
+        data-above-sidebar="flutter_best_practices_lints&#47;ClassDeclarationExtension-extension-sidebar.html"
         data-below-sidebar=""
       >
         <div>
-          <h1><span class="kind-function">createPlugin</span> function</h1>
+          <h1><span class="kind-method">implementsInterface</span> method</h1>
         </div>
 
         <section class="multi-line-signature">
           <span class="returntype"
-            ><a
-              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/PluginBase-class.html"
-              >PluginBase</a
+            ><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+              >bool</a
             ></span
           >
-          <span class="name">createPlugin</span>(<wbr />)
+          <span class="name">implementsInterface</span>(<wbr />
+          <ol class="parameter-list single-line">
+            <li>
+              <span
+                class="parameter"
+                id="implementsInterface-param-interfaceName"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                    >String</a
+                  ></span
+                >
+                <span class="parameter-name">interfaceName</span></span
+              >
+            </li>
+          </ol>
+          )
         </section>
 
         <section class="desc markdown">
-          <p>This is the entrypoint of our custom linter</p>
+          <p>
+            Checks if this class implements the interface named
+            <code>interfaceName</code>. Returns <code>true</code> if an
+            <code>implements</code> clause lists the given interface.
+          </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">PluginBase createPlugin() =&gt; FlutterBestPracticesPlugin();</code></pre>
+          ><code class="language-dart">bool implementsInterface(String interfaceName) {
+  final clause = implementsClause;
+  if (clause == null) return false;
+  &#47;&#47; Check every implemented interface&#39;s identifier
+  return clause.interfaces.any((typeName) =&gt; typeName.name2.lexeme == interfaceName);
+}</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -120,19 +155,31 @@
           </form>
         </header>
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-          <li><a href="../index.html">flutter_best_practices_lints</a></li>
+          <li><a href="../../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a href="../flutter_best_practices_lints"
+            <a href="../../flutter_best_practices_lints"
               >flutter_best_practices_lints</a
             >
           </li>
-          <li class="self-crumb">createPlugin function</li>
+          <li>
+            <a
+              href="../../flutter_best_practices_lints/ClassDeclarationExtension.html"
+              >ClassDeclarationExtension</a
+            >
+          </li>
+          <li class="self-crumb">implementsInterface method</li>
         </ol>
 
-        <h5>flutter_best_practices_lints library</h5>
+        <h5>
+          ClassDeclarationExtension extension on
+          <a
+            href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+            >ClassDeclaration</a
+          >
+        </h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
@@ -143,7 +190,7 @@
       <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
     </footer>
 
-    <script src="../static-assets/highlight.pack.js?v1"></script>
-    <script src="../static-assets/docs.dart.js"></script>
+    <script src="../../static-assets/highlight.pack.js?v1"></script>
+    <script src="../../static-assets/docs.dart.js"></script>
   </body>
 </html>

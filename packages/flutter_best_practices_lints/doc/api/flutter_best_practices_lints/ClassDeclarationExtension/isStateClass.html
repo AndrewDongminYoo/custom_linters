@@ -48,8 +48,7 @@
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a
-            href="../../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+          <a href="../../flutter_best_practices_lints"
             >flutter_best_practices_lints.dart</a
           >
         </li>
@@ -109,42 +108,30 @@
 
           <section class="desc markdown">
             <p>
-              An extension on
+              Provides convenient inspection utilities on a
               <a
                 href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
-              that provides utility getters to determine whether the class is a
-              private <code>State</code>-related class (common in Flutter) or an
-              abstract class.
+              to help custom lint rules determine class characteristics in
+              Flutter code. Utility getters include checks for private Flutter
+              State classes, abstract declarations, interface implementations,
+              superclass extensions, generic type usage, and overall
+              relationships to other classes.
             </p>
             <p>
-              Checks if this
-              <a
-                href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
-                >ClassDeclaration</a
-              >
-              is considered a <code>State</code> class. Specifically, it
-              verifies the following conditions:
+              Determines if the class is a private Flutter
+              <code>State</code> subclass by verifying:
             </p>
             <ol>
+              <li>Class name starts with <code>_</code> (private).</li>
+              <li>Class name ends with <code>State</code>.</li>
               <li>
-                The class name starts with an underscore (<code>_</code>).
-              </li>
-              <li>
-                The class name ends with the substring <code>State</code>.
-              </li>
-              <li>
-                The class extends a class whose element name is
-                <code>State</code>, and its library URI starts with
-                <code>package:flutter/</code>. (Usually import from
-                <code>package:flutter/src/widgets/framework.dart</code>)
+                It extends a <code>State&lt;T&gt;</code> from Flutter's
+                framework (library URI starts with
+                <code>package:flutter/</code>).
               </li>
             </ol>
-            <p>
-              This is typically used in Flutter to detect private
-              <code>State</code> subclasses.
-            </p>
           </section>
 
           <section class="summary source-code" id="source">
@@ -152,34 +139,34 @@
             <pre
               class="language-dart"
             ><code class="language-dart">bool get isStateClass {
-  &#47;&#47; (1) Check if the class name follows the naming convention.
   final className = name.lexeme;
+  &#47;&#47; (1) Private classes end with &#39;State&#39;
   if (!className.startsWith(&#39;_&#39;) || !className.endsWith(&#39;State&#39;)) {
     return false;
   }
 
-  &#47;&#47; (2) Ensure the class has an extends clause.
+  &#47;&#47; (2) Must have an extends clause
   if (extendsClause == null) return false;
 
-  &#47;&#47; (3) Retrieve the superclass node.
+  &#47;&#47; (3) Get the superclass AST node
   final superclassNode = extendsClause!.superclass;
 
-  &#47;&#47; (4) Retrieve the static type&#39;s element of the superclass.
+  &#47;&#47; (4) Resolve its static type element
   final superType = superclassNode.type;
   if (superType == null) return false;
   final superElement = superType.element;
   if (superElement == null) return false;
 
-  &#47;&#47; (5) Check that the superclass element&#39;s name is exactly &#39;State&#39;.
+  &#47;&#47; (5) Name must be exactly &#39;State&#39;
   if (superElement.name != &#39;State&#39;) return false;
 
-  &#47;&#47; (6) Optionally, confirm that the superclass comes from the Flutter.
+  &#47;&#47; (6) Confirm it originates from Flutter
   final libraryUri = superElement.library?.source.uri.toString();
   if (libraryUri == null || !libraryUri.startsWith(&#39;package:flutter&#47;&#39;)) {
     return false;
   }
 
-  return true;
+  return true; &#47;&#47; All checks passed
 }</code></pre>
           </section>
         </section>
@@ -202,8 +189,7 @@
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a
-              href="../../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+            <a href="../../flutter_best_practices_lints"
               >flutter_best_practices_lints</a
             >
           </li>
@@ -233,7 +219,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

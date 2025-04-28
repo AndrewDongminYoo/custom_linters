@@ -2,7 +2,7 @@
   {
     "name": "flutter_best_practices_lints",
     "qualifiedName": "flutter_best_practices_lints",
-    "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html",
+    "href": "flutter_best_practices_lints",
     "kind": 9,
     "packageRank": 0,
     "desc": "flutter_best_practices_lints"
@@ -13,11 +13,39 @@
     "href": "flutter_best_practices_lints/ClassDeclarationExtension.html",
     "kind": 6,
     "packageRank": 0,
-    "desc": "An extension on ClassDeclaration that provides utility getters\nto determine whether the class is a private State-related class\n(common in Flutter) or an abstract class.",
+    "desc": "Provides convenient inspection utilities on a ClassDeclaration\nto help custom lint rules determine class characteristics in Flutter code.\nUtility getters include checks for private Flutter State classes,\nabstract declarations, interface implementations, superclass extensions,\ngeneric type usage, and overall relationships to other classes.",
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
+    }
+  },
+  {
+    "name": "extendsClass",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.extendsClass",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/extendsClass.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Checks if this class directly extends a base class named baseClassName.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
+    }
+  },
+  {
+    "name": "implementsInterface",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.implementsInterface",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/implementsInterface.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Checks if this class implements the interface named interfaceName.\nReturns true if an implements clause lists the given interface.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
     }
   },
   {
@@ -27,7 +55,21 @@
     "kind": 16,
     "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "Returns true if this ClassDeclaration is declared as abstract.",
+    "desc": "Returns true if this class is declared as abstract.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
+    }
+  },
+  {
+    "name": "isRelatedTo",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.isRelatedTo",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/isRelatedTo.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Returns true if this class is related to className by either\nimplementing it, extending it, or using it as a generic type.",
     "enclosedBy": {
       "name": "ClassDeclarationExtension",
       "kind": 6,
@@ -41,7 +83,21 @@
     "kind": 16,
     "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "An extension on ClassDeclaration that provides utility getters\nto determine whether the class is a private State-related class\n(common in Flutter) or an abstract class.",
+    "desc": "Provides convenient inspection utilities on a ClassDeclaration\nto help custom lint rules determine class characteristics in Flutter code.\nUtility getters include checks for private Flutter State classes,\nabstract declarations, interface implementations, superclass extensions,\ngeneric type usage, and overall relationships to other classes.",
+    "enclosedBy": {
+      "name": "ClassDeclarationExtension",
+      "kind": 6,
+      "href": "flutter_best_practices_lints/ClassDeclarationExtension.html"
+    }
+  },
+  {
+    "name": "usesGeneric",
+    "qualifiedName": "flutter_best_practices_lints.ClassDeclarationExtension.usesGeneric",
+    "href": "flutter_best_practices_lints/ClassDeclarationExtension/usesGeneric.html",
+    "kind": 10,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Determines if baseClassName appears as a generic type argument\nin either the extends or implements clauses of this class.",
     "enclosedBy": {
       "name": "ClassDeclarationExtension",
       "kind": 6,
@@ -58,7 +114,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
     }
   },
   {
@@ -98,7 +154,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
     }
   },
   {
@@ -121,11 +177,11 @@
     "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "desc": "Ensures that public class names in PascalCase correspond to their\nsnake_case file names, helping maintain consistency between files\nand the primary class they contain.",
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
     }
   },
   {
@@ -134,7 +190,7 @@
     "href": "flutter_best_practices_lints/MatchingClassAndFileName/MatchingClassAndFileName.html",
     "kind": 2,
     "packageRank": 0,
-    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "desc": "Ensures that public class names in PascalCase correspond to their\nsnake_case file names, helping maintain consistency between files\nand the primary class they contain.",
     "enclosedBy": {
       "name": "MatchingClassAndFileName",
       "kind": 3,
@@ -148,7 +204,7 @@
     "kind": 10,
     "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "A custom lint rule that checks whether the main class name (in PascalCase)\nmatches the file name (in snake_case).",
+    "desc": "Ensures that public class names in PascalCase correspond to their\nsnake_case file names, helping maintain consistency between files\nand the primary class they contain.",
     "enclosedBy": {
       "name": "MatchingClassAndFileName",
       "kind": 3,
@@ -161,11 +217,11 @@
     "href": "flutter_best_practices_lints/SingleClassPerFile-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "desc": "Validates that each Dart file declares only one public class,\nexcept when exactly two public classes exist and one is abstract\nwhile the other extends or implements it (common for interface+impl),\nor when a StatefulWidget and its private State coexist.",
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
     }
   },
   {
@@ -174,7 +230,7 @@
     "href": "flutter_best_practices_lints/SingleClassPerFile/SingleClassPerFile.html",
     "kind": 2,
     "packageRank": 0,
-    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "desc": "Validates that each Dart file declares only one public class,\nexcept when exactly two public classes exist and one is abstract\nwhile the other extends or implements it (common for interface+impl),\nor when a StatefulWidget and its private State coexist.",
     "enclosedBy": {
       "name": "SingleClassPerFile",
       "kind": 3,
@@ -188,7 +244,7 @@
     "kind": 10,
     "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "A custom lint rule that ensures a file contains only one class declaration.",
+    "desc": "Emits lints for a given file.",
     "enclosedBy": {
       "name": "SingleClassPerFile",
       "kind": 3,
@@ -205,7 +261,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+      "href": "flutter_best_practices_lints"
     }
   }
 ]

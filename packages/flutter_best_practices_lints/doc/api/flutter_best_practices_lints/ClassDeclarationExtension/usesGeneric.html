@@ -9,10 +9,10 @@
     />
     <meta
       name="description"
-      content="API docs for the FlutterBestPracticesPlugin constructor from Class FlutterBestPracticesPlugin from the flutter_best_practices_lints library, for the Dart programming language."
+      content="API docs for the usesGeneric method from the ClassDeclarationExtension extension, for the Dart programming language."
     />
     <title>
-      FlutterBestPracticesPlugin constructor - FlutterBestPracticesPlugin -
+      usesGeneric method - ClassDeclarationExtension extension -
       flutter_best_practices_lints library - Dart API
     </title>
 
@@ -54,13 +54,13 @@
         </li>
         <li>
           <a
-            href="../../flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
-            >FlutterBestPracticesPlugin</a
+            href="../../flutter_best_practices_lints/ClassDeclarationExtension.html"
+            >ClassDeclarationExtension</a
           >
         </li>
-        <li class="self-crumb">FlutterBestPracticesPlugin constructor</li>
+        <li class="self-crumb">usesGeneric method</li>
       </ol>
-      <div class="self-name">FlutterBestPracticesPlugin</div>
+      <div class="self-name">usesGeneric</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -87,18 +87,77 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="flutter_best_practices_lints&#47;FlutterBestPracticesPlugin-class-sidebar.html"
+        data-above-sidebar="flutter_best_practices_lints&#47;ClassDeclarationExtension-extension-sidebar.html"
         data-below-sidebar=""
       >
         <div>
-          <h1>
-            <span class="kind-constructor">FlutterBestPracticesPlugin</span>
-            constructor
-          </h1>
+          <h1><span class="kind-method">usesGeneric</span> method</h1>
         </div>
 
         <section class="multi-line-signature">
-          <span class="name">FlutterBestPracticesPlugin</span>(<wbr />)
+          <span class="returntype"
+            ><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+              >bool</a
+            ></span
+          >
+          <span class="name">usesGeneric</span>(<wbr />
+          <ol class="parameter-list single-line">
+            <li>
+              <span class="parameter" id="usesGeneric-param-baseClassName"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                    >String</a
+                  ></span
+                >
+                <span class="parameter-name">baseClassName</span></span
+              >
+            </li>
+          </ol>
+          )
+        </section>
+
+        <section class="desc markdown">
+          <p>
+            Determines if <code>baseClassName</code> appears as a generic type
+            argument in either the extends or implements clauses of this class.
+          </p>
+        </section>
+
+        <section class="summary source-code" id="source">
+          <h2><span>Implementation</span></h2>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">bool usesGeneric(String baseClassName) {
+  &#47;&#47; Check extends clause type arguments
+  if (extendsClause != null) {
+    final typeArgs = extendsClause!.superclass.typeArguments;
+    if (typeArgs != null) {
+      &#47;&#47; Iterate through &lt;...&gt; arguments
+      for (final arg in typeArgs.arguments) {
+        if (arg is NamedType &amp;&amp; arg.name2.lexeme == baseClassName) {
+          return true;
+        }
+      }
+    }
+  }
+
+  &#47;&#47; Check implements clause type arguments
+  if (implementsClause != null) {
+    for (final interface in implementsClause!.interfaces) {
+      final typeArgs = interface.typeArguments;
+      if (typeArgs != null) {
+        for (final arg in typeArgs.arguments) {
+          if (arg is NamedType &amp;&amp; arg.name2.lexeme == baseClassName) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+}</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -125,17 +184,23 @@
           </li>
           <li>
             <a
-              href="../../flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
-              >FlutterBestPracticesPlugin</a
+              href="../../flutter_best_practices_lints/ClassDeclarationExtension.html"
+              >ClassDeclarationExtension</a
             >
           </li>
-          <li class="self-crumb">FlutterBestPracticesPlugin constructor</li>
+          <li class="self-crumb">usesGeneric method</li>
         </ol>
 
-        <h5>FlutterBestPracticesPlugin class</h5>
+        <h5>
+          ClassDeclarationExtension extension on
+          <a
+            href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+            >ClassDeclaration</a
+          >
+        </h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"

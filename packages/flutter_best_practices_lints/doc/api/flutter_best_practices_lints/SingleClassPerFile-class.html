@@ -43,8 +43,7 @@
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a
-            href="../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+          <a href="../flutter_best_practices_lints"
             >flutter_best_practices_lints.dart</a
           >
         </li>
@@ -86,22 +85,11 @@
 
         <section class="desc markdown">
           <p>
-            A custom lint rule that ensures a file contains only one class
-            declaration.
+            Validates that each Dart file declares only one public class, except
+            when exactly two public classes exist and one is abstract while the
+            other extends or implements it (common for interface+impl), or when
+            a StatefulWidget and its private State coexist.
           </p>
-          <p>
-            This rule is part of the
-            <code>flutter_best_practices_lints</code> plugin. Having multiple
-            classes in a single file can make code organization hard. By
-            restricting a file to a single main class, you encourage better
-            project structure and maintainability.
-          </p>
-          <ul>
-            <li>
-              Excludes classes recognized as Flutter <code>State</code> classes
-              (for example, <code>_MyWidgetState</code>).
-            </li>
-          </ul>
         </section>
 
         <section>
@@ -145,8 +133,11 @@
               ><span class="signature">()</span>
             </dt>
             <dd>
-              A custom lint rule that ensures a file contains only one class
-              declaration.
+              Validates that each Dart file declares only one public class,
+              except when exactly two public classes exist and one is abstract
+              while the other extends or implements it (common for
+              interface+impl), or when a StatefulWidget and its private State
+              coexist.
               <div class="constructor-modifier features">const</div>
             </dd>
           </dl>
@@ -431,8 +422,7 @@
               </span>
             </dt>
             <dd>
-              A custom lint rule that ensures a file contains only one class
-              declaration.
+              Emits lints for a given file.
               <div class="features"><span class="feature">override</span></div>
             </dd>
 
@@ -652,8 +642,7 @@
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a
-              href="../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+            <a href="../flutter_best_practices_lints"
               >flutter_best_practices_lints</a
             >
           </li>
@@ -670,7 +659,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

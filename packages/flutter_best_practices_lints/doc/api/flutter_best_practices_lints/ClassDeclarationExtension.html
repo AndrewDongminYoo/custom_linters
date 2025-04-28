@@ -44,8 +44,7 @@
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a
-            href="../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+          <a href="../flutter_best_practices_lints"
             >flutter_best_practices_lints.dart</a
           >
         </li>
@@ -89,14 +88,16 @@
 
         <section class="desc markdown">
           <p>
-            An extension on
+            Provides convenient inspection utilities on a
             <a
               href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
               >ClassDeclaration</a
             >
-            that provides utility getters to determine whether the class is a
-            private <code>State</code>-related class (common in Flutter) or an
-            abstract class.
+            to help custom lint rules determine class characteristics in Flutter
+            code. Utility getters include checks for private Flutter State
+            classes, abstract declarations, interface implementations,
+            superclass extensions, generic type usage, and overall relationships
+            to other classes.
           </p>
         </section>
 
@@ -149,12 +150,8 @@
                   extension</span
                 >
               </p>
-              Returns <code>true</code> if this
-              <a
-                href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
-                >ClassDeclaration</a
-              >
-              is declared as <code>abstract</code>.
+              Returns <code>true</code> if this class is declared as
+              <code>abstract</code>.
               <div class="features"><span class="feature">no setter</span></div>
             </dd>
 
@@ -188,15 +185,209 @@
                   extension</span
                 >
               </p>
-              An extension on
+              Provides convenient inspection utilities on a
               <a
                 href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
-              that provides utility getters to determine whether the class is a
-              private <code>State</code>-related class (common in Flutter) or an
-              abstract class.
+              to help custom lint rules determine class characteristics in
+              Flutter code. Utility getters include checks for private Flutter
+              State classes, abstract declarations, interface implementations,
+              superclass extensions, generic type usage, and overall
+              relationships to other classes.
               <div class="features"><span class="feature">no setter</span></div>
+            </dd>
+          </dl>
+        </section>
+
+        <section class="summary offset-anchor" id="instance-methods">
+          <h2>Methods</h2>
+          <dl class="callables">
+            <dt id="extendsClass" class="callable">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/ClassDeclarationExtension/extendsClass.html"
+                  >extendsClass</a
+                ></span
+              ><span class="signature"
+                >(<wbr /><span
+                  class="parameter"
+                  id="extendsClass-param-baseClassName"
+                  ><span class="type-annotation"
+                    ><a
+                      href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                      >String</a
+                    ></span
+                  >
+                  <span class="parameter-name">baseClassName</span></span
+                >)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                    >bool</a
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd>
+              <p class="from-extension">
+                <span
+                  >Available on
+                  <a
+                    href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+                    >ClassDeclaration</a
+                  >, provided by the
+                  <a
+                    href="../flutter_best_practices_lints/ClassDeclarationExtension.html"
+                    >ClassDeclarationExtension</a
+                  >
+                  extension</span
+                >
+              </p>
+              Checks if this class directly extends a base class named
+              <code>baseClassName</code>.
+            </dd>
+
+            <dt id="implementsInterface" class="callable">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/ClassDeclarationExtension/implementsInterface.html"
+                  >implementsInterface</a
+                ></span
+              ><span class="signature"
+                >(<wbr /><span
+                  class="parameter"
+                  id="implementsInterface-param-interfaceName"
+                  ><span class="type-annotation"
+                    ><a
+                      href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                      >String</a
+                    ></span
+                  >
+                  <span class="parameter-name">interfaceName</span></span
+                >)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                    >bool</a
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd>
+              <p class="from-extension">
+                <span
+                  >Available on
+                  <a
+                    href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+                    >ClassDeclaration</a
+                  >, provided by the
+                  <a
+                    href="../flutter_best_practices_lints/ClassDeclarationExtension.html"
+                    >ClassDeclarationExtension</a
+                  >
+                  extension</span
+                >
+              </p>
+              Checks if this class implements the interface named
+              <code>interfaceName</code>. Returns <code>true</code> if an
+              <code>implements</code> clause lists the given interface.
+            </dd>
+
+            <dt id="isRelatedTo" class="callable">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/ClassDeclarationExtension/isRelatedTo.html"
+                  >isRelatedTo</a
+                ></span
+              ><span class="signature"
+                >(<wbr /><span
+                  class="parameter"
+                  id="isRelatedTo-param-className"
+                  ><span class="type-annotation"
+                    ><a
+                      href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                      >String</a
+                    ></span
+                  >
+                  <span class="parameter-name">className</span></span
+                >)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                    >bool</a
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd>
+              <p class="from-extension">
+                <span
+                  >Available on
+                  <a
+                    href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+                    >ClassDeclaration</a
+                  >, provided by the
+                  <a
+                    href="../flutter_best_practices_lints/ClassDeclarationExtension.html"
+                    >ClassDeclarationExtension</a
+                  >
+                  extension</span
+                >
+              </p>
+              Returns <code>true</code> if this class is related to
+              <code>className</code> by either implementing it, extending it, or
+              using it as a generic type.
+            </dd>
+
+            <dt id="usesGeneric" class="callable">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/ClassDeclarationExtension/usesGeneric.html"
+                  >usesGeneric</a
+                ></span
+              ><span class="signature"
+                >(<wbr /><span
+                  class="parameter"
+                  id="usesGeneric-param-baseClassName"
+                  ><span class="type-annotation"
+                    ><a
+                      href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                      >String</a
+                    ></span
+                  >
+                  <span class="parameter-name">baseClassName</span></span
+                >)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                    >bool</a
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd>
+              <p class="from-extension">
+                <span
+                  >Available on
+                  <a
+                    href="https://pub.dev/documentation/analyzer/6.11.0/dart_ast_ast/ClassDeclaration-class.html"
+                    >ClassDeclaration</a
+                  >, provided by the
+                  <a
+                    href="../flutter_best_practices_lints/ClassDeclarationExtension.html"
+                    >ClassDeclarationExtension</a
+                  >
+                  extension</span
+                >
+              </p>
+              Determines if <code>baseClassName</code> appears as a generic type
+              argument in either the extends or implements clauses of this
+              class.
             </dd>
           </dl>
         </section>
@@ -219,8 +410,7 @@
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a
-              href="../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+            <a href="../flutter_best_practices_lints"
               >flutter_best_practices_lints</a
             >
           </li>
@@ -237,7 +427,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

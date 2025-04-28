@@ -48,8 +48,7 @@
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a
-            href="../../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+          <a href="../../flutter_best_practices_lints"
             >flutter_best_practices_lints.dart</a
           >
         </li>
@@ -105,22 +104,16 @@
 
         <section class="desc markdown">
           <p>
-            A custom lint rule that checks whether the main class name (in
-            PascalCase) matches the file name (in snake_case).
-          </p>
-          <p>
-            This rule is part of the
-            <code>flutter_best_practices_lints</code> plugin. It ensures that
-            each file's primary class is in sync with its file name, improving
-            project structure and clarity.
+            Ensures that public class names in PascalCase correspond to their
+            snake_case file names, helping maintain consistency between files
+            and the primary class they contain.
           </p>
           <ul>
+            <li>Single public class: name must match file name.</li>
             <li>
-              Excludes classes that are recognized as Flutter
-              <code>State</code> classes (for example,
-              <code>_MyWidgetState</code>).
+              Multiple public classes: at least one must match, and any others
+              not related to the primary class will trigger a warning.
             </li>
-            <li>Excludes abstract classes.</li>
           </ul>
         </section>
 
@@ -149,8 +142,7 @@
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a
-              href="../../flutter_best_practices_lints/flutter_best_practices_lints-library.html"
+            <a href="../../flutter_best_practices_lints"
               >flutter_best_practices_lints</a
             >
           </li>
@@ -174,7 +166,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.1.2+1 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>
