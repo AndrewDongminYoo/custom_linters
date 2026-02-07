@@ -51,7 +51,7 @@ class MatchingClassAndFileName extends DartLintRule {
     if (!path.split(filePath).contains('lib')) return;
 
     context.registry.addCompilationUnit((CompilationUnit node) {
-      final fullPath = node.declaredElement!.source.fullName;
+      final fullPath = node.declaredFragment!.source.fullName;
       final fileName = path.basenameWithoutExtension(fullPath);
       final expectedClassName = fileName.toPascalCase();
 

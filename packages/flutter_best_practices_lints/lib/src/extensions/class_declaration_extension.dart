@@ -1,5 +1,6 @@
 // 📦 Package imports:
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/element/element2.dart';
 
 /// {@template class_declaration_extension}
 /// Provides convenient inspection utilities on a [ClassDeclaration]
@@ -28,22 +29,38 @@ extension ClassDeclarationExtension on ClassDeclaration {
     // (3) Get the superclass AST node
     final superclassNode = extendsClause!.superclass;
 
-    // (4) Resolve its static type element
+    // (4) Prefer the resolved element model when available.
     final superType = superclassNode.type;
-    if (superType == null) return false;
-    final superElement = superType.element;
-    if (superElement == null) return false;
+    final superElement = superType?.element3;
+    if (superElement is ClassElement2) {
+      // (5) Name must be exactly 'State'
+      if (superElement.name3 != 'State') return false;
 
-    // (5) Name must be exactly 'State'
-    if (superElement.name != 'State') return false;
+      // (6) Confirm it originates from Flutter
+      final libraryUri = superElement.library2.firstFragment.source.uri.toString();
+      if (!libraryUri.startsWith('package:flutter/')) {
+        return false;
+      }
 
-    // (6) Confirm it originates from Flutter
-    final libraryUri = superElement.library?.source.uri.toString();
-    if (libraryUri == null || !libraryUri.startsWith('package:flutter/')) {
-      return false;
+      return true;
     }
 
-    return true; // All checks passed
+    // Fallback for situations where type resolution is unavailable in tests or
+    // partial analysis contexts.
+    if (superclassNode.name2.lexeme != 'State') return false;
+
+    AstNode? current = this;
+    while (current != null && current is! CompilationUnit) {
+      current = current.parent;
+    }
+    final unit = current as CompilationUnit?;
+    if (unit == null) return false;
+
+    final hasFlutterImport = unit.directives.whereType<ImportDirective>().any(
+          (d) => d.uri.stringValue?.startsWith('package:flutter/') ?? false,
+        );
+
+    return hasFlutterImport;
   }
 
   /// Returns `true` if this class is declared as `abstract`.

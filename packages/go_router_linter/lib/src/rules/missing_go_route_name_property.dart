@@ -25,7 +25,7 @@ class MissingGoRouteNameProperty extends DartLintRule {
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
     resolver.getResolvedUnitResult().then((unit) {
@@ -37,7 +37,7 @@ class MissingGoRouteNameProperty extends DartLintRule {
 class _GoRouteVisitor extends RecursiveAstVisitor<void> {
   _GoRouteVisitor(this.reporter, this.context);
 
-  final ErrorReporter reporter;
+  final DiagnosticReporter reporter;
   final CustomLintContext context;
 
   @override
