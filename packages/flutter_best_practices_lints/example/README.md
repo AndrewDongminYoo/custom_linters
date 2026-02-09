@@ -76,7 +76,6 @@ Analyzing...
 ### What Triggers the Lints?
 
 1. **`single_class_per_file`**
-
    - In `my_home_page.dart`, there's a second class (`MyHomePage2`). This triggers the lint because the file already contains the main `MyHomePage` stateful widget class.
    - **Fix:** Move `MyHomePage2` to a new file or combine the functionality into the main class if appropriate.
 

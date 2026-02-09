@@ -47,7 +47,6 @@ context.go('/home');
 
 - **Lint Code:** `avoid_hardcoded_routes`
 - **What it does:** Detects when hardcoded route strings are used directly in:
-
   - `context.go()`, `context.push()`, `context.goNamed()`, `context.pushNamed()`, etc.
   - `GoRouter.of(context).go()`, `GoRouter.of(context).push()`, `GoRouter.of(context).goNamed()`, `GoRouter.of(context).pushNamed()`, etc.
   - `GoRoute` definitions (`path` and `name` properties)

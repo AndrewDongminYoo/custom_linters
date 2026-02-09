@@ -35,7 +35,6 @@ Currently, this repository includes:
    ```
 
 3. **Navigate to a package**:
-
    - **For `go_router_linter`**:
 
      ```bash
@@ -49,7 +48,6 @@ Currently, this repository includes:
      ```
 
 4. **Pub commands**:
-
    - Get dependencies: `dart pub get`
    - Run tests: `dart pub test`
    - Analyze code: `dart analyze`

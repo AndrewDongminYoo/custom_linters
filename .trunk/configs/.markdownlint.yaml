@@ -1,6 +1,8 @@
 # Prettier friendly markdownlint config (all formatting rules disabled)
 extends: markdownlint/style/prettier
-# MD024/no-duplicate-heading : Multiple headings with the same content
+# Multiple headings with the same content
 MD024: false
-# MD033/no-inline-html : Inline HTML
+# Inline HTML
 MD033: false
+# Bare URL used
+MD034: false

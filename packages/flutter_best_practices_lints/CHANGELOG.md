@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updates `single_class_per_file` to allow a single abstract class alongside a concrete implementation, and to correctly handle `StatefulWidget` and `State` class pairings. The rule now only applies to files within the `lib/` directory.
-- Modifies `matching_class_and_file_name` to support multiple classes per file where one class name matches the file name (primary class), and allows other classes if they are related to the primary class.  It also provides more specific correction messages.
+- Modifies `matching_class_and_file_name` to support multiple classes per file where one class name matches the file name (primary class), and allows other classes if they are related to the primary class. It also provides more specific correction messages.
 - Introduces `isRelatedTo` extension method on `ClassDeclaration` to determine relationships between classes.
 - Adds example code to demonstrate expected lint violations.
 
