@@ -2,7 +2,7 @@
   {
     "name": "go_router_linter",
     "qualifiedName": "go_router_linter",
-    "href": "go_router_linter/go_router_linter-library.html",
+    "href": "go_router_linter/",
     "kind": 9,
     "packageRank": 0,
     "desc": "go_router_linter"
@@ -17,12 +17,12 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   },
   {
-    "name": "AvoidHardcodedRoutes",
-    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.AvoidHardcodedRoutes",
+    "name": "AvoidHardcodedRoutes.new",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.AvoidHardcodedRoutes.new",
     "href": "go_router_linter/AvoidHardcodedRoutes/AvoidHardcodedRoutes.html",
     "kind": 2,
     "packageRank": 0,
@@ -57,7 +57,7 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   },
   {
@@ -84,12 +84,12 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   },
   {
-    "name": "MissingGoRouteNameProperty",
-    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.MissingGoRouteNameProperty",
+    "name": "MissingGoRouteNameProperty.new",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.MissingGoRouteNameProperty.new",
     "href": "go_router_linter/MissingGoRouteNameProperty/MissingGoRouteNameProperty.html",
     "kind": 2,
     "packageRank": 0,
@@ -124,7 +124,7 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   },
   {
@@ -151,12 +151,12 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   },
   {
-    "name": "UseContextDirectlyForGoRouter",
-    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.UseContextDirectlyForGoRouter",
+    "name": "UseContextDirectlyForGoRouter.new",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.UseContextDirectlyForGoRouter.new",
     "href": "go_router_linter/UseContextDirectlyForGoRouter/UseContextDirectlyForGoRouter.html",
     "kind": 2,
     "packageRank": 0,
@@ -191,7 +191,7 @@
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
-      "href": "go_router_linter/go_router_linter-library.html"
+      "href": "go_router_linter/"
     }
   }
 ]

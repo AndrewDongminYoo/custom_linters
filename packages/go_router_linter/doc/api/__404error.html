@@ -30,7 +30,6 @@
 
   <body data-base-href="" data-using-base-href="false" class="light-theme">
     <div id="overlay-under-drawer"></div>
-
     <header id="title">
       <span
         id="sidenav-left-toggle"
@@ -53,22 +52,31 @@
           placeholder="Loading search..."
         />
       </form>
-      <div class="toggle" id="theme-button" title="Toggle brightness">
-        <label for="theme">
-          <input type="checkbox" id="theme" value="light-theme" />
-          <span id="dark-theme-button" class="material-symbols-outlined">
-            dark_mode
-          </span>
-          <span id="light-theme-button" class="material-symbols-outlined">
-            light_mode
-          </span>
-        </label>
-      </div>
+      <button
+        class="toggle"
+        id="theme-button"
+        title="Toggle between light and dark mode"
+        aria-label="Light and dark mode toggle"
+      >
+        <span
+          id="dark-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          dark_mode
+        </span>
+        <span
+          id="light-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          light_mode
+        </span>
+      </button>
     </header>
     <main>
       <div id="dartdoc-main-content" class="main-content">
         <h1>404: Something's gone wrong :-(</h1>
-
         <section class="desc">
           <p>
             You've tried to visit a page that doesn't exist. Luckily this site
@@ -90,7 +98,6 @@
         </section>
       </div>
       <!-- /.main-content -->
-
       <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
         <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
         <header id="header-search-sidebar" class="hidden-l">
@@ -105,7 +112,6 @@
             />
           </form>
         </header>
-
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li class="self-crumb">go_router_linter package</li>
         </ol>
@@ -116,22 +122,16 @@
         </h5>
         <ol>
           <li class="section-title">Libraries</li>
-          <li>
-            <a href="go_router_linter/go_router_linter-library.html"
-              >go_router_linter</a
-            >
-          </li>
+          <li><a href="go_router_linter/">go_router_linter</a></li>
         </ol>
       </div>
-
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
       ></div>
     </main>
-
     <footer>
-      <span class="no-break"> go_router_linter 0.1.8 </span>
+      <span class="no-break"> go_router_linter 0.2.0 </span>
     </footer>
 
     <script src="static-assets/highlight.pack.js?v1"></script>

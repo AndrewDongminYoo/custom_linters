@@ -44,7 +44,7 @@
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../index.html">flutter_best_practices_lints</a></li>
         <li>
-          <a href="../flutter_best_practices_lints"
+          <a href="../flutter_best_practices_lints/"
             >flutter_best_practices_lints.dart</a
           >
         </li>
@@ -61,17 +61,27 @@
           placeholder="Loading search..."
         />
       </form>
-      <div class="toggle" id="theme-button" title="Toggle brightness">
-        <label for="theme">
-          <input type="checkbox" id="theme" value="light-theme" />
-          <span id="dark-theme-button" class="material-symbols-outlined">
-            dark_mode
-          </span>
-          <span id="light-theme-button" class="material-symbols-outlined">
-            light_mode
-          </span>
-        </label>
-      </div>
+      <button
+        class="toggle"
+        id="theme-button"
+        title="Toggle between light and dark mode"
+        aria-label="Light and dark mode toggle"
+      >
+        <span
+          id="dark-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          dark_mode
+        </span>
+        <span
+          id="light-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          light_mode
+        </span>
+      </button>
     </header>
     <main>
       <div
@@ -106,7 +116,7 @@
                 </li>
                 <li>
                   <a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/PluginBase-class.html"
+                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase-class.html"
                     >PluginBase</a
                   >
                 </li>
@@ -119,7 +129,7 @@
         <section class="summary offset-anchor" id="constructors">
           <h2>Constructors</h2>
           <dl class="constructor-summary-list">
-            <dt id="FlutterBestPracticesPlugin" class="callable">
+            <dt id="FlutterBestPracticesPlugin.new" class="callable">
               <span class="name"
                 ><a
                   href="../flutter_best_practices_lints/FlutterBestPracticesPlugin/FlutterBestPracticesPlugin.html"
@@ -191,7 +201,7 @@
             <dt id="getAssists" class="callable inherited">
               <span class="name"
                 ><a
-                  href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/PluginBase/getAssists.html"
+                  href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase/getAssists.html"
                   >getAssists</a
                 ></span
               ><span class="signature"
@@ -204,7 +214,7 @@
                   ><span class="signature"
                     >&lt;<wbr /><span class="type-parameter"
                       ><a
-                        href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/Assist-class.html"
+                        href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/Assist-class.html"
                         >Assist</a
                       ></span
                     >&gt;</span
@@ -227,7 +237,7 @@
                 >(<wbr /><span class="parameter" id="getLintRules-param-configs"
                   ><span class="type-annotation"
                     ><a
-                      href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintConfigs-class.html"
+                      href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintConfigs-class.html"
                       >CustomLintConfigs</a
                     ></span
                   >
@@ -241,7 +251,7 @@
                   ><span class="signature"
                     >&lt;<wbr /><span class="type-parameter"
                       ><a
-                        href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/LintRule-class.html"
+                        href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/LintRule-class.html"
                         >LintRule</a
                       ></span
                     >&gt;</span
@@ -357,7 +367,7 @@
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../index.html">flutter_best_practices_lints</a></li>
           <li>
-            <a href="../flutter_best_practices_lints"
+            <a href="../flutter_best_practices_lints/"
               >flutter_best_practices_lints</a
             >
           </li>
@@ -374,7 +384,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.2.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

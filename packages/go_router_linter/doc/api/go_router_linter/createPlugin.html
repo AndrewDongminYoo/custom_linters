@@ -30,7 +30,6 @@
 
   <body data-base-href="../" data-using-base-href="false" class="light-theme">
     <div id="overlay-under-drawer"></div>
-
     <header id="title">
       <span
         id="sidenav-left-toggle"
@@ -41,11 +40,7 @@
       >
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../index.html">go_router_linter</a></li>
-        <li>
-          <a href="../go_router_linter/go_router_linter-library.html"
-            >go_router_linter.dart</a
-          >
-        </li>
+        <li><a href="../go_router_linter/">go_router_linter.dart</a></li>
         <li class="self-crumb">createPlugin function</li>
       </ol>
       <div class="self-name">createPlugin</div>
@@ -59,17 +54,27 @@
           placeholder="Loading search..."
         />
       </form>
-      <div class="toggle" id="theme-button" title="Toggle brightness">
-        <label for="theme">
-          <input type="checkbox" id="theme" value="light-theme" />
-          <span id="dark-theme-button" class="material-symbols-outlined">
-            dark_mode
-          </span>
-          <span id="light-theme-button" class="material-symbols-outlined">
-            light_mode
-          </span>
-        </label>
-      </div>
+      <button
+        class="toggle"
+        id="theme-button"
+        title="Toggle between light and dark mode"
+        aria-label="Light and dark mode toggle"
+      >
+        <span
+          id="dark-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          dark_mode
+        </span>
+        <span
+          id="light-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          light_mode
+        </span>
+      </button>
     </header>
     <main>
       <div
@@ -85,7 +90,7 @@
         <section class="multi-line-signature">
           <span class="returntype"
             ><a
-              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/PluginBase-class.html"
+              href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase-class.html"
               >PluginBase</a
             ></span
           >
@@ -104,7 +109,6 @@
         </section>
       </div>
       <!-- /.main-content -->
-
       <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
         <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
         <header id="header-search-sidebar" class="hidden-l">
@@ -119,14 +123,9 @@
             />
           </form>
         </header>
-
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../index.html">go_router_linter</a></li>
-          <li>
-            <a href="../go_router_linter/go_router_linter-library.html"
-              >go_router_linter</a
-            >
-          </li>
+          <li><a href="../go_router_linter/">go_router_linter</a></li>
           <li class="self-crumb">createPlugin function</li>
         </ol>
 
@@ -134,16 +133,14 @@
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
       <!--/.sidebar-offcanvas-left-->
-
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
       ></div>
       <!--/.sidebar-offcanvas-->
     </main>
-
     <footer>
-      <span class="no-break"> go_router_linter 0.1.8 </span>
+      <span class="no-break"> go_router_linter 0.2.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

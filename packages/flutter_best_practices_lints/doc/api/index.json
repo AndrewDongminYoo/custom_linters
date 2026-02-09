@@ -2,7 +2,7 @@
   {
     "name": "flutter_best_practices_lints",
     "qualifiedName": "flutter_best_practices_lints",
-    "href": "flutter_best_practices_lints",
+    "href": "flutter_best_practices_lints/",
     "kind": 9,
     "packageRank": 0,
     "desc": "flutter_best_practices_lints"
@@ -17,7 +17,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   },
   {
@@ -114,12 +114,12 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   },
   {
-    "name": "FlutterBestPracticesPlugin",
-    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.FlutterBestPracticesPlugin",
+    "name": "FlutterBestPracticesPlugin.new",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.FlutterBestPracticesPlugin.new",
     "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/FlutterBestPracticesPlugin.html",
     "kind": 2,
     "packageRank": 0,
@@ -154,7 +154,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   },
   {
@@ -181,12 +181,12 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   },
   {
-    "name": "MatchingClassAndFileName",
-    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.MatchingClassAndFileName",
+    "name": "MatchingClassAndFileName.new",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.MatchingClassAndFileName.new",
     "href": "flutter_best_practices_lints/MatchingClassAndFileName/MatchingClassAndFileName.html",
     "kind": 2,
     "packageRank": 0,
@@ -221,12 +221,12 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   },
   {
-    "name": "SingleClassPerFile",
-    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.SingleClassPerFile",
+    "name": "SingleClassPerFile.new",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.SingleClassPerFile.new",
     "href": "flutter_best_practices_lints/SingleClassPerFile/SingleClassPerFile.html",
     "kind": 2,
     "packageRank": 0,
@@ -261,7 +261,7 @@
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
-      "href": "flutter_best_practices_lints"
+      "href": "flutter_best_practices_lints/"
     }
   }
 ]

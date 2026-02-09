@@ -37,7 +37,6 @@
     class="light-theme"
   >
     <div id="overlay-under-drawer"></div>
-
     <header id="title">
       <span
         id="sidenav-left-toggle"
@@ -48,11 +47,7 @@
       >
       <ol class="breadcrumbs gt-separated dark hidden-xs">
         <li><a href="../../index.html">go_router_linter</a></li>
-        <li>
-          <a href="../../go_router_linter/go_router_linter-library.html"
-            >go_router_linter.dart</a
-          >
-        </li>
+        <li><a href="../../go_router_linter/">go_router_linter.dart</a></li>
         <li>
           <a
             href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
@@ -72,17 +67,27 @@
           placeholder="Loading search..."
         />
       </form>
-      <div class="toggle" id="theme-button" title="Toggle brightness">
-        <label for="theme">
-          <input type="checkbox" id="theme" value="light-theme" />
-          <span id="dark-theme-button" class="material-symbols-outlined">
-            dark_mode
-          </span>
-          <span id="light-theme-button" class="material-symbols-outlined">
-            light_mode
-          </span>
-        </label>
-      </div>
+      <button
+        class="toggle"
+        id="theme-button"
+        title="Toggle between light and dark mode"
+        aria-label="Light and dark mode toggle"
+      >
+        <span
+          id="dark-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          dark_mode
+        </span>
+        <span
+          id="light-theme-button"
+          class="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          light_mode
+        </span>
+      </button>
     </header>
     <main>
       <div
@@ -106,7 +111,6 @@
               </li>
             </ol>
           </div>
-
           <span class="returntype">void</span>
           <span class="name">run</span>(<wbr />
           <ol class="parameter-list single-line">
@@ -114,7 +118,7 @@
               <span class="parameter" id="run-param-resolver"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintResolver-class.html"
+                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintResolver-class.html"
                     >CustomLintResolver</a
                   ></span
                 >
@@ -125,8 +129,8 @@
               <span class="parameter" id="run-param-reporter"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/6.11.0/error_listener/ErrorReporter-class.html"
-                    >ErrorReporter</a
+                    href="https://pub.dev/documentation/analyzer/8.4.0/error_listener/DiagnosticReporter-class.html"
+                    >DiagnosticReporter</a
                   ></span
                 >
                 <span class="parameter-name">reporter</span>,
@@ -136,7 +140,7 @@
               <span class="parameter" id="run-param-context"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/CustomLintContext-class.html"
+                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintContext-class.html"
                     >CustomLintContext</a
                   ></span
                 >
@@ -158,7 +162,7 @@
             >
             will only be invoked with files respecting
             <a
-              href="https://pub.dev/documentation/custom_lint_core/0.7.0/custom_lint_core/DartLintRule/filesToAnalyze.html"
+              href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/DartLintRule/filesToAnalyze.html"
               >filesToAnalyze</a
             >
           </p>
@@ -169,10 +173,10 @@
           <pre class="language-dart"><code class="language-dart">@override
 void run(
   CustomLintResolver resolver,
-  ErrorReporter reporter,
+  DiagnosticReporter reporter,
   CustomLintContext context,
 ) {
-  context.registry.addMethodInvocation((MethodInvocation node) {
+  context.registry.addMethodInvocation((node) {
     if (node.methodName.name == &#39;of&#39; &amp;&amp;
         node.target is Identifier &amp;&amp;
         (node.target! as Identifier).name == &#39;GoRouter&#39; &amp;&amp;
@@ -196,7 +200,6 @@ void run(
         </section>
       </div>
       <!-- /.main-content -->
-
       <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
         <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
         <header id="header-search-sidebar" class="hidden-l">
@@ -211,14 +214,9 @@ void run(
             />
           </form>
         </header>
-
         <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
           <li><a href="../../index.html">go_router_linter</a></li>
-          <li>
-            <a href="../../go_router_linter/go_router_linter-library.html"
-              >go_router_linter</a
-            >
-          </li>
+          <li><a href="../../go_router_linter/">go_router_linter</a></li>
           <li>
             <a
               href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
@@ -232,16 +230,14 @@ void run(
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
       <!--/.sidebar-offcanvas-->
-
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
       ></div>
       <!--/.sidebar-offcanvas-->
     </main>
-
     <footer>
-      <span class="no-break"> go_router_linter 0.1.8 </span>
+      <span class="no-break"> go_router_linter 0.2.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>
