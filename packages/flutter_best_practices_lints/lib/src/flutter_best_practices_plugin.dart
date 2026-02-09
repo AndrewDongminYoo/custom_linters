@@ -13,7 +13,7 @@ class FlutterBestPracticesPlugin extends PluginBase {
   /// We list all the custom warnings/infos/errors
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
-        const SingleClassPerFile(),
-        const MatchingClassAndFileName(),
-      ];
+    const SingleClassPerFile(),
+    const MatchingClassAndFileName(),
+  ];
 }

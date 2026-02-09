@@ -29,7 +29,8 @@ class MatchingClassAndFileName extends DartLintRule {
   /// when the class name does not match the file name.
   static const _code = LintCode(
     name: 'matching_class_and_file_name',
-    problemMessage: 'Class name (PascalCase) must match the file name (snake_case).',
+    problemMessage:
+        'Class name (PascalCase) must match the file name (snake_case).',
   );
 
   /// {@macro matching_class_and_file_name}
@@ -50,19 +51,23 @@ class MatchingClassAndFileName extends DartLintRule {
     // it will not be checked.
     if (!path.split(filePath).contains('lib')) return;
 
-    context.registry.addCompilationUnit((CompilationUnit node) {
+    context.registry.addCompilationUnit((node) {
       final fullPath = node.declaredFragment!.source.fullName;
       final fileName = path.basenameWithoutExtension(fullPath);
       final expectedClassName = fileName.toPascalCase();
 
       // Collect all class declarations excluding private State classes
-      final classDeclarations =
-          node.declarations.whereType<ClassDeclaration>().where((cls) => !cls.isStateClass).toList();
+      final classDeclarations = node.declarations
+          .whereType<ClassDeclaration>()
+          .where((cls) => !cls.isStateClass)
+          .toList();
 
       if (classDeclarations.isEmpty) return; // Nothing to check
 
       // Identify classes matching the expected primary name
-      final primaryClasses = classDeclarations.where((cls) => cls.name.lexeme == expectedClassName).toList();
+      final primaryClasses = classDeclarations
+          .where((cls) => cls.name.lexeme == expectedClassName)
+          .toList();
 
       // Single public class case
       if (classDeclarations.length == 1) {
@@ -72,7 +77,8 @@ class MatchingClassAndFileName extends DartLintRule {
           reporter.atNode(
             mainClass,
             _code.copyWith(
-              problemMessage: 'Class name ${mainClass.name.lexeme} must match the file name "$fileName".',
+              problemMessage:
+                  'Class name ${mainClass.name.lexeme} must match the file name "$fileName".',
               correctionMessage: 'Rename the class to "$expectedClassName".',
             ),
           );
@@ -83,14 +89,20 @@ class MatchingClassAndFileName extends DartLintRule {
       // Multiple public classes
       if (primaryClasses.isNotEmpty) {
         // Warn on any classes not matching and not related to primary
-        for (final cls in classDeclarations.where((c) => c.name.lexeme != expectedClassName)) {
-          final isRelated = primaryClasses.any((primary) => cls.isRelatedTo(primary.name.lexeme));
+        for (final cls in classDeclarations.where(
+          (c) => c.name.lexeme != expectedClassName,
+        )) {
+          final isRelated = primaryClasses.any(
+            (primary) => cls.isRelatedTo(primary.name.lexeme),
+          );
           if (!isRelated) {
             reporter.atNode(
               cls,
               _code.copyWith(
-                problemMessage: 'Class name ${cls.name.lexeme} does not match the file name "$fileName".',
-                correctionMessage: 'Either rename it to "$expectedClassName" or separate into a new file.',
+                problemMessage:
+                    'Class name ${cls.name.lexeme} does not match the file name "$fileName".',
+                correctionMessage:
+                    'Either rename it to "$expectedClassName" or separate into a new file.',
               ),
             );
           }
@@ -101,7 +113,8 @@ class MatchingClassAndFileName extends DartLintRule {
           reporter.atNode(
             cls,
             _code.copyWith(
-              problemMessage: 'Class name ${cls.name.lexeme} must match the file name "$fileName".',
+              problemMessage:
+                  'Class name ${cls.name.lexeme} must match the file name "$fileName".',
               correctionMessage: 'Rename the class to "$expectedClassName".',
             ),
           );

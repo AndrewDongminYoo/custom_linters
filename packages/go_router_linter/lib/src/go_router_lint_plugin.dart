@@ -14,8 +14,8 @@ class _GoRouterLintPlugin extends PluginBase {
   /// We list all the custom warnings/infos/errors
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
-        const UseContextDirectlyForGoRouter(),
-        const MissingGoRouteNameProperty(),
-        const AvoidHardcodedRoutes(),
-      ];
+    const UseContextDirectlyForGoRouter(),
+    const MissingGoRouteNameProperty(),
+    const AvoidHardcodedRoutes(),
+  ];
 }

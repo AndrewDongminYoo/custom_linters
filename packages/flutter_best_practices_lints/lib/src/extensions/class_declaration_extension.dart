@@ -55,7 +55,9 @@ extension ClassDeclarationExtension on ClassDeclaration {
     final clause = implementsClause;
     if (clause == null) return false;
     // Check every implemented interface's identifier
-    return clause.interfaces.any((typeName) => typeName.name.lexeme == interfaceName);
+    return clause.interfaces.any(
+      (typeName) => typeName.name.lexeme == interfaceName,
+    );
   }
 
   /// Checks if this class directly extends a base class named [baseClassName].
@@ -101,6 +103,8 @@ extension ClassDeclarationExtension on ClassDeclaration {
   /// Returns `true` if this class is related to [className] by either
   /// implementing it, extending it, or using it as a generic type.
   bool isRelatedTo(String className) {
-    return implementsInterface(className) || extendsClass(className) || usesGeneric(className);
+    return implementsInterface(className) ||
+        extendsClass(className) ||
+        usesGeneric(className);
   }
 }

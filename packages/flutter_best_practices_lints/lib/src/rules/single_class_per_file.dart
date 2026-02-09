@@ -16,13 +16,14 @@ import 'package:flutter_best_practices_lints/src/extensions/class_declaration_ex
 class SingleClassPerFile extends DartLintRule {
   /// {@macro single_class_per_file}
   const SingleClassPerFile()
-      : super(
-          code: const LintCode(
-            name: 'single_class_per_file',
-            problemMessage: 'A file should contain only one public class declaration.',
-            correctionMessage: 'Split the classes into separate files.',
-          ),
-        );
+    : super(
+        code: const LintCode(
+          name: 'single_class_per_file',
+          problemMessage:
+              'A file should contain only one public class declaration.',
+          correctionMessage: 'Split the classes into separate files.',
+        ),
+      );
 
   @override
   void run(
@@ -34,10 +35,14 @@ class SingleClassPerFile extends DartLintRule {
     final filePath = resolver.path;
     if (!path.split(filePath).contains('lib')) return;
 
-    context.registry.addCompilationUnit((CompilationUnit node) {
-      final allClasses = node.declarations.whereType<ClassDeclaration>().toList();
+    context.registry.addCompilationUnit((node) {
+      final allClasses = node.declarations
+          .whereType<ClassDeclaration>()
+          .toList();
       // Public classes do not start with '_'
-      final publicClasses = allClasses.where((cls) => !cls.name.lexeme.startsWith('_')).toList();
+      final publicClasses = allClasses
+          .where((cls) => !cls.name.lexeme.startsWith('_'))
+          .toList();
 
       if (publicClasses.length <= 1) return; // Zero or one public class is fine
 
@@ -48,12 +53,15 @@ class SingleClassPerFile extends DartLintRule {
         final firstIsAbstract = first.isAbstract;
         final secondIsAbstract = second.isAbstract;
         final firstUsedBySecond =
-            second.implementsInterface(first.name.lexeme) || second.extendsClass(first.name.lexeme);
+            second.implementsInterface(first.name.lexeme) ||
+            second.extendsClass(first.name.lexeme);
         final secondUsedByFirst =
-            first.implementsInterface(second.name.lexeme) || first.extendsClass(second.name.lexeme);
+            first.implementsInterface(second.name.lexeme) ||
+            first.extendsClass(second.name.lexeme);
 
         // If one class is an abstract definition and the other builds on it, allow both
-        if ((firstIsAbstract && firstUsedBySecond) || (secondIsAbstract && secondUsedByFirst)) {
+        if ((firstIsAbstract && firstUsedBySecond) ||
+            (secondIsAbstract && secondUsedByFirst)) {
           return;
         }
       }

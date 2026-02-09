@@ -49,7 +49,7 @@
 ///     - single_class_per_file
 /// ```
 /// {@endtemplate}
-library flutter_best_practices_lints;
+library;
 
 // 🌎 Project exports:
 export 'src/extensions/class_declaration_extension.dart';

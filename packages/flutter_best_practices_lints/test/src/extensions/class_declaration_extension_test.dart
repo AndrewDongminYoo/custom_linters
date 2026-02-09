@@ -25,7 +25,8 @@ class _AwesomeWidgetState extends State<AwesomeWidget> {}
           final classDecl = parseClassDeclaration(code);
           expect(classDecl.isStateClass, isTrue);
         },
-        skip: 'parseString() only does syntactic parsing without type resolution. '
+        skip:
+            'parseString() only does syntactic parsing without type resolution. '
             'isStateClass requires resolved types to verify State extends from '
             'package:flutter. Full analysis context setup would be too complex '
             'for this unit test.',
@@ -73,13 +74,16 @@ class MockRegularClass {}
         expect(classDecl.isAbstract, isFalse);
       });
 
-      test('returns false for private State class without abstract keyword', () {
-        const code = '''
+      test(
+        'returns false for private State class without abstract keyword',
+        () {
+          const code = '''
 class _AwesomeWidgetState {}
 ''';
-        final classDecl = parseClassDeclaration(code);
-        expect(classDecl.isAbstract, isFalse);
-      });
+          final classDecl = parseClassDeclaration(code);
+          expect(classDecl.isAbstract, isFalse);
+        },
+      );
     });
   });
 }
