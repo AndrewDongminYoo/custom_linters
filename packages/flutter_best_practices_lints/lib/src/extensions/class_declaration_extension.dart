@@ -38,7 +38,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
     if (superElement.name != 'State') return false;
 
     // (6) Confirm it originates from Flutter
-    final libraryUri = superElement.library?.source.uri.toString();
+    final libraryUri = superElement.library?.uri.toString();
     if (libraryUri == null || !libraryUri.startsWith('package:flutter/')) {
       return false;
     }
@@ -55,14 +55,14 @@ extension ClassDeclarationExtension on ClassDeclaration {
     final clause = implementsClause;
     if (clause == null) return false;
     // Check every implemented interface's identifier
-    return clause.interfaces.any((typeName) => typeName.name2.lexeme == interfaceName);
+    return clause.interfaces.any((typeName) => typeName.name.lexeme == interfaceName);
   }
 
   /// Checks if this class directly extends a base class named [baseClassName].
   bool extendsClass(String baseClassName) {
     if (extendsClause == null) return false;
     // Compare superclass identifier
-    return extendsClause!.superclass.name2.lexeme == baseClassName;
+    return extendsClause!.superclass.name.lexeme == baseClassName;
   }
 
   /// Determines if [baseClassName] appears as a generic type argument
@@ -74,7 +74,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
       if (typeArgs != null) {
         // Iterate through <...> arguments
         for (final arg in typeArgs.arguments) {
-          if (arg is NamedType && arg.name2.lexeme == baseClassName) {
+          if (arg is NamedType && arg.name.lexeme == baseClassName) {
             return true;
           }
         }
@@ -87,7 +87,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
         final typeArgs = interface.typeArguments;
         if (typeArgs != null) {
           for (final arg in typeArgs.arguments) {
-            if (arg is NamedType && arg.name2.lexeme == baseClassName) {
+            if (arg is NamedType && arg.name.lexeme == baseClassName) {
               return true;
             }
           }

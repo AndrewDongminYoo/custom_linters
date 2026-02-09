@@ -27,7 +27,7 @@ class SingleClassPerFile extends DartLintRule {
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
     // Only enforce for 'lib/' sources

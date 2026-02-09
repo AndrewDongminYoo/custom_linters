@@ -60,7 +60,7 @@
 ///     - avoid_hardcoded_routes
 /// ```
 /// {@endtemplate}
-library go_router_linter;
+library;
 
 export 'src/extensions/lint_code_extension.dart';
 export 'src/extensions/route_methods_extension.dart';

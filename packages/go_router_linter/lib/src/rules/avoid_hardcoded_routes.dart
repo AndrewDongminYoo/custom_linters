@@ -30,7 +30,7 @@ class AvoidHardcodedRoutes extends DartLintRule {
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
     resolver.getResolvedUnitResult().then((unit) {
@@ -42,7 +42,7 @@ class AvoidHardcodedRoutes extends DartLintRule {
 class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
   _AvoidHardcodedRoutesVisitor(this.reporter, this.context);
 
-  final ErrorReporter reporter;
+  final DiagnosticReporter reporter;
   final CustomLintContext context;
 
   @override

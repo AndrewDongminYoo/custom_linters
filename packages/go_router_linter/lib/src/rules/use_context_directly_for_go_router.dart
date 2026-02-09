@@ -29,10 +29,10 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
-    context.registry.addMethodInvocation((MethodInvocation node) {
+    context.registry.addMethodInvocation((node) {
       if (node.methodName.name == 'of' &&
           node.target is Identifier &&
           (node.target! as Identifier).name == 'GoRouter' &&
