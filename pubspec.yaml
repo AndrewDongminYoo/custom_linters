@@ -38,3 +38,7 @@ melos:
     format:ci:
       run: melos exec -- "dart format . --set-exit-if-changed"
       description: Check Dart file formatting for all packages in this project.
+
+    analyze:
+      run: melos exec -- "dart analyze ."
+      description: Analyze all Dart files in this project.
