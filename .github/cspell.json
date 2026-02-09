@@ -14,6 +14,9 @@
       "description": "Forbidden VGV Spellings"
     }
   ],
+  "suggestionsTimeout": 5000,
+  "allowCompoundWords": true,
   "useGitignore": true,
-  "words": ["go_router_linter", "subosito"]
+  "ignoreWords": ["plaintext", "subosito", "Verdana", "white-space"],
+  "words": ["Dongmin"]
 }
