@@ -33,3 +33,6 @@ pubspec.lock
 
 .idea/.name
 *.iml
+
+.claude/settings.local.json
+
