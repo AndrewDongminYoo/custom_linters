@@ -28,6 +28,7 @@ class MissingGoRouteNameProperty extends DartLintRule {
     DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
+    // ignore: discarded_futures
     resolver.getResolvedUnitResult().then((unit) {
       unit.unit.visitChildren(_GoRouteVisitor(reporter, context));
     });
