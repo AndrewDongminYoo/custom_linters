@@ -92,6 +92,11 @@ class _AvoidHardcodedRoutesVisitor {
             if (arg.expression is StringLiteral) {
               reporter.atNode(arg.expression, AvoidHardcodedRoutes._code);
             }
+          } else if (paramName == 'initialLocation' &&
+              element.name == 'GoRouter') {
+            if (arg.expression is StringLiteral) {
+              reporter.atNode(arg.expression, AvoidHardcodedRoutes._code);
+            }
           } else if (paramName == 'redirect') {
             _reportRedirectStrings(arg.expression);
           }
