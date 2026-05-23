@@ -25,11 +25,12 @@ void main() {
         ),
       );
 
-      expect(rules, hasLength(4));
+      expect(rules, hasLength(5));
       expect(rules[0], isA<SingleClassPerFile>());
       expect(rules[1], isA<MatchingClassAndFileName>());
       expect(rules[2], isA<PreferWidgetClassOverWidgetHelper>());
       expect(rules[3], isA<AvoidWidgetOperatorEquals>());
+      expect(rules[4], isA<PreferMediaQueryPartialMethods>());
     });
   });
 }
