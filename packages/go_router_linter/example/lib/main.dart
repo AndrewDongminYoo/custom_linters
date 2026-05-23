@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       /// The route configuration.
+      // expect_lint: missing_go_router_error_handler
       routerConfig: GoRouter(
         routes: <RouteBase>[
           // expect_lint: missing_go_route_name_property
