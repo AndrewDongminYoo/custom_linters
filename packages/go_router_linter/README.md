@@ -51,6 +51,7 @@ context.go('/home');
   - `GoRouter.of(context).go()`, `GoRouter.of(context).push()`, `GoRouter.of(context).goNamed()`, `GoRouter.of(context).pushNamed()`, etc.
   - `GoRoute` definitions (`path` and `name` properties)
   - `redirect` callback return strings
+  - `GoRouter` constructor's `initialLocation` argument
 
   and suggests using constants or enums instead.
 
@@ -80,6 +81,14 @@ GoRoute(
 );
 ```
 
+```dart
+// Bad: Hardcoded initialLocation
+GoRouter(initialLocation: '/home', routes: [...]);
+
+// Good: Use a constant
+GoRouter(initialLocation: AppRoutes.home, routes: [...]);
+```
+
 #### 4. Avoid Navigator Named Routes With GoRouter
 
 - **Lint Code:** `avoid_navigator_named_routes_with_go_router`
@@ -96,6 +105,35 @@ Navigator.pushNamed(context, '/details');
 context.goNamed(AppRouteNames.details);
 ```
 
+#### 5. Missing GoRouter Error Handler
+
+- **Lint Code:** `missing_go_router_error_handler`
+- **What it does:** Warns when a `GoRouter` is constructed without either an
+  `errorBuilder` or an `errorPageBuilder`. Without one of these, navigation
+  errors (e.g. unknown routes, guard redirects that produce no match) surface
+  as a blank screen instead of a meaningful error UI.
+
+**Example:**
+
+```dart
+// Bad: no error handler
+final router = GoRouter(routes: [...]);
+
+// Good: provide errorBuilder
+final router = GoRouter(
+  routes: [...],
+  errorBuilder: (context, state) => ErrorPage(state.error),
+);
+
+// Also good: provide errorPageBuilder
+final router = GoRouter(
+  routes: [...],
+  errorPageBuilder: (context, state) => NoTransitionPage(
+    child: ErrorPage(state.error),
+  ),
+);
+```
+
 ## Installation
 
 To integrate `go_router_linter` into your project, follow these steps:
@@ -106,7 +144,7 @@ In your `pubspec.yaml` file, include `go_router_linter` under `dev_dependencies`
 
 ```yaml
 dev_dependencies:
-  go_router_linter: ^0.3.0
+  go_router_linter: ^0.4.0
 ```
 
 ### 2. Update `analysis_options.yaml`
@@ -124,6 +162,7 @@ custom_lint:
     - use_context_directly_for_go_router
     - avoid_hardcoded_routes
     - avoid_navigator_named_routes_with_go_router
+    - missing_go_router_error_handler
 ```
 
 ## Usage
@@ -183,6 +222,19 @@ The linter will suggest using go_router navigation APIs instead:
 ```dart
 context.goNamed(AppRouteNames.details);
 ```
+
+### Missing GoRouter Error Handler
+
+If a `GoRouter` constructor is missing both `errorBuilder` and
+`errorPageBuilder`:
+
+```dart
+final router = GoRouter(routes: [...]);
+```
+
+The linter will warn:
+
+> GoRouter should define an errorBuilder or errorPageBuilder.
 
 ## Contributing
 

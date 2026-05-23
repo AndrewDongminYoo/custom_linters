@@ -118,6 +118,40 @@ class MyButton extends StatelessWidget {
 
 </details>
 
+#### 5. Prefer Specific MediaQuery Accessors
+
+- **Lint Code:** `prefer_media_query_partial_methods`
+- **What it does:** Reports `MediaQuery.of(context).property` accesses that
+  have a dedicated static accessor (e.g. `MediaQuery.sizeOf(context)`).
+  The specific accessors subscribe only to the relevant slice of
+  `MediaQueryData`, so your widget only rebuilds when _that_ value changes —
+  not whenever any field of `MediaQueryData` changes. Requires Flutter 3.10+.
+
+<details>
+<summary>Example</summary>
+
+**Bad:**
+
+```dart
+final size = MediaQuery.of(context).size;
+final padding = MediaQuery.of(context).padding;
+```
+
+**Good:**
+
+```dart
+final size = MediaQuery.sizeOf(context);
+final padding = MediaQuery.paddingOf(context);
+```
+
+Supported accessors: `sizeOf`, `paddingOf`, `viewInsetsOf`, `viewPaddingOf`,
+`textScalerOf`, `devicePixelRatioOf`, `platformBrightnessOf`, `orientationOf`,
+`gestureSettingsOf`, `displayFeaturesOf`, `alwaysUse24HourFormatOf`,
+`accessibleNavigationOf`, `boldTextOf`, `disableAnimationsOf`,
+`highContrastOf`, `invertColorsOf`.
+
+</details>
+
 ## Installation
 
 To integrate `flutter_best_practices_lints` into your project, follow these steps:
@@ -128,7 +162,7 @@ In your `pubspec.yaml`, include `flutter_best_practices_lints` under `dev_depend
 
 ```yaml
 dev_dependencies:
-  flutter_best_practices_lints: ^0.4.0
+  flutter_best_practices_lints: ^0.5.0
 ```
 
 ### 2. Update `analysis_options.yaml`
@@ -146,6 +180,7 @@ custom_lint:
     - single_class_per_file
     - prefer_widget_class_over_widget_helper
     - avoid_widget_operator_equals
+    - prefer_media_query_partial_methods
 ```
 
 ## Usage
@@ -157,6 +192,8 @@ After configuring your project, the linter automatically checks your files and p
 - When a private `Widget _build...` helper is found, it suggests extracting a
   widget class.
 - When a widget overrides `operator ==`, it suggests removing the override.
+- When `MediaQuery.of(context).property` is used where a dedicated accessor
+  exists, it suggests the specific accessor (e.g. `MediaQuery.sizeOf(context)`).
 
 ### Example Lint Warnings
 
