@@ -75,5 +75,6 @@ export 'src/extensions/route_methods_extension.dart';
 export 'src/go_router_lint_plugin.dart' show createPlugin;
 export 'src/rules/avoid_hardcoded_routes.dart';
 export 'src/rules/avoid_navigator_named_routes_with_go_router.dart';
+export 'src/rules/missing_go_router_error_handler.dart';
 export 'src/rules/missing_go_route_name_property.dart';
 export 'src/rules/use_context_directly_for_go_router.dart';

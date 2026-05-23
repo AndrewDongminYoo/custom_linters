@@ -30,11 +30,12 @@ void main() {
           ),
         );
         expect(rules, isA<List<LintRule>>());
-        expect(rules, hasLength(4));
+        expect(rules, hasLength(5));
         expect(rules[0], isA<UseContextDirectlyForGoRouter>());
         expect(rules[1], isA<MissingGoRouteNameProperty>());
         expect(rules[2], isA<AvoidHardcodedRoutes>());
         expect(rules[3], isA<AvoidNavigatorNamedRoutesWithGoRouter>());
+        expect(rules[4], isA<MissingGoRouterErrorHandler>());
       });
     });
   });
