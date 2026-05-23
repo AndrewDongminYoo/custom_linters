@@ -22,6 +22,12 @@
 /// - **Avoid Widget operator ==** (`avoid_widget_operator_equals`):
 ///   Discourages equality overrides on Flutter widget subclasses.
 ///
+/// - **Prefer Specific MediaQuery Accessors**
+///   (`prefer_media_query_partial_methods`):
+///   Encourages using `MediaQuery.sizeOf(context)` and related dedicated
+///   accessors over `MediaQuery.of(context).size` to avoid unnecessary
+///   widget rebuilds (Flutter 3.10+).
+///
 /// ## Structure
 ///
 /// - **Extensions**:
@@ -61,6 +67,7 @@
 ///     - single_class_per_file
 ///     - prefer_widget_class_over_widget_helper
 ///     - avoid_widget_operator_equals
+///     - prefer_media_query_partial_methods
 /// ```
 /// {@endtemplate}
 library;
@@ -71,6 +78,6 @@ export 'src/extensions/lint_code_extension.dart';
 export 'src/flutter_best_practices_plugin.dart';
 export 'src/rules/avoid_widget_operator_equals.dart';
 export 'src/rules/matching_class_and_file_name.dart';
-export 'src/rules/prefer_widget_class_over_widget_helper.dart';
 export 'src/rules/prefer_media_query_partial_methods.dart';
+export 'src/rules/prefer_widget_class_over_widget_helper.dart';
 export 'src/rules/single_class_per_file.dart';
