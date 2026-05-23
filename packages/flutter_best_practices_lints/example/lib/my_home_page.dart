@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_override_of_non_virtual_member
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,15 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+
+  // expect_lint: avoid_widget_operator_equals
+  @override
+  bool operator ==(Object other) {
+    return other is MyHomePage && other.title == title;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -31,6 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  // expect_lint: prefer_widget_class_over_widget_helper
+  Widget _buildCounterText() {
+    return Text('$_counter', style: Theme.of(context).textTheme.headlineMedium);
   }
 
   @override
@@ -71,10 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            _buildCounterText(),
           ],
         ),
       ),

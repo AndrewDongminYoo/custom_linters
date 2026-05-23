@@ -3,3 +3,10 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   plugins:
     - custom_lint
+
+custom_lint:
+  rules:
+    - matching_class_and_file_name
+    - single_class_per_file
+    - prefer_widget_class_over_widget_helper
+    - avoid_widget_operator_equals

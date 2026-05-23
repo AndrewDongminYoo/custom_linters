@@ -4,6 +4,10 @@ This example demonstrates how to use the **`flutter_best_practices_lints`** pack
 
 - **`single_class_per_file`**: Ensures each file contains only one main class.
 - **`matching_class_and_file_name`**: Enforces that the class name (PascalCase) matches the file name (snake_case).
+- **`prefer_widget_class_over_widget_helper`**: Encourages extracting private
+  `Widget _build...` helpers into widget classes.
+- **`avoid_widget_operator_equals`**: Discourages equality overrides on Flutter
+  widget subclasses.
 
 ---
 
@@ -63,15 +67,17 @@ To see **`flutter_best_practices_lints`** in action, run:
 dart run custom_lint
 ```
 
-This command will analyze your code and report any lint warnings or suggestions. For instance, you might see:
+This command validates that the expected lint diagnostics are emitted. In this
+example, you should see:
 
 ```log
 Analyzing...
-  lib/main.dart:20:7 • A file should contain only one class declaration. • single_class_per_file • INFO
-  lib/my_home_page.dart:100:7 • Class name MyHomePage2 must match the file name "my_home_page". • matching_class_and_file_name • INFO
 
-2 issues found.
+No issues found!
 ```
+
+The example files use `expect_lint` comments, so `custom_lint` succeeds when
+the expected lint diagnostics are emitted.
 
 ### What Triggers the Lints?
 
@@ -83,6 +89,15 @@ Analyzing...
    <!-- cSpell:ignore MyhomePage -->
    - If you rename `MyHomePage` or the file itself so they no longer match (e.g., file: `my_home_page.dart`, class: `MyhomePage`), you’ll see a lint message advising you to align the two.
    - **Fix:** Ensure the file name is `my_home_page.dart` and the class name is `MyHomePage`.
+
+3. **`prefer_widget_class_over_widget_helper`**
+   - In `_MyHomePageState`, `_buildCounterText()` returns a `Widget`.
+   - **Fix:** Extract the helper into a dedicated `StatelessWidget`.
+
+4. **`avoid_widget_operator_equals`**
+   - `MyHomePage` overrides `operator ==`.
+   - **Fix:** Remove the equality override and let Flutter use normal widget
+     identity.
 
 By introducing these small “mistakes” in the code, you can see exactly how **`flutter_best_practices_lints`** catches them, providing guidance on how to rectify each situation.
 
@@ -103,6 +118,8 @@ By introducing these small “mistakes” in the code, you can see exactly how *
 - Implements `MyHomePage` as a `StatefulWidget`.
 - Contains `_MyHomePageState`, which manages the counter logic.
 - Also includes a second class, `MyHomePage2`, which demonstrates how `single_class_per_file` will be triggered.
+- Includes `_buildCounterText()`, which demonstrates `prefer_widget_class_over_widget_helper`.
+- Overrides `operator ==`, which demonstrates `avoid_widget_operator_equals`.
 - **Lint Trigger:**
   - `MyHomePage2` violates `single_class_per_file`.
   <!-- cSpell:ignore Myhomepage -->

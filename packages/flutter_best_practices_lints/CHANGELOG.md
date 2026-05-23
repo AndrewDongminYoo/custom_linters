@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.4.0 - 2026-05-23
+
+### Added
+
+- Added `prefer_widget_class_over_widget_helper` to encourage extracting
+  private `Widget _build...` helpers into widget classes.
+- Added `avoid_widget_operator_equals` to discourage equality overrides on
+  Flutter widget subclasses.
+- Added behavior tests for the new Flutter best-practice lint rules.
+
+### Changed
+
+- Updated README, examples, and package docs for the current rule set.
+
 ## 0.3.0 - 2026-02-09
 
 ### Changed

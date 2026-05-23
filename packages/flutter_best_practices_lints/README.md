@@ -61,6 +61,63 @@ class MyHomePage {}
 
 </details>
 
+#### 3. Prefer Widget Class Over Widget Helper
+
+- **Lint Code:** `prefer_widget_class_over_widget_helper`
+- **What it does:** Detects private `Widget _build...` helper functions and
+  methods. Extracting these helpers into widget classes keeps UI reusable and
+  gives Flutter better rebuild boundaries.
+
+<details>
+<summary>Example</summary>
+
+**Bad:**
+
+```dart
+Widget _buildHeader() => const Text('Header');
+```
+
+**Good:**
+
+```dart
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  @override
+  Widget build(BuildContext context) => const Text('Header');
+}
+```
+
+</details>
+
+#### 4. Avoid Widget operator ==
+
+- **Lint Code:** `avoid_widget_operator_equals`
+- **What it does:** Detects `operator ==` overrides in Flutter widget
+  subclasses. Widget equality overrides can make rebuild behavior more
+  expensive and surprising.
+
+<details>
+<summary>Example</summary>
+
+**Bad:**
+
+```dart
+class MyButton extends StatelessWidget {
+  const MyButton({super.key});
+
+  @override
+  bool operator ==(Object other) => other is MyButton;
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
+}
+```
+
+**Good:** Remove the equality override and rely on normal widget identity.
+
+</details>
+
 ## Installation
 
 To integrate `flutter_best_practices_lints` into your project, follow these steps:
@@ -71,10 +128,8 @@ In your `pubspec.yaml`, include `flutter_best_practices_lints` under `dev_depend
 
 ```yaml
 dev_dependencies:
-  flutter_best_practices_lints: ^0.1.0
+  flutter_best_practices_lints: ^0.4.0
 ```
-
-_(Note: Replace `^0.1.0` with the actual version you're using.)_
 
 ### 2. Update `analysis_options.yaml`
 
@@ -89,6 +144,8 @@ custom_lint:
   rules:
     - matching_class_and_file_name
     - single_class_per_file
+    - prefer_widget_class_over_widget_helper
+    - avoid_widget_operator_equals
 ```
 
 ## Usage
@@ -97,6 +154,9 @@ After configuring your project, the linter automatically checks your files and p
 
 - When you have multiple classes in the same file, it will suggest splitting them.
 - When a class name doesn't match the file name (in `snake_case` → `PascalCase` format), it prompts you to rename either the class or the file.
+- When a private `Widget _build...` helper is found, it suggests extracting a
+  widget class.
+- When a widget overrides `operator ==`, it suggests removing the override.
 
 ### Example Lint Warnings
 
