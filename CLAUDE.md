@@ -6,14 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Dart/Flutter monorepo containing custom lint packages built on `custom_lint_builder`. It includes two main packages:
 
-1. **go_router_linter**: Custom lint rules for the `go_router` package
-   - Enforces `name` property in `GoRoute` definitions
-   - Suggests using `context.go()` over `GoRouter.of(context).go()`
-   - Detects hardcoded route strings
+1. **go_router_linter** (`packages/go_router_linter/`) — lint rules for the `go_router` package
+   - `missing_go_route_name_property`: enforces `name` property in `GoRoute`
+   - `use_context_directly_for_go_router`: prefers `context.go()` over `GoRouter.of(context).go()`
+   - `avoid_hardcoded_routes`: bans hardcoded strings in navigation calls, `GoRoute` definitions, `redirect` returns, and `GoRouter(initialLocation:)`
+   - `avoid_navigator_named_routes_with_go_router`: bans `Navigator.*Named` APIs when `go_router` is a dependency
+   - `missing_go_router_error_handler`: requires `errorBuilder` or `errorPageBuilder` on every `GoRouter`
 
-2. **flutter_best_practices_lints**: General Flutter best practice rules
-   - Enforces single class per file
-   - Ensures class names match file names (PascalCase ↔ snake_case)
+2. **flutter_best_practices_lints** (`packages/flutter_best_practices_lints/`) — general Flutter best-practice rules
+   - `single_class_per_file`: one primary class per file (allows paired `State` classes)
+   - `matching_class_and_file_name`: PascalCase class name must match snake_case file name
+   - `prefer_widget_class_over_widget_helper`: bans private `Widget _build...` helper functions
+   - `avoid_widget_operator_equals`: bans `operator ==` overrides on widget subclasses
+   - `prefer_media_query_partial_methods`: prefers `MediaQuery.sizeOf(context)` and sibling accessors over `MediaQuery.of(context).size` (Flutter 3.10+)
 
 ## Essential Commands
 
@@ -137,30 +142,104 @@ class MyLintRule extends DartLintRule {
 ### Code Style
 
 - Uses `very_good_analysis` for consistent code style
-- Import ordering:
-  1. Dart/Flutter packages (commented with `// 🎯`)
-  2. External packages (commented with `// 📦`)
-  3. Project imports (commented with `// 🌎`)
+- Import ordering in **lib files**:
+  1. Dart SDK imports (commented with `// 🐦 Dart imports:`)
+  2. External packages (commented with `// 📦 Package imports:`)
+  3. Project imports (commented with `// 🌎 Project imports:`)
+- Import ordering in **test files**:
+  1. External packages (commented with `// 📦 Package imports:`) — includes the package under test
+  2. Project imports (commented with `// 🌎 Project imports:`) — e.g. `lint_test_utils.dart`
+  3. Test-only packages (commented with `// 🧪 Test imports:`) — e.g. `package:test/test.dart`
 - Prefer const constructors where possible
 - Use template documentation (`/// {@template ...}`)
 
 ### Testing
 
-Tests use the `custom_lint_builder` testing utilities. The typical pattern:
+Each package has a shared `test/src/lint_test_utils.dart` helper that drives all rule tests.
+
+**How `analyzeLintRule` works:**
+
+1. Creates a temporary directory under `test/` (`Directory('test').createTempSync('lint_test_')`)
+2. Writes the test source string to `<tmpdir>/main.dart`
+3. Resolves the file with the real Dart analyzer (`AnalysisContextCollection`)
+4. Runs the rule via `rule.testRun(result)` — returns a list of `AnalysisError`s
+5. Deletes the temp directory in a `finally` block (guaranteed cleanup)
+
+The function returns `List<String>` of lint code names (e.g. `['prefer_media_query_partial_methods']`).
+
+**Typical test pattern:**
 
 ```dart
-void main() {
-  test('lint rule detects issue', () async {
-    // Arrange: Define test code as string
-    final code = '''
-// test code here
-''';
+// 📦 Package imports:
+import 'package:my_lint_package/my_lint_package.dart';
 
-    // Act & Assert: Use custom_lint testing framework
-    // (exact pattern varies by package)
+// 🌎 Project imports:
+import '../lint_test_utils.dart';
+
+// 🧪 Test imports:
+import 'package:test/test.dart';
+
+void main() {
+  group('MyLintRule', () {
+    test('reports the violation', () async {
+      final errors = await analyzeLintRule(
+        const MyLintRule(),
+        '''
+import 'package:flutter/widgets.dart';
+
+// ... Dart source that should trigger the lint
+''',
+      );
+
+      expect(errors, everyElement('my_lint_rule'));
+      expect(errors, hasLength(1));
+    });
+
+    test('ignores compliant code', () async {
+      final errors = await analyzeLintRule(
+        const MyLintRule(),
+        '''
+// ... Dart source that should NOT trigger the lint
+''',
+      );
+
+      expect(errors, isEmpty);
+    });
   });
 }
 ```
+
+**`go_router_linter` only:** `analyzeLintRule` accepts an optional `pubspec` parameter of type `Pubspec` (from `package:pubspec_parse`). Rules that inspect project dependencies (e.g. `avoid_navigator_named_routes_with_go_router`) require a fake pubspec with `go_router` listed to activate.
+
+```dart
+import 'package:pubspec_parse/pubspec_parse.dart';
+
+final errors = await analyzeLintRule(
+  const AvoidNavigatorNamedRoutesWithGoRouter(),
+  source,
+  pubspec: Pubspec('test_app', dependencies: {'go_router': HostedDependency()}),
+);
+```
+
+## Git Workflow
+
+### Commit Granularity in This Monorepo
+
+Each package is versioned and tagged independently. **Commits must be grouped per package** — do not mix changes from `flutter_best_practices_lints` and `go_router_linter` in a single commit.
+
+When a session touches both packages, stage and commit them separately:
+
+```bash
+# 1. Commit flutter_best_practices_lints changes first
+git add packages/flutter_best_practices_lints/
+git commit -m "feat(flutter-lints): ..."
+
+# 2. Then commit go_router_linter changes
+git add packages/go_router_linter/
+git commit -m "feat(go-router-linter): ..."
+```
+
+Root-level files (e.g. `CLAUDE.md`, `melos.yaml`) that affect both packages can be committed independently or grouped with whichever package change is most relevant.
 
 ## CI/CD
 
@@ -178,3 +257,26 @@ The `.github/workflows/main.yaml` pipeline runs:
 - Both packages depend on `analyzer: ^8.4.0` and `custom_lint_builder: ^0.8.1`
 - The monorepo is managed via Dart's built-in workspace feature (not just Melos)
 - Package versions are managed independently in each package's `pubspec.yaml`
+
+### analyzer 8.x Compatibility
+
+`SimpleIdentifier.staticElement` was **removed** in analyzer 8.x. Do not use it.
+
+To verify that an identifier refers to a specific class from a specific library, use the **return type of the call** instead:
+
+```dart
+// ❌ Broken in analyzer 8.x
+final classElement = methodTarget.staticElement;  // staticElement not defined
+if (classElement is! ClassElement || classElement.name != 'MediaQuery') return;
+
+// ✅ Correct: inspect the return type of the MethodInvocation
+final returnElement = invocation.staticType?.element;
+final libraryUri = returnElement?.library?.uri.toString();
+if (returnElement?.name != 'MediaQueryData' ||
+    libraryUri == null ||
+    !libraryUri.startsWith('package:flutter/')) {
+  return;
+}
+```
+
+For `InstanceCreationExpression`, use `element?.library?.uri` on the constructor's static element (accessed via the element model of the creation expression itself, not via a `SimpleIdentifier`).
