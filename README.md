@@ -3,8 +3,8 @@
 A monorepo for various custom lint rules that can enhance your Flutter and Dart code quality.
 Currently, this repository includes:
 
-- **[go_router_linter](./packages/go_router_linter)**: A set of lint rules for the `go_router` package, helping you maintain consistent and robust route definitions in your Flutter apps.
-- **[flutter_best_practices_lints](./packages/flutter_best_practices_lints)**: A collection of lint rules that enforce common best practices in Flutter development, such as matching class names to file names and ensuring only one main class per file.
+- **[go_router_linter](./packages/go_router_linter)**: A set of lint rules for the `go_router` package, helping you maintain consistent and robust route definitions and navigation calls in your Flutter apps.
+- **[flutter_best_practices_lints](./packages/flutter_best_practices_lints)**: A collection of lint rules that enforce focused Flutter structure and widget best practices, such as matching class names to file names, keeping one main class per file, preferring widget classes over private widget helpers, and avoiding widget equality overrides.
 
 ## Contents
 
