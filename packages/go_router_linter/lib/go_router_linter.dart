@@ -27,6 +27,10 @@
 ///   (`avoid_navigator_named_routes_with_go_router`):
 ///   Flags `Navigator.*Named` APIs in projects that depend on `go_router`.
 ///
+/// - **Require GoRouter Error Handler** (`missing_go_router_error_handler`):
+///   Warns when `GoRouter` is constructed without an `errorBuilder` or
+///   `errorPageBuilder`, preventing silent blank screens on unknown routes.
+///
 /// ## Structure
 ///
 /// - **Extensions**:
@@ -43,6 +47,8 @@
 ///     `Navigator.*Named` APIs when `go_router` is present.
 ///   - `missing_go_route_name_property.dart`: Ensures `GoRoute` definitions
 ///     include a `name`.
+///   - `missing_go_router_error_handler.dart`: Reports `GoRouter` constructors
+///     without an `errorBuilder` or `errorPageBuilder`.
 ///   - `use_context_directly_for_go_router.dart`: Advises using `context.go()`
 ///     and related helpers instead of `GoRouter.of(context)`.
 ///
@@ -66,6 +72,7 @@
 ///     - use_context_directly_for_go_router
 ///     - avoid_hardcoded_routes
 ///     - avoid_navigator_named_routes_with_go_router
+///     - missing_go_router_error_handler
 /// ```
 /// {@endtemplate}
 library;
@@ -75,6 +82,6 @@ export 'src/extensions/route_methods_extension.dart';
 export 'src/go_router_lint_plugin.dart' show createPlugin;
 export 'src/rules/avoid_hardcoded_routes.dart';
 export 'src/rules/avoid_navigator_named_routes_with_go_router.dart';
-export 'src/rules/missing_go_router_error_handler.dart';
 export 'src/rules/missing_go_route_name_property.dart';
+export 'src/rules/missing_go_router_error_handler.dart';
 export 'src/rules/use_context_directly_for_go_router.dart';

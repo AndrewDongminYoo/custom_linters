@@ -1,8 +1,9 @@
-// 📦 Package imports:
+// 🌎 Project imports:
 import 'package:go_router_linter/go_router_linter.dart';
+
+// 🧪 Test imports:
 import 'package:test/test.dart';
 
-// 🌎 Project imports:
 import '../lint_test_utils.dart';
 
 void main() {
