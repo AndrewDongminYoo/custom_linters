@@ -59,6 +59,14 @@ class PreferMediaQueryPartialMethods extends DartLintRule {
         return;
       }
 
+      final returnElement = target.staticType?.element;
+      final libraryUri = returnElement?.library?.uri.toString();
+      if (returnElement?.name != 'MediaQueryData' ||
+          libraryUri == null ||
+          !libraryUri.startsWith('package:flutter/')) {
+        return;
+      }
+
       final property = node.propertyName.name;
       final replacement = _propertyToReplacement[property];
       if (replacement == null) return;

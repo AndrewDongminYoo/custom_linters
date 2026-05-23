@@ -1,8 +1,9 @@
-// 📦 Package imports:
+// 🌎 Project imports:
 import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
+
+// 🧪 Test imports:
 import 'package:test/test.dart';
 
-// 🌎 Project imports:
 import '../lint_test_utils.dart';
 
 void main() {

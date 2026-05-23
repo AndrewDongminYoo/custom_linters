@@ -43,6 +43,9 @@
 ///     `Widget _build...` helper functions and methods.
 ///   - `avoid_widget_operator_equals.dart`: Reports `operator ==` overrides on
 ///     widget subclasses.
+///   - `prefer_media_query_partial_methods.dart`: Reports
+///     `MediaQuery.of(context).property` accesses that have a dedicated static
+///     accessor (e.g. `MediaQuery.sizeOf(context)`).
 ///   - `single_class_per_file.dart`: Restricts each file to only one primary
 ///     class definition, ignoring private `State` classes.
 ///
