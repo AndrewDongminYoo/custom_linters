@@ -66,11 +66,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Home Screen')),
       body: Center(
-        child: ElevatedButton(
-          // ! Use context.push instead of GoRouter.of(context).push.
-          // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
-          onPressed: () => GoRouter.of(context).push('/details'),
-          child: const Text('Go to the Details screen'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ElevatedButton(
+              // ! Use context.push instead of GoRouter.of(context).push.
+              // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
+              onPressed: () => GoRouter.of(context).push('/details'),
+              child: const Text('Go to the Details screen'),
+            ),
+            ElevatedButton(
+              // ! Prefer go_router APIs over Navigator named routes.
+              // expect_lint: avoid_navigator_named_routes_with_go_router
+              onPressed: () => Navigator.pushNamed(context, '/details'),
+              child: const Text('Legacy named route'),
+            ),
+          ],
         ),
       ),
     );

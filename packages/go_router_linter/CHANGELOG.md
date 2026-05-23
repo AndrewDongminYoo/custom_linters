@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.3.0 - 2026-05-23
+
+### Added
+
+- Added `avoid_navigator_named_routes_with_go_router` to discourage
+  `Navigator.*Named` APIs when the analyzed project depends on `go_router`.
+- Added behavior tests for strengthened and new go_router lint rules.
+
+### Changed
+
+- Expanded `use_context_directly_for_go_router` to cover current GoRouterHelper
+  methods such as `namedLocation`, `canPop`, and `pop`, while ignoring unrelated
+  `GoRouter.of(context)` access.
+- Updated `avoid_hardcoded_routes` to check route identifier arguments only and
+  to report hardcoded redirect callback return strings.
+- Updated README, examples, and package docs for the current rule set.
+
 ## 0.2.0 - 2026-02-09
 
 ### Changed

@@ -7,15 +7,37 @@
 extension RouteMethodExtension on String {
   /// {@macro route_methods_extension}
   bool get isRouteMethod {
+    return isLocationRouteMethod || isNamedRouteMethod || isRouterHelperMethod;
+  }
+
+  /// Whether this method accepts a location string as its first argument.
+  bool get isLocationRouteMethod {
     const routeMethods = {
       'go',
-      'goNamed',
       'push',
-      'pushNamed',
       'pushReplacement',
-      'pushReplacementNamed',
       'replace',
+    };
+    return routeMethods.contains(this);
+  }
+
+  /// Whether this method accepts a route name as its first argument.
+  bool get isNamedRouteMethod {
+    const routeMethods = {
+      'goNamed',
+      'namedLocation',
+      'pushNamed',
+      'pushReplacementNamed',
       'replaceNamed',
+    };
+    return routeMethods.contains(this);
+  }
+
+  /// Whether this method is available on the GoRouterHelper extension.
+  bool get isRouterHelperMethod {
+    const routeMethods = {
+      'canPop',
+      'pop',
     };
     return routeMethods.contains(this);
   }

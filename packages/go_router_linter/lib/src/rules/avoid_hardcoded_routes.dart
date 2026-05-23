@@ -33,23 +33,22 @@ class AvoidHardcodedRoutes extends DartLintRule {
     DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
-    // ignore: discarded_futures
-    resolver.getResolvedUnitResult().then((unit) {
-      unit.unit.visitChildren(_AvoidHardcodedRoutesVisitor(reporter, context));
-    });
+    final visitor = _AvoidHardcodedRoutesVisitor(reporter);
+    context.registry.addMethodInvocation(visitor.checkMethodInvocation);
+    context.registry.addInstanceCreationExpression(
+      visitor.checkInstanceCreationExpression,
+    );
   }
 }
 
-class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
-  _AvoidHardcodedRoutesVisitor(this.reporter, this.context);
+class _AvoidHardcodedRoutesVisitor {
+  _AvoidHardcodedRoutesVisitor(this.reporter);
 
   final DiagnosticReporter reporter;
-  final CustomLintContext context;
 
-  @override
-  void visitMethodInvocation(MethodInvocation node) {
+  void checkMethodInvocation(MethodInvocation node) {
     final methodName = node.methodName.name;
-    if (methodName.isRouteMethod) {
+    if (methodName.isLocationRouteMethod || methodName.isNamedRouteMethod) {
       // Verify that the call target is a GoRouter
       // Example: GoRouter.of(context).go('/details')
       final target = node.target;
@@ -62,23 +61,26 @@ class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
           target is SimpleIdentifier && target.name == 'context';
 
       if (isGoRouterCall || isContextExtension) {
-        for (final argument in node.argumentList.arguments) {
-          // Check arguments for hardcoded strings
-          if (argument is StringLiteral) {
-            reporter.atNode(argument, AvoidHardcodedRoutes._code);
-          }
+        final routeArgument = node.argumentList.arguments
+            .where((argument) => argument is! NamedExpression)
+            .firstOrNull;
+
+        if (routeArgument is StringLiteral) {
+          reporter.atNode(routeArgument, AvoidHardcodedRoutes._code);
         }
       }
     }
-
-    super.visitMethodInvocation(node);
   }
 
-  @override
-  void visitInstanceCreationExpression(InstanceCreationExpression node) {
+  void checkInstanceCreationExpression(InstanceCreationExpression node) {
     final element = node.staticType?.element;
-    // Check if the class being instantiated is GoRoute
-    if (element is ClassElement && element.name == 'GoRoute') {
+    if (element is ClassElement &&
+        {
+          'GoRoute',
+          'GoRouter',
+          'ShellRoute',
+          'StatefulShellRoute',
+        }.contains(element.name)) {
       final arguments = node.argumentList.arguments;
 
       // Check `path` argument if it is a hardcoded string
@@ -90,11 +92,44 @@ class _AvoidHardcodedRoutesVisitor extends RecursiveAstVisitor<void> {
             if (arg.expression is StringLiteral) {
               reporter.atNode(arg.expression, AvoidHardcodedRoutes._code);
             }
+          } else if (paramName == 'redirect') {
+            _reportRedirectStrings(arg.expression);
           }
         }
       }
     }
+  }
 
-    super.visitInstanceCreationExpression(node);
+  void _reportRedirectStrings(Expression expression) {
+    if (expression is! FunctionExpression) return;
+
+    final body = expression.body;
+    if (body is ExpressionFunctionBody) {
+      final redirectExpression = body.expression;
+      if (redirectExpression is StringLiteral) {
+        reporter.atNode(redirectExpression, AvoidHardcodedRoutes._code);
+      }
+      return;
+    }
+
+    if (body is BlockFunctionBody) {
+      body.visitChildren(_RedirectStringVisitor(reporter));
+    }
+  }
+}
+
+class _RedirectStringVisitor extends RecursiveAstVisitor<void> {
+  _RedirectStringVisitor(this.reporter);
+
+  final DiagnosticReporter reporter;
+
+  @override
+  void visitReturnStatement(ReturnStatement node) {
+    final expression = node.expression;
+    if (expression is StringLiteral) {
+      reporter.atNode(expression, AvoidHardcodedRoutes._code);
+    }
+
+    super.visitReturnStatement(node);
   }
 }

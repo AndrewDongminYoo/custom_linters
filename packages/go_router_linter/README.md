@@ -50,6 +50,7 @@ context.go('/home');
   - `context.go()`, `context.push()`, `context.goNamed()`, `context.pushNamed()`, etc.
   - `GoRouter.of(context).go()`, `GoRouter.of(context).push()`, `GoRouter.of(context).goNamed()`, `GoRouter.of(context).pushNamed()`, etc.
   - `GoRoute` definitions (`path` and `name` properties)
+  - `redirect` callback return strings
 
   and suggests using constants or enums instead.
 
@@ -79,6 +80,22 @@ GoRoute(
 );
 ```
 
+#### 4. Avoid Navigator Named Routes With GoRouter
+
+- **Lint Code:** `avoid_navigator_named_routes_with_go_router`
+- **What it does:** Detects `Navigator.*Named` APIs in projects that depend on
+  `go_router`, and suggests using go_router navigation APIs instead.
+
+**Example:**
+
+```dart
+// Bad
+Navigator.pushNamed(context, '/details');
+
+// Good
+context.goNamed(AppRouteNames.details);
+```
+
 ## Installation
 
 To integrate `go_router_linter` into your project, follow these steps:
@@ -89,7 +106,7 @@ In your `pubspec.yaml` file, include `go_router_linter` under `dev_dependencies`
 
 ```yaml
 dev_dependencies:
-  go_router_linter: ^0.1.0
+  go_router_linter: ^0.3.0
 ```
 
 ### 2. Update `analysis_options.yaml`
@@ -106,6 +123,7 @@ custom_lint:
     - missing_go_route_name_property
     - use_context_directly_for_go_router
     - avoid_hardcoded_routes
+    - avoid_navigator_named_routes_with_go_router
 ```
 
 ## Usage
@@ -150,6 +168,21 @@ If a hardcoded route string is detected in `context.go('/profile')`:
 If a hardcoded route string is detected in a `GoRoute` definition:
 
 > Avoid hardcoded route paths. Use constants or enums for routes.
+
+### Avoiding Navigator Named Routes With GoRouter
+
+If a `Navigator.*Named` API is detected in a project that depends on
+`go_router`:
+
+```dart
+Navigator.pushNamed(context, '/details');
+```
+
+The linter will suggest using go_router navigation APIs instead:
+
+```dart
+context.goNamed(AppRouteNames.details);
+```
 
 ## Contributing
 

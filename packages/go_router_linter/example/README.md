@@ -4,7 +4,7 @@ This example app demonstrates the use of the go_router_linter package to ensure 
 
 Purpose
 
-The app showcases how go_router_linter detects and provides actionable feedback when non-idiomatic navigation patterns (e.g., GoRouter.of(context).go('/home')) are used. It highlights the benefits of replacing such patterns with concise alternatives like context.go('/home').
+The app showcases how go_router_linter detects and provides actionable feedback when non-idiomatic navigation patterns (e.g., GoRouter.of(context).go('/home') or Navigator.pushNamed(context, '/details')) are used. It highlights the benefits of replacing such patterns with concise alternatives like context.go('/home') or context.goNamed(AppRouteNames.details).
 
 Getting Started
 
@@ -49,33 +49,31 @@ To see the go_router_linter in action:
 
 1. Open the main.dart file.
 
-2. Introduce a non-idiomatic pattern, such as:
+2. Inspect the intentional lint examples marked with `expect_lint`, such as:
 
 ```dart
 GoRouter.of(context).go('/details');
 ```
 
-3. Save the file. The linter will highlight this code with a warning:
+3. Run the linter. The command succeeds when the expected lints are emitted:
 
 ```sh
 $ dart run custom_lint
 Building package executable... (2.0s)
 Built custom_lint:custom_lint.
-Analyzing...                           0.0s
+Analyzing...
 
-  lib/main.dart:61:28 • Use context.push instead of GoRouter.of(context).push. • use_context_directly_for_go_router • INFO
-  lib/main.dart:81:28 • Use context.go instead of GoRouter.of(context).go. • use_context_directly_for_go_router • INFO
-
-2 issues found.
+No issues found!
 ```
 
-4. Replace the flagged code with the idiomatic version:
+4. Replace the intentionally bad code with the idiomatic version:
 
 ```dart
 context.go('/details');
 ```
 
-The warning will disappear, showcasing the benefits of using go_router_linter for improved code quality and consistency.
+Remove the matching `expect_lint` comment after fixing the code. The example
+then stays clean while showing the intended migration path.
 
 Code Overview
 

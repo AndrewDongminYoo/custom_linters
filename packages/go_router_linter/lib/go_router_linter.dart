@@ -20,7 +20,12 @@
 ///
 /// - **Use `context.go()` Instead of `GoRouter.of(context).go()`**
 ///   (`use_context_directly_for_go_router`):
-///   Suggests the more concise and idiomatic `context.go()` calls.
+///   Suggests the more concise and idiomatic `BuildContext` helper calls,
+///   such as `context.go()`, `context.namedLocation()`, and `context.pop()`.
+///
+/// - **Avoid Navigator Named Routes With GoRouter**
+///   (`avoid_navigator_named_routes_with_go_router`):
+///   Flags `Navigator.*Named` APIs in projects that depend on `go_router`.
 ///
 /// ## Structure
 ///
@@ -33,11 +38,13 @@
 ///
 /// - **Rules**:
 ///   - `avoid_hardcoded_routes.dart`: Checks for hardcoded route strings in
-///     route methods and `GoRoute` definitions.
+///     route methods, redirects, and `GoRoute` definitions.
+///   - `avoid_navigator_named_routes_with_go_router.dart`: Discourages
+///     `Navigator.*Named` APIs when `go_router` is present.
 ///   - `missing_go_route_name_property.dart`: Ensures `GoRoute` definitions
 ///     include a `name`.
 ///   - `use_context_directly_for_go_router.dart`: Advises using `context.go()`
-///     instead of `GoRouter.of(context).go()`.
+///     and related helpers instead of `GoRouter.of(context)`.
 ///
 /// - **Plugin Entrypoint**:
 ///   - `go_router_linter.dart`: Defines the plugin and registers all available
@@ -58,6 +65,7 @@
 ///     - missing_go_route_name_property
 ///     - use_context_directly_for_go_router
 ///     - avoid_hardcoded_routes
+///     - avoid_navigator_named_routes_with_go_router
 /// ```
 /// {@endtemplate}
 library;
@@ -66,5 +74,6 @@ export 'src/extensions/lint_code_extension.dart';
 export 'src/extensions/route_methods_extension.dart';
 export 'src/go_router_lint_plugin.dart' show createPlugin;
 export 'src/rules/avoid_hardcoded_routes.dart';
+export 'src/rules/avoid_navigator_named_routes_with_go_router.dart';
 export 'src/rules/missing_go_route_name_property.dart';
 export 'src/rules/use_context_directly_for_go_router.dart';

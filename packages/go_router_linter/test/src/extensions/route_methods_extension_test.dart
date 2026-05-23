@@ -9,6 +9,9 @@ void main() {
     test('isRouteMethod returns true for known route methods', () {
       expect('go'.isRouteMethod, isTrue);
       expect('goNamed'.isRouteMethod, isTrue);
+      expect('namedLocation'.isRouteMethod, isTrue);
+      expect('canPop'.isRouteMethod, isTrue);
+      expect('pop'.isRouteMethod, isTrue);
       expect('push'.isRouteMethod, isTrue);
       expect('pushNamed'.isRouteMethod, isTrue);
       expect('pushReplacement'.isRouteMethod, isTrue);
@@ -20,6 +23,7 @@ void main() {
     test('isRouteMethod returns false for unknown methods', () {
       expect('l10n'.isRouteMethod, isFalse);
       expect('navigate'.isRouteMethod, isFalse);
+      expect('refresh'.isRouteMethod, isFalse);
     });
   });
 }

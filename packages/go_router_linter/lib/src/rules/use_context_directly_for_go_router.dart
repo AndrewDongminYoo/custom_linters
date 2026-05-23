@@ -5,6 +5,7 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 // 🌎 Project imports:
 import 'package:go_router_linter/src/extensions/lint_code_extension.dart';
+import 'package:go_router_linter/src/extensions/route_methods_extension.dart';
 
 /// {@template use_context_directly_for_go_router}
 /// A custom lint rule that checks for the use of `GoRouter.of(context).go()`
@@ -38,18 +39,21 @@ class UseContextDirectlyForGoRouter extends DartLintRule {
           (node.target! as Identifier).name == 'GoRouter' &&
           node.argumentList.arguments.length == 1 &&
           node.argumentList.arguments.first is SimpleIdentifier) {
-        // Ensure the parent is a MethodInvocation
-        if (node.parent is MethodInvocation) {
-          final parent = node.parent! as MethodInvocation;
-          if (parent.methodName.name.isNotEmpty) {
-            // Get the method name (e.g., `go`, `push`)
-            final name = parent.methodName.name;
-            // Generate a dynamic problem message
-            final message =
-                'Use context.$name instead of GoRouter.of(context).$name.';
-            reporter.atNode(parent, code.copyWith(correctionMessage: message));
-          }
+        final parent = node.parent;
+        if (parent is! MethodInvocation || parent.target != node) {
+          return;
         }
+
+        final name = parent.methodName.name;
+        if (!name.isRouteMethod) {
+          return;
+        }
+
+        final contextName =
+            (node.argumentList.arguments.first as SimpleIdentifier).name;
+        final message =
+            'Use $contextName.$name instead of GoRouter.of($contextName).$name.';
+        reporter.atNode(parent, code.copyWith(correctionMessage: message));
       }
     });
   }
