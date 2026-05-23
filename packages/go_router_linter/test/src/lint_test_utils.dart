@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-// ignore: depend_on_referenced_packages
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 Future<List<String>> analyzeLintRule(

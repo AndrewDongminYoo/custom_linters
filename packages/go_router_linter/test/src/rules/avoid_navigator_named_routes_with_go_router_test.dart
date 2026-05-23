@@ -2,7 +2,6 @@
 import 'package:go_router_linter/go_router_linter.dart';
 
 // 📦 Package imports:
-// ignore: depend_on_referenced_packages
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 // 🧪 Test imports:
