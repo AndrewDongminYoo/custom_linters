@@ -12,7 +12,8 @@
 
 ## File Map
 
-**flutter_best_practices_lints**
+### flutter_best_practices_lints
+
 - Create: `packages/flutter_best_practices_lints/lib/src/rules/prefer_media_query_partial_methods.dart`
 - Create: `packages/flutter_best_practices_lints/test/src/rules/prefer_media_query_partial_methods_test.dart`
 - Modify: `packages/flutter_best_practices_lints/lib/flutter_best_practices_lints.dart` — add export
@@ -20,7 +21,8 @@
 - Modify: `packages/flutter_best_practices_lints/pubspec.yaml` — bump version 0.4.0 → 0.5.0
 - Modify: `packages/flutter_best_practices_lints/CHANGELOG.md` — add 0.5.0 entry
 
-**go_router_linter**
+### go_router_linter
+
 - Create: `packages/go_router_linter/lib/src/rules/missing_go_router_error_handler.dart`
 - Create: `packages/go_router_linter/test/src/rules/missing_go_router_error_handler_test.dart`
 - Modify: `packages/go_router_linter/lib/go_router_linter.dart` — add export
@@ -35,6 +37,7 @@
 ## Task 1: `prefer_media_query_partial_methods` — Test
 
 **Files:**
+
 - Create: `packages/flutter_best_practices_lints/test/src/rules/prefer_media_query_partial_methods_test.dart`
 
 - [ ] **Step 1.1: Create the failing test file**
@@ -133,6 +136,7 @@ Expected output contains: `Error: Getter 'PreferMediaQueryPartialMethods' isn't 
 ## Task 2: `prefer_media_query_partial_methods` — Implementation
 
 **Files:**
+
 - Create: `packages/flutter_best_practices_lints/lib/src/rules/prefer_media_query_partial_methods.dart`
 - Modify: `packages/flutter_best_practices_lints/lib/flutter_best_practices_lints.dart`
 - Modify: `packages/flutter_best_practices_lints/lib/src/flutter_best_practices_plugin.dart`
@@ -285,6 +289,7 @@ git commit -m "feat(flutter-lints): add prefer_media_query_partial_methods rule"
 ## Task 3: `missing_go_router_error_handler` — Test
 
 **Files:**
+
 - Create: `packages/go_router_linter/test/src/rules/missing_go_router_error_handler_test.dart`
 
 - [ ] **Step 3.1: Create the failing test file**
@@ -373,6 +378,7 @@ Expected output contains: `Error: Getter 'MissingGoRouterErrorHandler' isn't def
 ## Task 4: `missing_go_router_error_handler` — Implementation
 
 **Files:**
+
 - Create: `packages/go_router_linter/lib/src/rules/missing_go_router_error_handler.dart`
 - Modify: `packages/go_router_linter/lib/go_router_linter.dart`
 - Modify: `packages/go_router_linter/lib/src/go_router_lint_plugin.dart`
@@ -501,6 +507,7 @@ git commit -m "feat(go-router-linter): add missing_go_router_error_handler rule"
 ## Task 5: `avoid_hardcoded_routes` — `initialLocation` Extension
 
 **Files:**
+
 - Modify: `packages/go_router_linter/lib/src/rules/avoid_hardcoded_routes.dart`
 - Modify: `packages/go_router_linter/test/src/rules/avoid_hardcoded_routes_test.dart`
 
@@ -608,6 +615,7 @@ git commit -m "feat(go-router-linter): extend avoid_hardcoded_routes to check in
 ## Task 6: Version Bumps and CHANGELOGs
 
 **Files:**
+
 - Modify: `packages/flutter_best_practices_lints/pubspec.yaml`
 - Modify: `packages/flutter_best_practices_lints/CHANGELOG.md`
 - Modify: `packages/go_router_linter/pubspec.yaml`
@@ -616,10 +624,13 @@ git commit -m "feat(go-router-linter): extend avoid_hardcoded_routes to check in
 - [ ] **Step 6.1: Bump `flutter_best_practices_lints` to 0.5.0**
 
 In `packages/flutter_best_practices_lints/pubspec.yaml`, change:
+
 ```yaml
 version: 0.4.0
 ```
+
 to:
+
 ```yaml
 version: 0.5.0
 ```
@@ -634,16 +645,18 @@ Prepend to `packages/flutter_best_practices_lints/CHANGELOG.md`:
 ### Added
 
 - Added `prefer_media_query_partial_methods` to encourage `MediaQuery.sizeOf(context)` and sibling accessors over `MediaQuery.of(context).size` to reduce unnecessary widget rebuilds (Flutter 3.10+).
-
 ```
 
 - [ ] **Step 6.3: Bump `go_router_linter` to 0.4.0**
 
 In `packages/go_router_linter/pubspec.yaml`, change:
+
 ```yaml
 version: 0.3.0
 ```
+
 to:
+
 ```yaml
 version: 0.4.0
 ```
@@ -659,7 +672,6 @@ Prepend to `packages/go_router_linter/CHANGELOG.md`:
 
 - Added `missing_go_router_error_handler` to warn when `GoRouter` is constructed without an `errorBuilder` or `errorPageBuilder`.
 - Extended `avoid_hardcoded_routes` to report hardcoded `initialLocation` strings in `GoRouter` constructors.
-
 ```
 
 - [ ] **Step 6.5: Verify full monorepo analysis**

@@ -20,29 +20,30 @@ grounded in official Flutter and go_router documentation.
 specific value, reducing unnecessary rebuilds.
 
 **Detection:** `PropertyAccess` node where:
+
 - The target is a `MethodInvocation` with method name `of` on `MediaQuery`
 - The accessed property has a corresponding dedicated static accessor
 
 **Covered property → replacement mapping:**
 
-| Property | Replacement |
-|---|---|
-| `size` | `MediaQuery.sizeOf(context)` |
-| `padding` | `MediaQuery.paddingOf(context)` |
-| `viewInsets` | `MediaQuery.viewInsetsOf(context)` |
-| `viewPadding` | `MediaQuery.viewPaddingOf(context)` |
-| `textScaler` | `MediaQuery.textScalerOf(context)` |
-| `devicePixelRatio` | `MediaQuery.devicePixelRatioOf(context)` |
-| `platformBrightness` | `MediaQuery.platformBrightnessOf(context)` |
-| `orientation` | `MediaQuery.orientationOf(context)` |
-| `gestureSettings` | `MediaQuery.gestureSettingsOf(context)` |
-| `displayFeatures` | `MediaQuery.displayFeaturesOf(context)` |
+| Property                | Replacement                                   |
+| ----------------------- | --------------------------------------------- |
+| `size`                  | `MediaQuery.sizeOf(context)`                  |
+| `padding`               | `MediaQuery.paddingOf(context)`               |
+| `viewInsets`            | `MediaQuery.viewInsetsOf(context)`            |
+| `viewPadding`           | `MediaQuery.viewPaddingOf(context)`           |
+| `textScaler`            | `MediaQuery.textScalerOf(context)`            |
+| `devicePixelRatio`      | `MediaQuery.devicePixelRatioOf(context)`      |
+| `platformBrightness`    | `MediaQuery.platformBrightnessOf(context)`    |
+| `orientation`           | `MediaQuery.orientationOf(context)`           |
+| `gestureSettings`       | `MediaQuery.gestureSettingsOf(context)`       |
+| `displayFeatures`       | `MediaQuery.displayFeaturesOf(context)`       |
 | `alwaysUse24HourFormat` | `MediaQuery.alwaysUse24HourFormatOf(context)` |
-| `accessibleNavigation` | `MediaQuery.accessibleNavigationOf(context)` |
-| `boldText` | `MediaQuery.boldTextOf(context)` |
-| `disableAnimations` | `MediaQuery.disableAnimationsOf(context)` |
-| `highContrast` | `MediaQuery.highContrastOf(context)` |
-| `invertColors` | `MediaQuery.invertColorsOf(context)` |
+| `accessibleNavigation`  | `MediaQuery.accessibleNavigationOf(context)`  |
+| `boldText`              | `MediaQuery.boldTextOf(context)`              |
+| `disableAnimations`     | `MediaQuery.disableAnimationsOf(context)`     |
+| `highContrast`          | `MediaQuery.highContrastOf(context)`          |
+| `invertColors`          | `MediaQuery.invertColorsOf(context)`          |
 
 **Correction message:** Dynamic per property, e.g.
 `Use MediaQuery.sizeOf(context) instead.`
@@ -51,6 +52,7 @@ specific value, reducing unnecessary rebuilds.
 is out of scope to avoid false positives.
 
 **Tests:**
+
 - Reports `MediaQuery.of(ctx).size`
 - Reports `MediaQuery.of(ctx).padding`
 - Does not report `MediaQuery.sizeOf(ctx)`
@@ -65,12 +67,14 @@ renders a blank/debug screen when an unknown route is pushed. Production apps
 should always define a custom error screen.
 
 **Detection:** `InstanceCreationExpression` where:
+
 - The static type element name is `GoRouter`
 - Neither `errorBuilder` nor `errorPageBuilder` appears in the argument list
 
 **LintCode severity:** warning
 
 **Tests:**
+
 - Reports `GoRouter(routes: [...])`
 - Does not report `GoRouter(routes: [...], errorBuilder: (_, __) => const NotFoundPage())`
 - Does not report `GoRouter(routes: [...], errorPageBuilder: ...)`
@@ -88,6 +92,7 @@ add `initialLocation` to the set of checked named parameters when the enclosing
 class is `GoRouter`.
 
 **Tests:**
+
 - Reports `GoRouter(initialLocation: '/home')`
 - Does not report `GoRouter(initialLocation: AppRoutes.home)`
 
