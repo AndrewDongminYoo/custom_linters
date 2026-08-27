@@ -2,7 +2,6 @@
 set -euo pipefail
 
 readonly PROJECT_BOOTSTRAP="melos"
-readonly INSTALL_FIREBASE_TOOLS="0"
 readonly EXTRA_DART_TOOL=""
 
 readonly FLUTTER_INSTALL_DIR="${HOME}/flutter"
@@ -56,11 +55,6 @@ aarch64 | arm64) FLUTTER_ARCH="arm64" ;;
 *) die "Unsupported Flutter host architecture: $(uname -m)" ;;
 esac
 export FLUTTER_ARCH FLUTTER_RELEASES_URL
-
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-readonly SCRIPT_DIR
-[[ -f ${SCRIPT_DIR}/pubspec.yaml ]] || die "pubspec.yaml not found at ${SCRIPT_DIR}."
-cd "${SCRIPT_DIR}"
 
 TMP_DIR="$(mktemp -d)"
 readonly TMP_DIR
@@ -158,7 +152,7 @@ export PATH="${FLUTTER_INSTALL_DIR}/bin:${PUB_CACHE}/bin:${TRUNK_INSTALL_DIR}:${
 "${DART_BIN}" --version
 "${FLUTTER_BIN}" precache --linux --web
 
-for package_name in melos merry flutterfire_cli "${EXTRA_DART_TOOL}"; do
+for package_name in melos merry "${EXTRA_DART_TOOL}"; do
 	[[ -n ${package_name} ]] || continue
 	echo "Activating latest compatible ${package_name}..."
 	"${DART_BIN}" pub global activate "${package_name}"
@@ -170,13 +164,6 @@ chmod 0755 "${TMP_DIR}/trunk"
 mkdir -p "${TRUNK_INSTALL_DIR}"
 mv -f "${TMP_DIR}/trunk" "${TRUNK_INSTALL_DIR}/trunk"
 "${TRUNK_INSTALL_DIR}/trunk" --version
-
-if [[ ${INSTALL_FIREBASE_TOOLS} == "1" ]]; then
-	need_cmd npm
-	echo "Installing latest compatible firebase-tools..."
-	npm install --global --prefix "${HOME}/.local" firebase-tools
-	"${HOME}/.local/bin/firebase" --version
-fi
 
 run_flutter_pub_get() {
 	if git ls-files --error-unmatch pubspec.lock >/dev/null 2>&1; then
