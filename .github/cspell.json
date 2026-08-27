@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-  "dictionaries": ["vgv_allowed", "vgv_forbidden"],
+  "dictionaries": ["vgv_allowed", "vgv_forbidden", "dart", "en-gb"],
   "dictionaryDefinitions": [
     {
       "name": "vgv_allowed",
@@ -15,8 +15,9 @@
     }
   ],
   "suggestionsTimeout": 5000,
-  "allowCompoundWords": true,
+  "allowCompoundWords": false,
   "useGitignore": true,
+  "ignorePaths": ["**/doc/api/**"],
   "ignoreWords": ["plaintext", "subosito", "Verdana", "white-space"],
   "words": ["Dongmin"]
 }

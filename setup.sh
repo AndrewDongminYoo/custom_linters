@@ -25,6 +25,7 @@ need_cmd() {
 	command -v "$1" >/dev/null 2>&1 || die "'$1' command is required but not found."
 }
 
+# cspell:ignore tlsv
 download() {
 	curl --fail --location --silent --show-error \
 		--retry 3 --retry-delay 2 \
@@ -65,6 +66,7 @@ TMP_DIR="$(mktemp -d)"
 readonly TMP_DIR
 trap cleanup EXIT
 
+# cspell:ignore urllib,urlopen
 release_info="$(
 	python3 - <<'PY'
 import json
