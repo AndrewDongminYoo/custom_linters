@@ -40,5 +40,5 @@ melos:
       description: Check Dart file formatting for all packages in this project.
 
     analyze:
-      run: melos exec -- "dart analyze ."
+      run: melos exec --concurrency=1 -- "dart analyze ."
       description: Analyze all Dart files in this project.
