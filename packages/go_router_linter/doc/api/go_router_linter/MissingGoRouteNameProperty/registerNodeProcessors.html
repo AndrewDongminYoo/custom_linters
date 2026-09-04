@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the run method from the MissingGoRouteNameProperty class, for the Dart programming language."
+      content="API docs for the registerNodeProcessors method from the MissingGoRouteNameProperty class, for the Dart programming language."
     />
     <title>
-      run method - MissingGoRouteNameProperty class - go_router_linter library -
-      Dart API
+      registerNodeProcessors method - MissingGoRouteNameProperty class -
+      go_router_linter library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -53,9 +53,9 @@
             >MissingGoRouteNameProperty</a
           >
         </li>
-        <li class="self-crumb">run method</li>
+        <li class="self-crumb">registerNodeProcessors method</li>
       </ol>
-      <div class="self-name">run</div>
+      <div class="self-name">registerNodeProcessors</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -96,7 +96,9 @@
         data-below-sidebar=""
       >
         <div>
-          <h1><span class="kind-method">run</span> method</h1>
+          <h1>
+            <span class="kind-method">registerNodeProcessors</span> method
+          </h1>
         </div>
 
         <section class="multi-line-signature">
@@ -111,36 +113,25 @@
             </ol>
           </div>
           <span class="returntype">void</span>
-          <span class="name">run</span>(<wbr />
+          <span class="name">registerNodeProcessors</span>(<wbr />
           <ol class="parameter-list single-line">
             <li>
-              <span class="parameter" id="run-param-resolver"
+              <span class="parameter" id="registerNodeProcessors-param-registry"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintResolver-class.html"
-                    >CustomLintResolver</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_visitor_registry/RuleVisitorRegistry-class.html"
+                    >RuleVisitorRegistry</a
                   ></span
                 >
-                <span class="parameter-name">resolver</span>,
+                <span class="parameter-name">registry</span>,
               </span>
             </li>
             <li>
-              <span class="parameter" id="run-param-reporter"
+              <span class="parameter" id="registerNodeProcessors-param-context"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/8.4.0/error_listener/DiagnosticReporter-class.html"
-                    >DiagnosticReporter</a
-                  ></span
-                >
-                <span class="parameter-name">reporter</span>,
-              </span>
-            </li>
-            <li>
-              <span class="parameter" id="run-param-context"
-                ><span class="type-annotation"
-                  ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintContext-class.html"
-                    >CustomLintContext</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_context/RuleContext-class.html"
+                    >RuleContext</a
                   ></span
                 >
                 <span class="parameter-name">context</span></span
@@ -153,30 +144,22 @@
         </section>
 
         <section class="desc markdown">
-          <p>Emits lints for a given file.</p>
+          <p>Registers node processors in the given <code>registry</code>.</p>
           <p>
-            <a href="../../go_router_linter/MissingGoRouteNameProperty/run.html"
-              >run</a
-            >
-            will only be invoked with files respecting
-            <a
-              href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/DartLintRule/filesToAnalyze.html"
-              >filesToAnalyze</a
-            >
+            The node processors may use the provided <code>context</code> to
+            access information that is not available from the AST nodes or their
+            associated elements.
           </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre class="language-dart"><code class="language-dart">@override
-void run(
-  CustomLintResolver resolver,
-  DiagnosticReporter reporter,
-  CustomLintContext context,
+void registerNodeProcessors(
+  RuleVisitorRegistry registry,
+  RuleContext context,
 ) {
-  resolver.getResolvedUnitResult().then((unit) {
-    unit.unit.visitChildren(_GoRouteVisitor(reporter, context));
-  });
+  registry.addInstanceCreationExpression(this, _Visitor(this));
 }</code></pre>
         </section>
       </div>
@@ -204,7 +187,7 @@ void run(
               >MissingGoRouteNameProperty</a
             >
           </li>
-          <li class="self-crumb">run method</li>
+          <li class="self-crumb">registerNodeProcessors method</li>
         </ol>
 
         <h5>MissingGoRouteNameProperty class</h5>
@@ -218,7 +201,7 @@ void run(
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

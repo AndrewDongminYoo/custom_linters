@@ -1,93 +1,33 @@
-# Example App for go_router_linter
+# Go Router Linter Example
 
-This example app demonstrates the use of the go_router_linter package to ensure consistent and idiomatic usage of navigation methods in Flutter applications using the go_router package. It uses a sample app inspired by the official go_router example.
+This Flutter app contains source patterns used to demonstrate the five `go_router_linter` diagnostics with `go_router 17.5.0`.
+It is an inner package in this repository's pub workspace, so its committed `analysis_options.yaml` intentionally does not contain a top-level `plugins:` block.
 
-Purpose
+## Requirements
 
-The app showcases how go_router_linter detects and provides actionable feedback when non-idiomatic navigation patterns (e.g., GoRouter.of(context).go('/home') or Navigator.pushNamed(context, '/details')) are used. It highlights the benefits of replacing such patterns with concise alternatives like context.go('/home') or context.goNamed(AppRouteNames.details).
+- Dart `>=3.11.0 <4.0.0`.
+- A compatible stable Flutter SDK.
+- `go_router 17.5.0`, as pinned in this example.
 
-Getting Started
+## Run the App
 
-Requirements
-
-```log
-•	Dart SDK: >=3.5.0
-•	Flutter: >=3.10.0
-•	go_router package installed
-```
-
-Clone the Repository
-
-To run the example, clone the repository and navigate to the example directory:
-
-```sh
-git clone https://github.com/andrewdongminyu/go_router_linter.git
-cd go_router_linter/example
-```
-
-Install Dependencies
-
-Run the following command to install the necessary dependencies:
-
-```sh
+```bash
 flutter pub get
-```
-
-Run the App
-
-Launch the app using the Flutter CLI:
-
-```sh
 flutter run
 ```
 
-The app should start, and you can interact with its navigation features.
+## Verify the Plugin Host
 
-Linter Demonstration
+Run the standalone consumer harness from the repository root.
+The harness creates a temporary consumer outside the workspace, adds the official plugin configuration at that consumer's root, and checks violating, compliant, disabled, and plugin-qualified-ignore scenarios.
 
-To see the go_router_linter in action:
-
-1. Open the main.dart file.
-
-2. Inspect the intentional lint examples marked with `expect_lint`, such as:
-
-```dart
-GoRouter.of(context).go('/details');
+```bash
+dart run tool/verify_analyzer_plugins.dart --plugin go_router_linter --source local --analyzer dart --repeat 3
 ```
 
-3. Run the linter. The command succeeds when the expected lints are emitted:
+The demonstration source covers `missing_go_route_name_property`, `use_context_directly_for_go_router`, `avoid_hardcoded_routes`, `avoid_navigator_named_routes_with_go_router`, and `missing_go_router_error_handler`.
 
-```sh
-$ dart run custom_lint
-Building package executable... (2.0s)
-Built custom_lint:custom_lint.
-Analyzing...
+## License
 
-No issues found!
-```
-
-4. Replace the intentionally bad code with the idiomatic version:
-
-```dart
-context.go('/details');
-```
-
-Remove the matching `expect_lint` comment after fixing the code. The example
-then stays clean while showing the intended migration path.
-
-Code Overview
-
-The example app demonstrates basic navigation between two routes:
-
-1. Home Page: The default landing page with navigation buttons.
-2. Details Page: Accessed via /details.
-
-main.dart
-
-The main.dart file defines the app’s navigation using GoRouter. For details, see the official go_router example here.
-
-Feedback
-
-If you encounter any issues or have suggestions for improving the go_router_linter or this example app, feel free to open an issue on the GitHub repository.
-
-This example app is designed to demonstrate how go_router_linter can integrate into real-world Flutter projects to enforce consistent navigation patterns.
+This example is distributed under the package's MIT License.
+See [LICENSE](../LICENSE).

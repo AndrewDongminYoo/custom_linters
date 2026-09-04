@@ -53,7 +53,7 @@
             >AvoidHardcodedRoutes</a
           >
         </li>
-        <li class="self-crumb">AvoidHardcodedRoutes.new const constructor</li>
+        <li class="self-crumb">AvoidHardcodedRoutes.new constructor</li>
       </ol>
       <div class="self-name">AvoidHardcodedRoutes.new</div>
       <form class="search navbar-right" role="search">
@@ -103,24 +103,22 @@
         </div>
 
         <section class="multi-line-signature">
-          const
           <span class="name">AvoidHardcodedRoutes</span>(<wbr />)
         </section>
 
         <section class="desc markdown">
-          <p>A lint rule that checks for hardcoded route strings.</p>
-          <p>
-            A lint rule that detects hardcoded route paths or names in
-            <code>context.go</code>, <code>context.push</code>, or when defining
-            GoRoute instances, and suggests using constants instead.
-          </p>
+          <p>Detects hardcoded route paths and names in go_router APIs.</p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">const AvoidHardcodedRoutes() : super(code: _code);</code></pre>
+          ><code class="language-dart">AvoidHardcodedRoutes()
+  : super(
+      name: &#39;avoid_hardcoded_routes&#39;,
+      description: &#39;Avoids hardcoded route paths and names.&#39;,
+    );</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -146,7 +144,7 @@
               >AvoidHardcodedRoutes</a
             >
           </li>
-          <li class="self-crumb">AvoidHardcodedRoutes.new const constructor</li>
+          <li class="self-crumb">AvoidHardcodedRoutes.new constructor</li>
         </ol>
 
         <h5>AvoidHardcodedRoutes class</h5>
@@ -160,7 +158,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

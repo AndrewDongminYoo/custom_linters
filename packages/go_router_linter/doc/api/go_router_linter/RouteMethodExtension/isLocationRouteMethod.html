@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the UseContextDirectlyForGoRouter.new constructor from Class UseContextDirectlyForGoRouter from the go_router_linter library, for the Dart programming language."
+      content="API docs for the isLocationRouteMethod property from the RouteMethodExtension extension, for the Dart programming language."
     />
     <title>
-      UseContextDirectlyForGoRouter.new constructor -
-      UseContextDirectlyForGoRouter - go_router_linter library - Dart API
+      isLocationRouteMethod property - RouteMethodExtension extension -
+      go_router_linter library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -49,16 +49,13 @@
         <li><a href="../../index.html">go_router_linter</a></li>
         <li><a href="../../go_router_linter/">go_router_linter.dart</a></li>
         <li>
-          <a
-            href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-            >UseContextDirectlyForGoRouter</a
+          <a href="../../go_router_linter/RouteMethodExtension.html"
+            >RouteMethodExtension</a
           >
         </li>
-        <li class="self-crumb">
-          UseContextDirectlyForGoRouter.new constructor
-        </li>
+        <li class="self-crumb">isLocationRouteMethod property</li>
       </ol>
-      <div class="self-name">UseContextDirectlyForGoRouter.new</div>
+      <div class="self-name">isLocationRouteMethod</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -95,36 +92,48 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="go_router_linter&#47;UseContextDirectlyForGoRouter-class-sidebar.html"
+        data-above-sidebar="go_router_linter&#47;RouteMethodExtension-extension-sidebar.html"
         data-below-sidebar=""
       >
         <div>
           <h1>
-            <span class="kind-constructor">UseContextDirectlyForGoRouter</span>
-            constructor
+            <span class="kind-property">isLocationRouteMethod</span> property
           </h1>
         </div>
 
-        <section class="multi-line-signature">
-          <span class="name">UseContextDirectlyForGoRouter</span>(<wbr />)
-        </section>
+        <section id="getter">
+          <section class="multi-line-signature">
+            <span class="returntype"
+              ><a
+                href="https://api.flutter.dev/flutter/dart-core/bool-class.html"
+                >bool</a
+              ></span
+            >
+            get
+            <span class="name">isLocationRouteMethod</span>
+          </section>
 
-        <section class="desc markdown">
-          <p>
-            Reports <code>GoRouter.of(context).method()</code> calls when the
-            equivalent <code>BuildContext</code> helper is available.
-          </p>
-        </section>
+          <section class="desc markdown">
+            <p>
+              Whether this method accepts a location string as its first
+              argument.
+            </p>
+          </section>
 
-        <section class="summary source-code" id="source">
-          <h2><span>Implementation</span></h2>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">UseContextDirectlyForGoRouter()
-  : super(
-      name: &#39;use_context_directly_for_go_router&#39;,
-      description: &#39;Prefers BuildContext go_router helpers.&#39;,
-    );</code></pre>
+          <section class="summary source-code" id="source">
+            <h2><span>Implementation</span></h2>
+            <pre
+              class="language-dart"
+            ><code class="language-dart">bool get isLocationRouteMethod {
+  const routeMethods = {
+    &#39;go&#39;,
+    &#39;push&#39;,
+    &#39;pushReplacement&#39;,
+    &#39;replace&#39;,
+  };
+  return routeMethods.contains(this);
+}</code></pre>
+          </section>
         </section>
       </div>
       <!-- /.main-content -->
@@ -146,20 +155,22 @@
           <li><a href="../../index.html">go_router_linter</a></li>
           <li><a href="../../go_router_linter/">go_router_linter</a></li>
           <li>
-            <a
-              href="../../go_router_linter/UseContextDirectlyForGoRouter-class.html"
-              >UseContextDirectlyForGoRouter</a
+            <a href="../../go_router_linter/RouteMethodExtension.html"
+              >RouteMethodExtension</a
             >
           </li>
-          <li class="self-crumb">
-            UseContextDirectlyForGoRouter.new constructor
-          </li>
+          <li class="self-crumb">isLocationRouteMethod property</li>
         </ol>
 
-        <h5>UseContextDirectlyForGoRouter class</h5>
+        <h5>
+          RouteMethodExtension extension on
+          <a href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+            >String</a
+          >
+        </h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"

@@ -125,17 +125,7 @@
             <pre
               class="language-dart"
             ><code class="language-dart">bool get isRouteMethod {
-  const routeMethods = {
-    &#39;go&#39;,
-    &#39;goNamed&#39;,
-    &#39;push&#39;,
-    &#39;pushNamed&#39;,
-    &#39;pushReplacement&#39;,
-    &#39;pushReplacementNamed&#39;,
-    &#39;replace&#39;,
-    &#39;replaceNamed&#39;,
-  };
-  return routeMethods.contains(this);
+  return isLocationRouteMethod || isNamedRouteMethod || isRouterHelperMethod;
 }</code></pre>
           </section>
         </section>
@@ -182,7 +172,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

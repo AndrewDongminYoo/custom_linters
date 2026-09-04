@@ -79,228 +79,271 @@
         <section class="desc markdown">
           <h1 id="go-router-linter">Go Router Linter</h1>
           <p>
-            <code>go_router_linter</code> is a custom linting package designed
-            to enhance code quality and consistency when using the
-            <code>go_router</code> package in Dart and Flutter applications. It
-            encourages best practices by identifying and suggesting improvements
-            for common patterns.
+            <code>go_router_linter</code> provides opt-in analyzer diagnostics
+            for route definitions and navigation calls that use
+            <code>go_router</code>. Version <code>0.5.0</code> migrates the
+            package from <code>custom_lint</code> to Dart's official analyzer
+            plugin host.
           </p>
-          <h2 id="features">Features</h2>
-          <h3 id="current-rules">Current Rules</h3>
-          <h4 id="1-ensure-goroute-includes-a-name-property">
-            1. Ensure <code>GoRoute</code> Includes a <code>name</code> Property
-          </h4>
+          <h2 id="requirements">Requirements</h2>
           <ul>
+            <li>Dart <code>&gt;=3.11.0 &lt;4.0.0</code>.</li>
+            <li>A stable Flutter SDK that includes a compatible Dart SDK.</li>
             <li>
-              <strong>Lint Code:</strong>
-              <code>missing_go_route_name_property</code>
-            </li>
-            <li>
-              <strong>What it does:</strong> Detects
-              <code>GoRoute</code> definitions missing the
-              <code>name</code> property and suggests adding it for better
-              readability and routing consistency.
+              A top-level <code>analysis_options.yaml</code> in the consuming
+              package or pub workspace.
             </li>
           </ul>
-          <p><strong>Example:</strong></p>
-          <pre class="language-dart"><code class="language-dart">// Bad
-GoRoute(
-  path: '/home',
-  builder: (context, state) =&gt; HomePage(),
-);
-
-// Good
-GoRoute(
-  path: '/home',
-  name: 'home',
-  builder: (context, state) =&gt; HomePage(),
-);
-</code></pre>
-          <h4 id="2-use-contextgo-instead-of-gorouterofcontextgo">
-            2. Use <code>context.go()</code> Instead of
-            <code>GoRouter.of(context).go()</code>
-          </h4>
-          <ul>
-            <li>
-              <strong>Lint Code:</strong>
-              <code>use_context_directly_for_go_router</code>
-            </li>
-            <li>
-              <strong>What it does:</strong> Detects instances where
-              <code>GoRouter.of(context).go()</code> is used and suggests
-              replacing it with the more concise <code>context.go()</code>.
-            </li>
-          </ul>
-          <p><strong>Example:</strong></p>
-          <pre class="language-dart"><code class="language-dart">// Bad
-GoRouter.of(context).go('/home');
-
-// Good
-context.go('/home');
-</code></pre>
-          <h4 id="3-avoid-hardcoded-routes">3. Avoid Hardcoded Routes</h4>
-          <ul>
-            <li>
-              <p>
-                <strong>Lint Code:</strong> <code>avoid_hardcoded_routes</code>
-              </p>
-            </li>
-            <li>
-              <p>
-                <strong>What it does:</strong> Detects when hardcoded route
-                strings are used directly in:
-              </p>
-              <ul>
-                <li>
-                  <code>context.go()</code>, <code>context.push()</code>,
-                  <code>context.goNamed()</code>,
-                  <code>context.pushNamed()</code>, etc.
-                </li>
-                <li>
-                  <code>GoRouter.of(context).go()</code>,
-                  <code>GoRouter.of(context).push()</code>,
-                  <code>GoRouter.of(context).goNamed()</code>,
-                  <code>GoRouter.of(context).pushNamed()</code>, etc.
-                </li>
-                <li>
-                  <code>GoRoute</code> definitions (<code>path</code> and
-                  <code>name</code> properties)
-                </li>
-              </ul>
-              <p>and suggests using constants or enums instead.</p>
-            </li>
-          </ul>
-          <p><strong>Examples:</strong></p>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">// Bad: Hardcoded string in go()
-context.go('/profile');
-
-// Good: Use a constant or enum
-context.go(AppRoutes.profile);
-</code></pre>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">// Bad: Hardcoded string in GoRoute definition
-GoRoute(
-  path: '/details',
-  name: 'details',
-  builder: (context, state) =&gt; DetailsPage(),
-);
-
-// Good: Use a constant or enum
-GoRoute(
-  path: AppRoutes.detailsPath,
-  name: DetailsPage.name,
-  builder: (context, state) =&gt; DetailsPage(),
-);
-</code></pre>
+          <p>
+            The only locally tested Flutter stable release is
+            <code>3.47.2</code>, so it is both the oldest tested and current
+            tested release. The minimum supported Flutter stable release is not
+            established until the complete matrix passes. The tested dependency
+            family resolves <code>analysis_server_plugin 0.3.22</code>,
+            <code>analyzer 14.3.0</code>, and
+            <code>analyzer_plugin 0.14.16</code>. Beta, dev, and master Flutter
+            channels are unsupported.
+          </p>
+          <p>
+            The standalone migration consumer pins
+            <code>go_router 17.5.0</code>. This evidence does not imply
+            compatibility with a wider <code>go_router</code> range. The
+            <code>0.5.0</code> release candidate is unpublished while Flutter
+            issue
+            <a href="https://github.com/flutter/flutter/issues/187999"
+              >#187999</a
+            >
+            reproduces in the required <code>flutter analyze</code> lane.
+          </p>
+          <h2 id="compatibility-evidence">Compatibility evidence</h2>
+          <p>
+            The release matrix below separates local evidence from lanes that
+            have not run. <code>Blocked #187999</code> means that the command
+            completed without reporting the expected plugin diagnostics.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Operating system</th>
+                <th>Flutter stable</th>
+                <th>Bundled Dart</th>
+                <th>Resolved official family</th>
+                <th><code>go_router</code></th>
+                <th><code>dart analyze</code></th>
+                <th><code>flutter analyze</code></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>macOS 26.6.2 arm64</td>
+                <td>3.47.2</td>
+                <td>3.13.2</td>
+                <td>
+                  <code>analysis_server_plugin 0.3.22</code>,
+                  <code>analyzer 14.3.0</code>,
+                  <code>analyzer_plugin 0.14.16</code>
+                </td>
+                <td>17.5.0</td>
+                <td>Passed locally</td>
+                <td>Blocked #187999</td>
+              </tr>
+              <tr>
+                <td>macOS</td>
+                <td>3.44.0</td>
+                <td>Not recorded</td>
+                <td>Not resolved</td>
+                <td>Not resolved</td>
+                <td>Not run</td>
+                <td>Not run</td>
+              </tr>
+              <tr>
+                <td>Linux</td>
+                <td>3.47.2</td>
+                <td>Not recorded</td>
+                <td>Not resolved</td>
+                <td>Not resolved</td>
+                <td>Not run</td>
+                <td>Not run</td>
+              </tr>
+              <tr>
+                <td>Linux</td>
+                <td>3.44.0</td>
+                <td>Not recorded</td>
+                <td>Not resolved</td>
+                <td>Not resolved</td>
+                <td>Not run</td>
+                <td>Not run</td>
+              </tr>
+              <tr>
+                <td>Windows</td>
+                <td>3.47.2</td>
+                <td>Not recorded</td>
+                <td>Not resolved</td>
+                <td>Not resolved</td>
+                <td>Not run</td>
+                <td>Not run</td>
+              </tr>
+              <tr>
+                <td>Windows</td>
+                <td>3.44.0</td>
+                <td>Not recorded</td>
+                <td>Not resolved</td>
+                <td>Not resolved</td>
+                <td>Not run</td>
+                <td>Not run</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            The GitHub Actions matrix defines the unverified lanes, but it has
+            not been dispatched. No row other than the macOS
+            <code>dart analyze</code> row is release evidence.
+          </p>
           <h2 id="installation">Installation</h2>
-          <p>
-            To integrate <code>go_router_linter</code> into your project, follow
-            these steps:
-          </p>
-          <h3 id="1-add-dependency">1. Add Dependency</h3>
-          <p>
-            In your <code>pubspec.yaml</code> file, include
-            <code>go_router_linter</code> under <code>dev_dependencies</code>:
-          </p>
+          <p>Add the package as a development dependency:</p>
           <pre
             class="language-yaml"
           ><code class="language-yaml">dev_dependencies:
-  go_router_linter: ^0.1.0
+  go_router_linter: ^0.5.0
 </code></pre>
-          <h3 id="2-update-analysis_optionsyaml">
-            2. Update <code>analysis_options.yaml</code>
+          <p>
+            Add the plugin to the top-level
+            <code>analysis_options.yaml</code> and enable each diagnostic
+            explicitly:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">plugins:
+  go_router_linter:
+    version: ^0.5.0
+    diagnostics:
+      missing_go_route_name_property: true
+      use_context_directly_for_go_router: true
+      avoid_hardcoded_routes: true
+      avoid_navigator_named_routes_with_go_router: true
+      missing_go_router_error_handler: true
+</code></pre>
+          <p>
+            For local development, replace <code>version</code> with an absolute
+            package path:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">plugins:
+  go_router_linter:
+    path: /absolute/path/to/custom_linters/packages/go_router_linter
+    diagnostics:
+      missing_go_route_name_property: true
+      use_context_directly_for_go_router: true
+      avoid_hardcoded_routes: true
+      avoid_navigator_named_routes_with_go_router: true
+      missing_go_router_error_handler: true
+</code></pre>
+          <p>
+            The official host does not load a <code>plugins:</code> block from
+            an inner package's nested analysis options file. Place the block at
+            the consumer package root or pub-workspace root.
+          </p>
+          <p>
+            All diagnostics use <code>INFO</code> severity and remain disabled
+            until listed under <code>diagnostics:</code>. Analyzer output shows
+            the raw diagnostic code. Use the plugin-qualified form only in
+            suppression comments:
+          </p>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">// ignore: go_router_linter/avoid_hardcoded_routes
+context.go('/home');
+</code></pre>
+          <p>The package does not define rule-specific options.</p>
+          <h2 id="rules">Rules</h2>
+          <h3 id="missing_go_route_name_property">
+            <code>missing_go_route_name_property</code>
           </h3>
           <p>
-            Enable the custom lint rules by adding the following to your
-            <code>analysis_options.yaml</code> file:
-          </p>
-          <pre class="language-yaml"><code class="language-yaml">analyzer:
-  plugins:
-    - custom_lint
-
-custom_lint:
-  rules:
-    - missing_go_route_name_property
-    - use_context_directly_for_go_router
-    - avoid_hardcoded_routes
-</code></pre>
-          <h2 id="usage">Usage</h2>
-          <p>
-            After setting up, the linter will automatically analyze your code
-            and provide warnings or suggestions based on the defined rules.
-          </p>
-          <h3 id="missing-name-property">Missing <code>name</code> Property</h3>
-          <p>
-            If a <code>GoRoute</code> definition does not include the
-            <code>name</code> property:
+            Reports a <code>GoRoute</code> that does not include a
+            <code>name</code> argument.
           </p>
           <pre class="language-dart"><code class="language-dart">GoRoute(
-  path: '/profile',
-  builder: (context, state) =&gt; ProfilePage(),
+  path: AppRoutes.homePath,
+  builder: (context, state) =&gt; const HomePage(),
 );
 </code></pre>
-          <p>The linter will produce the following suggestion:</p>
-          <blockquote>
-            <p>
-              GoRoute definition should include a <code>name</code> property.
-            </p>
-          </blockquote>
-          <h3 id="using-gorouterofcontextgo">
-            Using <code>GoRouter.of(context).go()</code>
+          <h3 id="use_context_directly_for_go_router">
+            <code>use_context_directly_for_go_router</code>
           </h3>
-          <p>If <code>GoRouter.of(context).go()</code> is detected:</p>
+          <p>
+            Reports supported <code>GoRouter.of(context)</code> route-method
+            calls and recommends the corresponding
+            <code>BuildContext</code> extension.
+          </p>
           <pre
             class="language-dart"
-          ><code class="language-dart">GoRouter.of(context).go('/home');
+          ><code class="language-dart">GoRouter.of(context).go(AppRoutes.homePath);
 </code></pre>
-          <p>The linter will suggest replacing it with:</p>
+          <p>Use <code>context.go(AppRoutes.homePath)</code> instead.</p>
+          <h3 id="avoid_hardcoded_routes">
+            <code>avoid_hardcoded_routes</code>
+          </h3>
+          <p>
+            Reports hardcoded route strings in supported
+            <code>BuildContext</code> and <code>GoRouter</code> methods,
+            <code>GoRoute</code> definitions, redirects, and
+            <code>GoRouter.initialLocation</code>.
+          </p>
           <pre
             class="language-dart"
-          ><code class="language-dart">context.go('/home');
+          ><code class="language-dart">context.go('/profile');
 </code></pre>
-          <h3 id="avoiding-hardcoded-routes">Avoiding Hardcoded Routes</h3>
+          <p>Use a constant, enum, or variable instead.</p>
+          <h3 id="avoid_navigator_named_routes_with_go_router">
+            <code>avoid_navigator_named_routes_with_go_router</code>
+          </h3>
           <p>
-            If a hardcoded route string is detected in
-            <code>context.go('/profile')</code>:
+            Reports supported <code>Navigator.*Named</code> and
+            <code>NavigatorState.*Named</code> calls when the owning package
+            declares <code>go_router</code> in <code>dependencies</code> or
+            <code>dev_dependencies</code>. The rule reads the owning package's
+            pubspec and does not use the process working directory or a
+            cross-package cache.
           </p>
-          <blockquote>
-            <p>
-              Avoid hardcoded route paths. Use constants or enums for routes.
-            </p>
-          </blockquote>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">Navigator.pushNamed(context, AppRoutes.detailsPath);
+</code></pre>
+          <p>Use a <code>go_router</code> navigation API instead.</p>
+          <h3 id="missing_go_router_error_handler">
+            <code>missing_go_router_error_handler</code>
+          </h3>
           <p>
-            If a hardcoded route string is detected in a
-            <code>GoRoute</code> definition:
+            Reports a <code>GoRouter</code> that defines neither
+            <code>errorBuilder</code> nor <code>errorPageBuilder</code>.
           </p>
-          <blockquote>
-            <p>
-              Avoid hardcoded route paths. Use constants or enums for routes.
-            </p>
-          </blockquote>
-          <h2 id="contributing">Contributing</h2>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">final router = GoRouter(routes: const []);
+</code></pre>
+          <p>Add an error handler that renders an appropriate fallback.</p>
+          <h2 id="development">Development</h2>
           <p>
-            Contributions are welcome! If you have ideas for new lint rules or
-            improvements, please open an issue or submit a pull request on our
-            <a href="https://github.com/AndrewDongminYoo/custom_linters"
-              >GitHub repository</a
-            >.
+            Run the rule tests with the Dart VM because
+            <code>test_reflective_loader</code> uses <code>dart:mirrors</code>:
           </p>
+          <pre class="language-bash"><code class="language-bash">dart test
+dart analyze .
+</code></pre>
+          <p>
+            The workspace example intentionally does not enable
+            <code>plugins:</code>. Use the repository's standalone consumer
+            harness for a real host check:
+          </p>
+          <pre
+            class="language-bash"
+          ><code class="language-bash">dart run tool/verify_analyzer_plugins.dart --plugin go_router_linter --source local --analyzer dart --repeat 3
+</code></pre>
           <h2 id="license">License</h2>
           <p>
-            This project is licensed under the MIT License. See the
+            This package is licensed under the MIT License. See
             <a
               href="https://github.com/AndrewDongminYoo/custom_linters/blob/main/LICENSE"
               >LICENSE</a
-            >
-            file for details.
-          </p>
-          <h2 id="acknowledgements">Acknowledgements</h2>
-          <p>
-            Special thanks to the Dart and Flutter communities for their
-            continuous support and contributions.
+            >.
           </p>
         </section>
 
@@ -312,7 +355,15 @@ custom_lint:
                 ><a href="go_router_linter/">go_router_linter</a></span
               >
             </dt>
-            <dd>go_router_linter</dd>
+            <dd>
+              Analyzer diagnostics for route definitions and navigation calls
+              that use <code>go_router</code>.
+            </dd>
+
+            <dt id="main">
+              <span class="name"><a href="main/">main</a></span>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
       </div>
@@ -342,6 +393,7 @@ custom_lint:
         <ol>
           <li class="section-title">Libraries</li>
           <li><a href="go_router_linter/">go_router_linter</a></li>
+          <li><a href="main/">main</a></li>
         </ol>
       </div>
       <div
@@ -350,7 +402,7 @@ custom_lint:
       ></div>
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="static-assets/highlight.pack.js?v1"></script>

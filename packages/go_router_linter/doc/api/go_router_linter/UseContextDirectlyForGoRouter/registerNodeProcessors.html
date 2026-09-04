@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the UseContextDirectlyForGoRouter.new constructor from Class UseContextDirectlyForGoRouter from the go_router_linter library, for the Dart programming language."
+      content="API docs for the registerNodeProcessors method from the UseContextDirectlyForGoRouter class, for the Dart programming language."
     />
     <title>
-      UseContextDirectlyForGoRouter.new constructor -
-      UseContextDirectlyForGoRouter - go_router_linter library - Dart API
+      registerNodeProcessors method - UseContextDirectlyForGoRouter class -
+      go_router_linter library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -54,11 +54,9 @@
             >UseContextDirectlyForGoRouter</a
           >
         </li>
-        <li class="self-crumb">
-          UseContextDirectlyForGoRouter.new constructor
-        </li>
+        <li class="self-crumb">registerNodeProcessors method</li>
       </ol>
-      <div class="self-name">UseContextDirectlyForGoRouter.new</div>
+      <div class="self-name">registerNodeProcessors</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -100,31 +98,70 @@
       >
         <div>
           <h1>
-            <span class="kind-constructor">UseContextDirectlyForGoRouter</span>
-            constructor
+            <span class="kind-method">registerNodeProcessors</span> method
           </h1>
         </div>
 
         <section class="multi-line-signature">
-          <span class="name">UseContextDirectlyForGoRouter</span>(<wbr />)
+          <div>
+            <ol class="annotation-list">
+              <li>
+                @<a
+                  href="https://api.flutter.dev/flutter/dart-core/override-constant.html"
+                  >override</a
+                >
+              </li>
+            </ol>
+          </div>
+          <span class="returntype">void</span>
+          <span class="name">registerNodeProcessors</span>(<wbr />
+          <ol class="parameter-list single-line">
+            <li>
+              <span class="parameter" id="registerNodeProcessors-param-registry"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_visitor_registry/RuleVisitorRegistry-class.html"
+                    >RuleVisitorRegistry</a
+                  ></span
+                >
+                <span class="parameter-name">registry</span>,
+              </span>
+            </li>
+            <li>
+              <span class="parameter" id="registerNodeProcessors-param-context"
+                ><span class="type-annotation"
+                  ><a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_context/RuleContext-class.html"
+                    >RuleContext</a
+                  ></span
+                >
+                <span class="parameter-name">context</span></span
+              >
+            </li>
+          </ol>
+          )
+
+          <div class="features"><span class="feature">override</span></div>
         </section>
 
         <section class="desc markdown">
+          <p>Registers node processors in the given <code>registry</code>.</p>
           <p>
-            Reports <code>GoRouter.of(context).method()</code> calls when the
-            equivalent <code>BuildContext</code> helper is available.
+            The node processors may use the provided <code>context</code> to
+            access information that is not available from the AST nodes or their
+            associated elements.
           </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">UseContextDirectlyForGoRouter()
-  : super(
-      name: &#39;use_context_directly_for_go_router&#39;,
-      description: &#39;Prefers BuildContext go_router helpers.&#39;,
-    );</code></pre>
+          <pre class="language-dart"><code class="language-dart">@override
+void registerNodeProcessors(
+  RuleVisitorRegistry registry,
+  RuleContext context,
+) {
+  registry.addMethodInvocation(this, _Visitor(this));
+}</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -151,15 +188,13 @@
               >UseContextDirectlyForGoRouter</a
             >
           </li>
-          <li class="self-crumb">
-            UseContextDirectlyForGoRouter.new constructor
-          </li>
+          <li class="self-crumb">registerNodeProcessors method</li>
         </ol>
 
         <h5>UseContextDirectlyForGoRouter class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
