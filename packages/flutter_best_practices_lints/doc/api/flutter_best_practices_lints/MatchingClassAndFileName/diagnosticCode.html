@@ -9,10 +9,10 @@
     />
     <meta
       name="description"
-      content="API docs for the MatchingClassAndFileName.new constructor from Class MatchingClassAndFileName from the flutter_best_practices_lints library, for the Dart programming language."
+      content="API docs for the diagnosticCode property from the MatchingClassAndFileName class, for the Dart programming language."
     />
     <title>
-      MatchingClassAndFileName.new constructor - MatchingClassAndFileName -
+      diagnosticCode property - MatchingClassAndFileName class -
       flutter_best_practices_lints library - Dart API
     </title>
 
@@ -58,9 +58,9 @@
             >MatchingClassAndFileName</a
           >
         </li>
-        <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
+        <li class="self-crumb">diagnosticCode property</li>
       </ol>
-      <div class="self-name">MatchingClassAndFileName.new</div>
+      <div class="self-name">diagnosticCode</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -101,40 +101,41 @@
         data-below-sidebar=""
       >
         <div>
-          <h1>
-            <span class="kind-constructor">MatchingClassAndFileName</span>
-            constructor
-          </h1>
+          <h1><span class="kind-property">diagnosticCode</span> property</h1>
         </div>
 
-        <section class="multi-line-signature">
-          <span class="name">MatchingClassAndFileName</span>(<wbr />)
-        </section>
+        <section id="getter">
+          <section class="multi-line-signature">
+            <div>
+              <ol class="annotation-list">
+                <li>
+                  @<a
+                    href="https://api.flutter.dev/flutter/dart-core/override-constant.html"
+                    >override</a
+                  >
+                </li>
+              </ol>
+            </div>
+            <span class="returntype"
+              ><a
+                href="https://pub.dev/documentation/analyzer/14.3.0/error_error/LintCode-class.html"
+                >LintCode</a
+              ></span
+            >
+            get
+            <span class="name">diagnosticCode</span>
+            <div class="features"><span class="feature">override</span></div>
+          </section>
 
-        <section class="desc markdown">
-          <p>
-            Ensures that public class names in PascalCase correspond to their
-            snake_case file names, helping maintain consistency between files
-            and the primary class they contain.
-          </p>
-          <ul>
-            <li>Single public class: name must match file name.</li>
-            <li>
-              Multiple public classes: at least one must match, and any others
-              not related to the primary class will trigger a warning.
-            </li>
-          </ul>
-        </section>
+          <section class="desc markdown">
+            <p>The code to report for a violation.</p>
+          </section>
 
-        <section class="summary source-code" id="source">
-          <h2><span>Implementation</span></h2>
-          <pre
-            class="language-dart"
-          ><code class="language-dart">MatchingClassAndFileName()
-  : super(
-      name: &#39;matching_class_and_file_name&#39;,
-      description: &#39;Matches the primary class name to its file name.&#39;,
-    );</code></pre>
+          <section class="summary source-code" id="source">
+            <h2><span>Implementation</span></h2>
+            <pre class="language-dart"><code class="language-dart">@override
+LintCode get diagnosticCode =&gt; _code;</code></pre>
+          </section>
         </section>
       </div>
       <!-- /.main-content -->
@@ -165,13 +166,13 @@
               >MatchingClassAndFileName</a
             >
           </li>
-          <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
+          <li class="self-crumb">diagnosticCode property</li>
         </ol>
 
         <h5>MatchingClassAndFileName class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-left-->
+      <!--/.sidebar-offcanvas-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"

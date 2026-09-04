@@ -97,10 +97,7 @@
         </div>
 
         <section class="desc markdown">
-          <p>
-            A plugin class is used to list all the assists/lints defined by a
-            plugin.
-          </p>
+          <p>Registers the Flutter best-practice analysis rules.</p>
         </section>
 
         <section>
@@ -116,8 +113,8 @@
                 </li>
                 <li>
                   <a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase-class.html"
-                    >PluginBase</a
+                    href="https://pub.dev/documentation/analysis_server_plugin/0.3.22/plugin/Plugin-class.html"
+                    >Plugin</a
                   >
                 </li>
                 <li>FlutterBestPracticesPlugin</li>
@@ -141,10 +138,7 @@
           </dl>
         </section>
 
-        <section
-          class="summary offset-anchor inherited"
-          id="instance-properties"
-        >
+        <section class="summary offset-anchor" id="instance-properties">
           <h2>Properties</h2>
           <dl class="properties">
             <dt id="hashCode" class="property inherited">
@@ -167,6 +161,30 @@
               <div class="features">
                 <span class="feature">no setter</span
                 ><span class="feature">inherited</span>
+              </div>
+            </dd>
+
+            <dt id="name" class="property">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/FlutterBestPracticesPlugin/name.html"
+                  >name</a
+                ></span
+              >
+              <span class="signature"
+                >&#8594;
+                <a
+                  href="https://api.flutter.dev/flutter/dart-core/String-class.html"
+                  >String</a
+                ></span
+              >
+            </dt>
+            <dd>
+              A user-visible name for this plugin, used for error-reporting and
+              insights-reporting purposes.
+              <div class="features">
+                <span class="feature">no setter</span
+                ><span class="feature">override</span>
               </div>
             </dd>
 
@@ -198,72 +216,6 @@
         <section class="summary offset-anchor" id="instance-methods">
           <h2>Methods</h2>
           <dl class="callables">
-            <dt id="getAssists" class="callable inherited">
-              <span class="name"
-                ><a
-                  href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase/getAssists.html"
-                  >getAssists</a
-                ></span
-              ><span class="signature"
-                >(<wbr />)
-                <span class="returntype parameter"
-                  >&#8594;
-                  <a
-                    href="https://api.flutter.dev/flutter/dart-core/List-class.html"
-                    >List</a
-                  ><span class="signature"
-                    >&lt;<wbr /><span class="type-parameter"
-                      ><a
-                        href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/Assist-class.html"
-                        >Assist</a
-                      ></span
-                    >&gt;</span
-                  ></span
-                >
-              </span>
-            </dt>
-            <dd class="inherited">
-              Obtains the list of assists created by this plugin.
-              <div class="features"><span class="feature">inherited</span></div>
-            </dd>
-
-            <dt id="getLintRules" class="callable">
-              <span class="name"
-                ><a
-                  href="../flutter_best_practices_lints/FlutterBestPracticesPlugin/getLintRules.html"
-                  >getLintRules</a
-                ></span
-              ><span class="signature"
-                >(<wbr /><span class="parameter" id="getLintRules-param-configs"
-                  ><span class="type-annotation"
-                    ><a
-                      href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintConfigs-class.html"
-                      >CustomLintConfigs</a
-                    ></span
-                  >
-                  <span class="parameter-name">configs</span></span
-                >)
-                <span class="returntype parameter"
-                  >&#8594;
-                  <a
-                    href="https://api.flutter.dev/flutter/dart-core/List-class.html"
-                    >List</a
-                  ><span class="signature"
-                    >&lt;<wbr /><span class="type-parameter"
-                      ><a
-                        href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/LintRule-class.html"
-                        >LintRule</a
-                      ></span
-                    >&gt;</span
-                  ></span
-                >
-              </span>
-            </dt>
-            <dd>
-              We list all the custom warnings/infos/errors
-              <div class="features"><span class="feature">override</span></div>
-            </dd>
-
             <dt id="noSuchMethod" class="callable inherited">
               <span class="name"
                 ><a
@@ -287,6 +239,80 @@
             </dt>
             <dd class="inherited">
               Invoked when a nonexistent method or property is accessed.
+              <div class="features"><span class="feature">inherited</span></div>
+            </dd>
+
+            <dt id="register" class="callable">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/FlutterBestPracticesPlugin/register.html"
+                  >register</a
+                ></span
+              ><span class="signature"
+                >(<wbr /><span class="parameter" id="register-param-registry"
+                  ><span class="type-annotation"
+                    ><a
+                      href="https://pub.dev/documentation/analysis_server_plugin/0.3.22/registry/PluginRegistry-class.html"
+                      >PluginRegistry</a
+                    ></span
+                  >
+                  <span class="parameter-name">registry</span></span
+                >)
+                <span class="returntype parameter">&#8594; void</span>
+              </span>
+            </dt>
+            <dd>
+              Registers analysis rules, quick fixes, and assists.
+              <div class="features"><span class="feature">override</span></div>
+            </dd>
+
+            <dt id="shutDown" class="callable inherited">
+              <span class="name"
+                ><a
+                  href="https://pub.dev/documentation/analysis_server_plugin/0.3.22/plugin/Plugin/shutDown.html"
+                  >shutDown</a
+                ></span
+              ><span class="signature"
+                >(<wbr />)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-async/FutureOr-class.html"
+                    >FutureOr</a
+                  ><span class="signature"
+                    >&lt;<wbr /><span class="type-parameter">void</span
+                    >&gt;</span
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd class="inherited">
+              <div class="features"><span class="feature">inherited</span></div>
+            </dd>
+
+            <dt id="start" class="callable inherited">
+              <span class="name"
+                ><a
+                  href="https://pub.dev/documentation/analysis_server_plugin/0.3.22/plugin/Plugin/start.html"
+                  >start</a
+                ></span
+              ><span class="signature"
+                >(<wbr />)
+                <span class="returntype parameter"
+                  >&#8594;
+                  <a
+                    href="https://api.flutter.dev/flutter/dart-async/FutureOr-class.html"
+                    >FutureOr</a
+                  ><span class="signature"
+                    >&lt;<wbr /><span class="type-parameter">void</span
+                    >&gt;</span
+                  ></span
+                >
+              </span>
+            </dt>
+            <dd class="inherited">
+              Initializes any necessary start-up state that is required for this
+              plugin to run.
               <div class="features"><span class="feature">inherited</span></div>
             </dd>
 
@@ -384,7 +410,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

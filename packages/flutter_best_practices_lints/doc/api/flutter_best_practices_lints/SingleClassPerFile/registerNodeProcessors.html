@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the run method from the SingleClassPerFile class, for the Dart programming language."
+      content="API docs for the registerNodeProcessors method from the SingleClassPerFile class, for the Dart programming language."
     />
     <title>
-      run method - SingleClassPerFile class - flutter_best_practices_lints
-      library - Dart API
+      registerNodeProcessors method - SingleClassPerFile class -
+      flutter_best_practices_lints library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -58,9 +58,9 @@
             >SingleClassPerFile</a
           >
         </li>
-        <li class="self-crumb">run method</li>
+        <li class="self-crumb">registerNodeProcessors method</li>
       </ol>
-      <div class="self-name">run</div>
+      <div class="self-name">registerNodeProcessors</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -101,7 +101,9 @@
         data-below-sidebar=""
       >
         <div>
-          <h1><span class="kind-method">run</span> method</h1>
+          <h1>
+            <span class="kind-method">registerNodeProcessors</span> method
+          </h1>
         </div>
 
         <section class="multi-line-signature">
@@ -116,36 +118,25 @@
             </ol>
           </div>
           <span class="returntype">void</span>
-          <span class="name">run</span>(<wbr />
+          <span class="name">registerNodeProcessors</span>(<wbr />
           <ol class="parameter-list single-line">
             <li>
-              <span class="parameter" id="run-param-resolver"
+              <span class="parameter" id="registerNodeProcessors-param-registry"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintResolver-class.html"
-                    >CustomLintResolver</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_visitor_registry/RuleVisitorRegistry-class.html"
+                    >RuleVisitorRegistry</a
                   ></span
                 >
-                <span class="parameter-name">resolver</span>,
+                <span class="parameter-name">registry</span>,
               </span>
             </li>
             <li>
-              <span class="parameter" id="run-param-reporter"
+              <span class="parameter" id="registerNodeProcessors-param-context"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/8.4.0/error_listener/DiagnosticReporter-class.html"
-                    >DiagnosticReporter</a
-                  ></span
-                >
-                <span class="parameter-name">reporter</span>,
-              </span>
-            </li>
-            <li>
-              <span class="parameter" id="run-param-context"
-                ><span class="type-annotation"
-                  ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintContext-class.html"
-                    >CustomLintContext</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_context/RuleContext-class.html"
+                    >RuleContext</a
                   ></span
                 >
                 <span class="parameter-name">context</span></span
@@ -158,61 +149,24 @@
         </section>
 
         <section class="desc markdown">
-          <p>Emits lints for a given file.</p>
+          <p>Registers node processors in the given <code>registry</code>.</p>
           <p>
-            <a
-              href="../../flutter_best_practices_lints/SingleClassPerFile/run.html"
-              >run</a
-            >
-            will only be invoked with files respecting
-            <a
-              href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/DartLintRule/filesToAnalyze.html"
-              >filesToAnalyze</a
-            >
+            The node processors may use the provided <code>context</code> to
+            access information that is not available from the AST nodes or their
+            associated elements.
           </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre class="language-dart"><code class="language-dart">@override
-void run(
-  CustomLintResolver resolver,
-  DiagnosticReporter reporter,
-  CustomLintContext context,
+void registerNodeProcessors(
+  RuleVisitorRegistry registry,
+  RuleContext context,
 ) {
-  &#47;&#47; Only enforce for &#39;lib&#47;&#39; sources
-  final filePath = resolver.path;
-  if (!path.split(filePath).contains(&#39;lib&#39;)) return;
+  if (!context.isInLibDir) return;
 
-  context.registry.addCompilationUnit((CompilationUnit node) {
-    final allClasses = node.declarations.whereType&lt;ClassDeclaration&gt;().toList();
-    &#47;&#47; Public classes do not start with &#39;_&#39;
-    final publicClasses = allClasses.where((cls) =&gt; !cls.name.lexeme.startsWith(&#39;_&#39;)).toList();
-
-    if (publicClasses.length &lt;= 1) return; &#47;&#47; Zero or one public class is fine
-
-    &#47;&#47; Allow exactly two if one is abstract and the other extends&#47;implements it
-    if (publicClasses.length == 2) {
-      final first = publicClasses[0];
-      final second = publicClasses[1];
-      final firstIsAbstract = first.isAbstract;
-      final secondIsAbstract = second.isAbstract;
-      final firstUsedBySecond =
-          second.implementsInterface(first.name.lexeme) || second.extendsClass(first.name.lexeme);
-      final secondUsedByFirst =
-          first.implementsInterface(second.name.lexeme) || first.extendsClass(second.name.lexeme);
-
-      &#47;&#47; If one class is an abstract definition and the other builds on it, allow both
-      if ((firstIsAbstract &amp;&amp; firstUsedBySecond) || (secondIsAbstract &amp;&amp; secondUsedByFirst)) {
-        return;
-      }
-    }
-
-    &#47;&#47; For any extra public classes beyond allowed, issue lint
-    for (var i = 1; i &lt; publicClasses.length; i++) {
-      reporter.atNode(publicClasses[i], code);
-    }
-  });
+  registry.addCompilationUnit(this, _Visitor(this));
 }</code></pre>
         </section>
       </div>
@@ -244,7 +198,7 @@ void run(
               >SingleClassPerFile</a
             >
           </li>
-          <li class="self-crumb">run method</li>
+          <li class="self-crumb">registerNodeProcessors method</li>
         </ol>
 
         <h5>SingleClassPerFile class</h5>
@@ -258,7 +212,7 @@ void run(
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

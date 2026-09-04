@@ -9,11 +9,12 @@
     />
     <meta
       name="description"
-      content="API docs for the MatchingClassAndFileName.new constructor from Class MatchingClassAndFileName from the flutter_best_practices_lints library, for the Dart programming language."
+      content="API docs for the PreferMediaQueryPartialMethods.new constructor from Class PreferMediaQueryPartialMethods from the flutter_best_practices_lints library, for the Dart programming language."
     />
     <title>
-      MatchingClassAndFileName.new constructor - MatchingClassAndFileName -
-      flutter_best_practices_lints library - Dart API
+      PreferMediaQueryPartialMethods.new constructor -
+      PreferMediaQueryPartialMethods - flutter_best_practices_lints library -
+      Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -54,13 +55,15 @@
         </li>
         <li>
           <a
-            href="../../flutter_best_practices_lints/MatchingClassAndFileName-class.html"
-            >MatchingClassAndFileName</a
+            href="../../flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+            >PreferMediaQueryPartialMethods</a
           >
         </li>
-        <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
+        <li class="self-crumb">
+          PreferMediaQueryPartialMethods.new constructor
+        </li>
       </ol>
-      <div class="self-name">MatchingClassAndFileName.new</div>
+      <div class="self-name">PreferMediaQueryPartialMethods.new</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -97,43 +100,41 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="flutter_best_practices_lints&#47;MatchingClassAndFileName-class-sidebar.html"
+        data-above-sidebar="flutter_best_practices_lints&#47;PreferMediaQueryPartialMethods-class-sidebar.html"
         data-below-sidebar=""
       >
         <div>
           <h1>
-            <span class="kind-constructor">MatchingClassAndFileName</span>
+            <span class="kind-constructor">PreferMediaQueryPartialMethods</span>
             constructor
           </h1>
         </div>
 
         <section class="multi-line-signature">
-          <span class="name">MatchingClassAndFileName</span>(<wbr />)
+          <span class="name">PreferMediaQueryPartialMethods</span>(<wbr />)
         </section>
 
         <section class="desc markdown">
           <p>
-            Ensures that public class names in PascalCase correspond to their
-            snake_case file names, helping maintain consistency between files
-            and the primary class they contain.
+            Reports <code>MediaQuery.of(context).property</code> accesses that
+            have a dedicated static accessor (e.g.
+            <code>MediaQuery.sizeOf(context)</code>).
           </p>
-          <ul>
-            <li>Single public class: name must match file name.</li>
-            <li>
-              Multiple public classes: at least one must match, and any others
-              not related to the primary class will trigger a warning.
-            </li>
-          </ul>
+          <p>
+            The specific accessors subscribe only to the relevant slice of
+            <code>MediaQueryData</code>, preventing unnecessary widget rebuilds
+            when other fields change.
+          </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">MatchingClassAndFileName()
+          ><code class="language-dart">PreferMediaQueryPartialMethods()
   : super(
-      name: &#39;matching_class_and_file_name&#39;,
-      description: &#39;Matches the primary class name to its file name.&#39;,
+      name: &#39;prefer_media_query_partial_methods&#39;,
+      description: &#39;Prefers specific MediaQuery accessors.&#39;,
     );</code></pre>
         </section>
       </div>
@@ -161,14 +162,16 @@
           </li>
           <li>
             <a
-              href="../../flutter_best_practices_lints/MatchingClassAndFileName-class.html"
-              >MatchingClassAndFileName</a
+              href="../../flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+              >PreferMediaQueryPartialMethods</a
             >
           </li>
-          <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
+          <li class="self-crumb">
+            PreferMediaQueryPartialMethods.new constructor
+          </li>
         </ol>
 
-        <h5>MatchingClassAndFileName class</h5>
+        <h5>PreferMediaQueryPartialMethods class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
       <!--/.sidebar-offcanvas-left-->

@@ -9,11 +9,12 @@
     />
     <meta
       name="description"
-      content="API docs for the getLintRules method from the FlutterBestPracticesPlugin class, for the Dart programming language."
+      content="API docs for the PreferWidgetClassOverWidgetHelper.new constructor from Class PreferWidgetClassOverWidgetHelper from the flutter_best_practices_lints library, for the Dart programming language."
     />
     <title>
-      getLintRules method - FlutterBestPracticesPlugin class -
-      flutter_best_practices_lints library - Dart API
+      PreferWidgetClassOverWidgetHelper.new constructor -
+      PreferWidgetClassOverWidgetHelper - flutter_best_practices_lints library -
+      Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -54,13 +55,15 @@
         </li>
         <li>
           <a
-            href="../../flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
-            >FlutterBestPracticesPlugin</a
+            href="../../flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
+            >PreferWidgetClassOverWidgetHelper</a
           >
         </li>
-        <li class="self-crumb">getLintRules method</li>
+        <li class="self-crumb">
+          PreferWidgetClassOverWidgetHelper.new constructor
+        </li>
       </ol>
-      <div class="self-name">getLintRules</div>
+      <div class="self-name">PreferWidgetClassOverWidgetHelper.new</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -97,66 +100,35 @@
       <div
         id="dartdoc-main-content"
         class="main-content"
-        data-above-sidebar="flutter_best_practices_lints&#47;FlutterBestPracticesPlugin-class-sidebar.html"
+        data-above-sidebar="flutter_best_practices_lints&#47;PreferWidgetClassOverWidgetHelper-class-sidebar.html"
         data-below-sidebar=""
       >
         <div>
-          <h1><span class="kind-method">getLintRules</span> method</h1>
+          <h1>
+            <span class="kind-constructor"
+              >PreferWidgetClassOverWidgetHelper</span
+            >
+            constructor
+          </h1>
         </div>
 
         <section class="multi-line-signature">
-          <div>
-            <ol class="annotation-list">
-              <li>
-                @<a
-                  href="https://api.flutter.dev/flutter/dart-core/override-constant.html"
-                  >override</a
-                >
-              </li>
-            </ol>
-          </div>
-          <span class="returntype"
-            ><a href="https://api.flutter.dev/flutter/dart-core/List-class.html"
-              >List</a
-            ><span class="signature"
-              >&lt;<wbr /><span class="type-parameter"
-                ><a
-                  href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/LintRule-class.html"
-                  >LintRule</a
-                ></span
-              >&gt;</span
-            ></span
-          >
-          <span class="name">getLintRules</span>(<wbr />
-          <ol class="parameter-list single-line">
-            <li>
-              <span class="parameter" id="getLintRules-param-configs"
-                ><span class="type-annotation"
-                  ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintConfigs-class.html"
-                    >CustomLintConfigs</a
-                  ></span
-                >
-                <span class="parameter-name">configs</span></span
-              >
-            </li>
-          </ol>
-          )
-
-          <div class="features"><span class="feature">override</span></div>
+          <span class="name">PreferWidgetClassOverWidgetHelper</span>(<wbr />)
         </section>
 
         <section class="desc markdown">
-          <p>We list all the custom warnings/infos/errors</p>
+          <p>Reports private <code>Widget _build...</code> helpers.</p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
-          <pre class="language-dart"><code class="language-dart">@override
-List&lt;LintRule&gt; getLintRules(CustomLintConfigs configs) =&gt; &lt;LintRule&gt;[
-      const SingleClassPerFile(),
-      const MatchingClassAndFileName(),
-    ];</code></pre>
+          <pre
+            class="language-dart"
+          ><code class="language-dart">PreferWidgetClassOverWidgetHelper()
+  : super(
+      name: &#39;prefer_widget_class_over_widget_helper&#39;,
+      description: &#39;Prefers widget classes over private Widget helpers.&#39;,
+    );</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -183,17 +155,19 @@ List&lt;LintRule&gt; getLintRules(CustomLintConfigs configs) =&gt; &lt;LintRule&
           </li>
           <li>
             <a
-              href="../../flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
-              >FlutterBestPracticesPlugin</a
+              href="../../flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
+              >PreferWidgetClassOverWidgetHelper</a
             >
           </li>
-          <li class="self-crumb">getLintRules method</li>
+          <li class="self-crumb">
+            PreferWidgetClassOverWidgetHelper.new constructor
+          </li>
         </ol>
 
-        <h5>FlutterBestPracticesPlugin class</h5>
+        <h5>PreferWidgetClassOverWidgetHelper class</h5>
         <div id="dartdoc-sidebar-left-content"></div>
       </div>
-      <!--/.sidebar-offcanvas-->
+      <!--/.sidebar-offcanvas-left-->
       <div
         id="dartdoc-sidebar-right"
         class="sidebar sidebar-offcanvas-right"
@@ -201,7 +175,7 @@ List&lt;LintRule&gt; getLintRules(CustomLintConfigs configs) =&gt; &lt;LintRule&
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

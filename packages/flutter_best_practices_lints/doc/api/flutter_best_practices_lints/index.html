@@ -90,97 +90,50 @@
         </div>
 
         <section class="desc markdown">
-          <h1 id="flutter_best_practices_lints">
-            flutter_best_practices_lints
-          </h1>
           <p>
-            The <code>flutter_best_practices_lints</code> package provides
-            custom lint rules to improve code quality and maintain consistency
-            across Flutter projects.
+            Analyzer diagnostics for Flutter project structure and widget usage.
           </p>
-          <h2 id="key-features">Key Features</h2>
-          <ul>
-            <li>
-              <p>
-                <strong>Single Class per File</strong>
-                (<code>single_class_per_file</code>): Ensures that each file
-                contains only one primary class declaration, promoting better
-                organization and maintainability.
-              </p>
-            </li>
-            <li>
-              <p>
-                <strong>Matching Class and File Name</strong>
-                (<code>matching_class_and_file_name</code>): Ensures that the
-                class name (in PascalCase) matches the file name (in
-                snake_case), improving project clarity and discoverability.
-              </p>
-            </li>
-          </ul>
-          <h2 id="structure">Structure</h2>
-          <ul>
-            <li>
-              <p><strong>Extensions</strong>:</p>
-              <ul>
-                <li>
-                  <code>class_declaration_extension.dart</code>: Provides helper
-                  getters to check whether a class is private
-                  <code>State</code> or abstract.
-                </li>
-                <li>
-                  <code>lint_code_extension.dart</code>: Offers a
-                  <code>copyWith()</code> method to easily create modified
-                  copies of <code>LintCode</code> instances.
-                </li>
-              </ul>
-            </li>
-            <li>
-              <p><strong>Rules</strong>:</p>
-              <ul>
-                <li>
-                  <code>matching_class_and_file_name.dart</code>: Checks if a
-                  class name matches the file name and excludes classes like
-                  <code>State</code> or abstract classes.
-                </li>
-                <li>
-                  <code>single_class_per_file.dart</code>: Restricts each file
-                  to only one primary class definition, ignoring private
-                  <code>State</code> classes.
-                </li>
-              </ul>
-            </li>
-            <li>
-              <p><strong>Plugin Entrypoint</strong>:</p>
-              <ul>
-                <li>
-                  <code>flutter_best_practices_plugin.dart</code>: Registers all
-                  the available lint rules and integrates them into your
-                  project's static analysis.
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <h2 id="getting-started">Getting Started</h2>
           <p>
-            To use these lint rules, add
-            <code>flutter_best_practices_lints</code> as a dev dependency in
-            your <code>pubspec.yaml</code> and configure it in your
-            <code>analysis_options.yaml</code>:
+            The package registers five opt-in <code>INFO</code> diagnostics
+            through Dart's official analyzer plugin host:
           </p>
-          <pre class="language-yaml"><code class="language-yaml">analyzer:
-  plugins:
-    - custom_lint
-
-custom_lint:
-  rules:
-    - matching_class_and_file_name
-    - single_class_per_file
+          <ul>
+            <li><code>single_class_per_file</code></li>
+            <li><code>matching_class_and_file_name</code></li>
+            <li><code>prefer_widget_class_over_widget_helper</code></li>
+            <li><code>avoid_widget_operator_equals</code></li>
+            <li><code>prefer_media_query_partial_methods</code></li>
+          </ul>
+          <p>
+            Add the package to the top-level
+            <code>analysis_options.yaml</code> for the consuming package or pub
+            workspace:
+          </p>
+          <pre class="language-yaml"><code class="language-yaml">plugins:
+  flutter_best_practices_lints:
+    version: ^0.6.0
+    diagnostics:
+      matching_class_and_file_name: true
+      single_class_per_file: true
+      prefer_widget_class_over_widget_helper: true
+      avoid_widget_operator_equals: true
+      prefer_media_query_partial_methods: true
 </code></pre>
         </section>
 
         <section class="summary offset-anchor" id="classes">
           <h2>Classes</h2>
           <dl>
+            <dt id="AvoidWidgetOperatorEquals">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/AvoidWidgetOperatorEquals-class.html"
+                  >AvoidWidgetOperatorEquals</a
+                ></span
+              >
+            </dt>
+            <dd>Reports equality overrides on Flutter widget classes.</dd>
+
             <dt id="FlutterBestPracticesPlugin">
               <span class="name"
                 ><a
@@ -189,10 +142,7 @@ custom_lint:
                 ></span
               >
             </dt>
-            <dd>
-              A plugin class is used to list all the assists/lints defined by a
-              plugin.
-            </dd>
+            <dd>Registers the Flutter best-practice analysis rules.</dd>
 
             <dt id="MatchingClassAndFileName">
               <span class="name"
@@ -207,6 +157,30 @@ custom_lint:
               snake_case file names, helping maintain consistency between files
               and the primary class they contain.
             </dd>
+
+            <dt id="PreferMediaQueryPartialMethods">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+                  >PreferMediaQueryPartialMethods</a
+                ></span
+              >
+            </dt>
+            <dd>
+              Reports <code>MediaQuery.of(context).property</code> accesses that
+              have a dedicated static accessor (e.g.
+              <code>MediaQuery.sizeOf(context)</code>).
+            </dd>
+
+            <dt id="PreferWidgetClassOverWidgetHelper">
+              <span class="name"
+                ><a
+                  href="../flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
+                  >PreferWidgetClassOverWidgetHelper</a
+                ></span
+              >
+            </dt>
+            <dd>Reports private <code>Widget _build...</code> helpers.</dd>
 
             <dt id="SingleClassPerFile">
               <span class="name"
@@ -238,14 +212,14 @@ custom_lint:
               >
               on
               <a
-                href="https://pub.dev/documentation/analyzer/8.4.0/dart_ast_ast/ClassDeclaration-class.html"
+                href="https://pub.dev/documentation/analyzer/14.3.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
             </dt>
             <dd>
               Provides convenient inspection utilities on a
               <a
-                href="https://pub.dev/documentation/analyzer/8.4.0/dart_ast_ast/ClassDeclaration-class.html"
+                href="https://pub.dev/documentation/analyzer/14.3.0/dart_ast_ast/ClassDeclaration-class.html"
                 >ClassDeclaration</a
               >
               to help custom lint rules determine class characteristics in
@@ -254,51 +228,6 @@ custom_lint:
               superclass extensions, generic type usage, and overall
               relationships to other classes.
             </dd>
-
-            <dt id="LintCodeCopyWithExtension">
-              <span class="name"
-                ><a
-                  href="../flutter_best_practices_lints/LintCodeCopyWithExtension.html"
-                  >LintCodeCopyWithExtension</a
-                ></span
-              >
-              on
-              <a
-                href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/LintCode-class.html"
-                >LintCode</a
-              >
-            </dt>
-            <dd>
-              An extension that provides a method for creating modified copies
-              of a
-              <a
-                href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/LintCode-class.html"
-                >LintCode</a
-              >.
-            </dd>
-          </dl>
-        </section>
-
-        <section class="summary offset-anchor" id="functions">
-          <h2>Functions</h2>
-          <dl class="callables">
-            <dt id="createPlugin" class="callable">
-              <span class="name"
-                ><a href="../flutter_best_practices_lints/createPlugin.html"
-                  >createPlugin</a
-                ></span
-              ><span class="signature"
-                >(<wbr />)
-                <span class="returntype parameter"
-                  >&#8594;
-                  <a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/PluginBase-class.html"
-                    >PluginBase</a
-                  ></span
-                >
-              </span>
-            </dt>
-            <dd>This is the entrypoint of our custom linter</dd>
           </dl>
         </section>
       </div>
@@ -333,6 +262,7 @@ custom_lint:
               >flutter_best_practices_lints</a
             >
           </li>
+          <li><a href="../main/">main</a></li>
         </ol>
       </div>
       <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -341,7 +271,7 @@ custom_lint:
       <!--/sidebar-offcanvas-right-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../static-assets/highlight.pack.js?v1"></script>

@@ -9,11 +9,11 @@
     />
     <meta
       name="description"
-      content="API docs for the run method from the MatchingClassAndFileName class, for the Dart programming language."
+      content="API docs for the registerNodeProcessors method from the MatchingClassAndFileName class, for the Dart programming language."
     />
     <title>
-      run method - MatchingClassAndFileName class - flutter_best_practices_lints
-      library - Dart API
+      registerNodeProcessors method - MatchingClassAndFileName class -
+      flutter_best_practices_lints library - Dart API
     </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -58,9 +58,9 @@
             >MatchingClassAndFileName</a
           >
         </li>
-        <li class="self-crumb">run method</li>
+        <li class="self-crumb">registerNodeProcessors method</li>
       </ol>
-      <div class="self-name">run</div>
+      <div class="self-name">registerNodeProcessors</div>
       <form class="search navbar-right" role="search">
         <input
           type="text"
@@ -101,7 +101,9 @@
         data-below-sidebar=""
       >
         <div>
-          <h1><span class="kind-method">run</span> method</h1>
+          <h1>
+            <span class="kind-method">registerNodeProcessors</span> method
+          </h1>
         </div>
 
         <section class="multi-line-signature">
@@ -116,36 +118,25 @@
             </ol>
           </div>
           <span class="returntype">void</span>
-          <span class="name">run</span>(<wbr />
+          <span class="name">registerNodeProcessors</span>(<wbr />
           <ol class="parameter-list single-line">
             <li>
-              <span class="parameter" id="run-param-resolver"
+              <span class="parameter" id="registerNodeProcessors-param-registry"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintResolver-class.html"
-                    >CustomLintResolver</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_visitor_registry/RuleVisitorRegistry-class.html"
+                    >RuleVisitorRegistry</a
                   ></span
                 >
-                <span class="parameter-name">resolver</span>,
+                <span class="parameter-name">registry</span>,
               </span>
             </li>
             <li>
-              <span class="parameter" id="run-param-reporter"
+              <span class="parameter" id="registerNodeProcessors-param-context"
                 ><span class="type-annotation"
                   ><a
-                    href="https://pub.dev/documentation/analyzer/8.4.0/error_listener/DiagnosticReporter-class.html"
-                    >DiagnosticReporter</a
-                  ></span
-                >
-                <span class="parameter-name">reporter</span>,
-              </span>
-            </li>
-            <li>
-              <span class="parameter" id="run-param-context"
-                ><span class="type-annotation"
-                  ><a
-                    href="https://pub.dev/documentation/custom_lint_core/0.8.1/custom_lint_core/CustomLintContext-class.html"
-                    >CustomLintContext</a
+                    href="https://pub.dev/documentation/analyzer/14.3.0/analysis_rule_rule_context/RuleContext-class.html"
+                    >RuleContext</a
                   ></span
                 >
                 <span class="parameter-name">context</span></span
@@ -158,98 +149,24 @@
         </section>
 
         <section class="desc markdown">
+          <p>Registers node processors in the given <code>registry</code>.</p>
           <p>
-            Ensures that public class names in PascalCase correspond to their
-            snake_case file names, helping maintain consistency between files
-            and the primary class they contain.
-          </p>
-          <ul>
-            <li>Single public class: name must match file name.</li>
-            <li>
-              Multiple public classes: at least one must match, and any others
-              not related to the primary class will trigger a warning.
-            </li>
-          </ul>
-          <p>
-            Registers a callback to inspect each Dart compilation unit. It
-            computes the expected class name from the file name, then validates
-            each non-State, non-private class declaration.
+            The node processors may use the provided <code>context</code> to
+            access information that is not available from the AST nodes or their
+            associated elements.
           </p>
         </section>
 
         <section class="summary source-code" id="source">
           <h2><span>Implementation</span></h2>
           <pre class="language-dart"><code class="language-dart">@override
-void run(
-  CustomLintResolver resolver,
-  DiagnosticReporter reporter,
-  CustomLintContext context,
+void registerNodeProcessors(
+  RuleVisitorRegistry registry,
+  RuleContext context,
 ) {
-  &#47;&#47; Only apply to files under &#39;lib&#47;&#39; directory
-  final filePath = resolver.path;
+  if (!context.isInLibDir) return;
 
-  &#47;&#47; If the file path is not included in the lib folder,
-  &#47;&#47; it will not be checked.
-  if (!path.split(filePath).contains(&#39;lib&#39;)) return;
-
-  context.registry.addCompilationUnit((CompilationUnit node) {
-    final fullPath = node.declaredFragment!.source.fullName;
-    final fileName = path.basenameWithoutExtension(fullPath);
-    final expectedClassName = fileName.toPascalCase();
-
-    &#47;&#47; Collect all class declarations excluding private State classes
-    final classDeclarations =
-        node.declarations.whereType&lt;ClassDeclaration&gt;().where((cls) =&gt; !cls.isStateClass).toList();
-
-    if (classDeclarations.isEmpty) return; &#47;&#47; Nothing to check
-
-    &#47;&#47; Identify classes matching the expected primary name
-    final primaryClasses = classDeclarations.where((cls) =&gt; cls.name.lexeme == expectedClassName).toList();
-
-    &#47;&#47; Single public class case
-    if (classDeclarations.length == 1) {
-      final mainClass = classDeclarations.first;
-      if (mainClass.name.lexeme != expectedClassName) {
-        &#47;&#47; Report mismatch with correction recommendation
-        reporter.atNode(
-          mainClass,
-          _code.copyWith(
-            problemMessage: &#39;Class name ${mainClass.name.lexeme} must match the file name &quot;$fileName&quot;.&#39;,
-            correctionMessage: &#39;Rename the class to &quot;$expectedClassName&quot;.&#39;,
-          ),
-        );
-      }
-      return;
-    }
-
-    &#47;&#47; Multiple public classes
-    if (primaryClasses.isNotEmpty) {
-      &#47;&#47; Warn on any classes not matching and not related to primary
-      for (final cls in classDeclarations.where((c) =&gt; c.name.lexeme != expectedClassName)) {
-        final isRelated = primaryClasses.any((primary) =&gt; cls.isRelatedTo(primary.name.lexeme));
-        if (!isRelated) {
-          reporter.atNode(
-            cls,
-            _code.copyWith(
-              problemMessage: &#39;Class name ${cls.name.lexeme} does not match the file name &quot;$fileName&quot;.&#39;,
-              correctionMessage: &#39;Either rename it to &quot;$expectedClassName&quot; or separate into a new file.&#39;,
-            ),
-          );
-        }
-      }
-    } else {
-      &#47;&#47; No primary class at all: warn on every class
-      for (final cls in classDeclarations) {
-        reporter.atNode(
-          cls,
-          _code.copyWith(
-            problemMessage: &#39;Class name ${cls.name.lexeme} must match the file name &quot;$fileName&quot;.&#39;,
-            correctionMessage: &#39;Rename the class to &quot;$expectedClassName&quot;.&#39;,
-          ),
-        );
-      }
-    }
-  });
+  registry.addCompilationUnit(this, _Visitor(this, context));
 }</code></pre>
         </section>
       </div>
@@ -281,7 +198,7 @@ void run(
               >MatchingClassAndFileName</a
             >
           </li>
-          <li class="self-crumb">run method</li>
+          <li class="self-crumb">registerNodeProcessors method</li>
         </ol>
 
         <h5>MatchingClassAndFileName class</h5>
@@ -295,7 +212,7 @@ void run(
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

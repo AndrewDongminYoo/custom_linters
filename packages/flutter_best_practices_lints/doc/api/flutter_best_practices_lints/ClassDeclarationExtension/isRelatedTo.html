@@ -140,7 +140,9 @@
           <pre
             class="language-dart"
           ><code class="language-dart">bool isRelatedTo(String className) {
-  return implementsInterface(className) || extendsClass(className) || usesGeneric(className);
+  return implementsInterface(className) ||
+      extendsClass(className) ||
+      usesGeneric(className);
 }</code></pre>
         </section>
       </div>
@@ -178,7 +180,7 @@
         <h5>
           ClassDeclarationExtension extension on
           <a
-            href="https://pub.dev/documentation/analyzer/8.4.0/dart_ast_ast/ClassDeclaration-class.html"
+            href="https://pub.dev/documentation/analyzer/14.3.0/dart_ast_ast/ClassDeclaration-class.html"
             >ClassDeclaration</a
           >
         </h5>
@@ -192,7 +194,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>
