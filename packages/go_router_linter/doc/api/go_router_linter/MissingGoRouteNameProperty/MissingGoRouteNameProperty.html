@@ -53,9 +53,7 @@
             >MissingGoRouteNameProperty</a
           >
         </li>
-        <li class="self-crumb">
-          MissingGoRouteNameProperty.new const constructor
-        </li>
+        <li class="self-crumb">MissingGoRouteNameProperty.new constructor</li>
       </ol>
       <div class="self-name">MissingGoRouteNameProperty.new</div>
       <form class="search navbar-right" role="search">
@@ -105,20 +103,13 @@
         </div>
 
         <section class="multi-line-signature">
-          const
           <span class="name">MissingGoRouteNameProperty</span>(<wbr />)
         </section>
 
         <section class="desc markdown">
           <p>
-            A lint rule that checks if GoRoute definitions include a
+            Checks that <code>GoRoute</code> definitions include a
             <code>name</code> property.
-          </p>
-          <p>
-            This rule is part of the custom lint rules for the GoRouter package.
-            It ensures that all GoRoute definitions have a
-            <code>name</code> property set, which is required for proper routing
-            functionality.
           </p>
         </section>
 
@@ -126,7 +117,11 @@
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">const MissingGoRouteNameProperty() : super(code: _code);</code></pre>
+          ><code class="language-dart">MissingGoRouteNameProperty()
+  : super(
+      name: &#39;missing_go_route_name_property&#39;,
+      description: &#39;Requires a name for each GoRoute definition.&#39;,
+    );</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -153,9 +148,7 @@
               >MissingGoRouteNameProperty</a
             >
           </li>
-          <li class="self-crumb">
-            MissingGoRouteNameProperty.new const constructor
-          </li>
+          <li class="self-crumb">MissingGoRouteNameProperty.new constructor</li>
         </ol>
 
         <h5>MissingGoRouteNameProperty class</h5>
@@ -169,7 +162,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

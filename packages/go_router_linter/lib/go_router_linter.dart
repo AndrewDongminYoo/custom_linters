@@ -1,85 +1,29 @@
-/// {@template go_router_linter_package}
-/// # go_router_linter
+/// Analyzer diagnostics for route definitions and navigation calls that use `go_router`.
 ///
-/// The `go_router_linter` package provides custom lint rules to improve code
-/// quality and maintain consistency when using the `go_router` package in
-/// Dart/Flutter projects.
+/// The package registers five opt-in `INFO` diagnostics through Dart's official analyzer plugin host:
 ///
-/// ## Key Features
+/// - `missing_go_route_name_property`
+/// - `use_context_directly_for_go_router`
+/// - `avoid_hardcoded_routes`
+/// - `avoid_navigator_named_routes_with_go_router`
+/// - `missing_go_router_error_handler`
 ///
-/// - **Avoid Hardcoded Routes** (`avoid_hardcoded_routes`):
-///   Detects hardcoded route strings in `context.go()`, `context.push()` and
-///   related methods,
-///   as well as in `GoRoute` definitions. Encourages the use of constants or
-///   enums.
-///
-/// - **Ensure `GoRoute` Includes a `name` Property**
-///   (`missing_go_route_name_property`):
-///   Ensures every `GoRoute` has a `name` property, improving readability and
-///   maintainability.
-///
-/// - **Use `context.go()` Instead of `GoRouter.of(context).go()`**
-///   (`use_context_directly_for_go_router`):
-///   Suggests the more concise and idiomatic `BuildContext` helper calls,
-///   such as `context.go()`, `context.namedLocation()`, and `context.pop()`.
-///
-/// - **Avoid Navigator Named Routes With GoRouter**
-///   (`avoid_navigator_named_routes_with_go_router`):
-///   Flags `Navigator.*Named` APIs in projects that depend on `go_router`.
-///
-/// - **Require GoRouter Error Handler** (`missing_go_router_error_handler`):
-///   Warns when `GoRouter` is constructed without an `errorBuilder` or
-///   `errorPageBuilder`, preventing silent blank screens on unknown routes.
-///
-/// ## Structure
-///
-/// - **Extensions**:
-///   - `lint_code_extension.dart`: Provides a `copyWith()` method for creating
-///     modified copies of `LintCode` instances.
-///   - `route_methods_extension.dart`: Adds a helper extension on `String`
-///     to easily identify route-related methods
-///     (`go`, `push`, `goNamed`, `pushNamed`, etc.).
-///
-/// - **Rules**:
-///   - `avoid_hardcoded_routes.dart`: Checks for hardcoded route strings in
-///     route methods, redirects, and `GoRoute` definitions.
-///   - `avoid_navigator_named_routes_with_go_router.dart`: Discourages
-///     `Navigator.*Named` APIs when `go_router` is present.
-///   - `missing_go_route_name_property.dart`: Ensures `GoRoute` definitions
-///     include a `name`.
-///   - `missing_go_router_error_handler.dart`: Reports `GoRouter` constructors
-///     without an `errorBuilder` or `errorPageBuilder`.
-///   - `use_context_directly_for_go_router.dart`: Advises using `context.go()`
-///     and related helpers instead of `GoRouter.of(context)`.
-///
-/// - **Plugin Entrypoint**:
-///   - `go_router_linter.dart`: Defines the plugin and registers all available
-///     lint rules.
-///
-/// ## Getting Started
-///
-/// To use these lint rules, add `go_router_linter` as a dev dependency and
-/// configure it in your `analysis_options.yaml`:
+/// Add the package to the top-level `analysis_options.yaml` for the consuming package or pub workspace:
 ///
 /// ```yaml
-/// analyzer:
-///   plugins:
-///     - custom_lint
-///
-/// custom_lint:
-///   rules:
-///     - missing_go_route_name_property
-///     - use_context_directly_for_go_router
-///     - avoid_hardcoded_routes
-///     - avoid_navigator_named_routes_with_go_router
-///     - missing_go_router_error_handler
+/// plugins:
+///   go_router_linter:
+///     version: ^0.5.0
+///     diagnostics:
+///       missing_go_route_name_property: true
+///       use_context_directly_for_go_router: true
+///       avoid_hardcoded_routes: true
+///       avoid_navigator_named_routes_with_go_router: true
+///       missing_go_router_error_handler: true
 /// ```
-/// {@endtemplate}
 library;
 
-export 'src/extensions/lint_code_extension.dart';
 export 'src/extensions/route_methods_extension.dart';
-export 'src/go_router_lint_plugin.dart' show createPlugin;
 export 'src/rules/avoid_hardcoded_routes.dart';
 export 'src/rules/avoid_navigator_named_routes_with_go_router.dart';
 export 'src/rules/missing_go_route_name_property.dart';

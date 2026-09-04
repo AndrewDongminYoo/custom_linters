@@ -1,12 +1,13 @@
 // 📦 Package imports:
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:path/path.dart' as path;
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
 
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/src/extensions/class_declaration_extension.dart';
-import 'package:flutter_best_practices_lints/src/extensions/lint_code_extension.dart';
 import 'package:flutter_best_practices_lints/src/extensions/pascal_case_extension.dart';
 
 /// {@template matching_class_and_file_name}
@@ -18,108 +19,124 @@ import 'package:flutter_best_practices_lints/src/extensions/pascal_case_extensio
 /// - Multiple public classes: at least one must match, and any others
 ///   not related to the primary class will trigger a warning.
 /// {@endtemplate}
-class MatchingClassAndFileName extends DartLintRule {
+class MatchingClassAndFileName extends AnalysisRule {
   /// {@macro matching_class_and_file_name}
-  const MatchingClassAndFileName() : super(code: _code);
+  MatchingClassAndFileName()
+    : super(
+        name: 'matching_class_and_file_name',
+        description: 'Matches the primary class name to its file name.',
+      );
 
-  /// Metadata about the diagnostic that appears in the IDE.
-  ///
-  /// The initial [LintCode.problemMessage] is general,
-  /// but it may be overwritten dynamically in [run]
-  /// when the class name does not match the file name.
   static const _code = LintCode(
-    name: 'matching_class_and_file_name',
-    problemMessage:
-        'Class name (PascalCase) must match the file name (snake_case).',
+    'matching_class_and_file_name',
+    'Class name {0} {1} the file name "{2}".',
+    correctionMessage: '{3}',
   );
 
-  /// {@macro matching_class_and_file_name}
-  ///
-  /// Registers a callback to inspect each Dart compilation unit.
-  /// It computes the expected class name from the file name,
-  /// then validates each non-State, non-private class declaration.
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
+  LintCode get diagnosticCode => _code;
+
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
-    // Only apply to files under 'lib/' directory
-    final filePath = resolver.path;
+    if (!context.isInLibDir) return;
 
-    // If the file path is not included in the lib folder,
-    // it will not be checked.
-    if (!path.split(filePath).contains('lib')) return;
+    registry.addCompilationUnit(this, _Visitor(this, context));
+  }
+}
 
-    context.registry.addCompilationUnit((node) {
-      final fullPath = node.declaredFragment!.source.fullName;
-      final fileName = path.basenameWithoutExtension(fullPath);
-      final expectedClassName = fileName.toPascalCase();
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule, this.context);
 
-      // Collect all class declarations excluding private State classes
-      final classDeclarations = node.declarations
-          .whereType<ClassDeclaration>()
-          .where((cls) => !cls.isStateClass)
-          .toList();
+  final MatchingClassAndFileName rule;
+  final RuleContext context;
 
-      if (classDeclarations.isEmpty) return; // Nothing to check
+  @override
+  void visitCompilationUnit(CompilationUnit node) {
+    final shortName =
+        context.currentUnit?.file.shortName ??
+        context.definingUnit.file.shortName;
+    final fileName = shortName.endsWith('.dart')
+        ? shortName.substring(0, shortName.length - '.dart'.length)
+        : shortName;
+    final expectedClassName = fileName.toPascalCase();
+    final classDeclarations = node.declarations
+        .whereType<ClassDeclaration>()
+        .where((declaration) => !declaration.isStateClass)
+        .toList();
 
-      // Identify classes matching the expected primary name
-      final primaryClasses = classDeclarations
-          .where((cls) => cls.name.lexeme == expectedClassName)
-          .toList();
+    if (classDeclarations.isEmpty) return;
 
-      // Single public class case
-      if (classDeclarations.length == 1) {
-        final mainClass = classDeclarations.first;
-        if (mainClass.name.lexeme != expectedClassName) {
-          // Report mismatch with correction recommendation
-          reporter.atNode(
-            mainClass,
-            _code.copyWith(
-              problemMessage:
-                  'Class name ${mainClass.name.lexeme} must match the file name "$fileName".',
-              correctionMessage: 'Rename the class to "$expectedClassName".',
-            ),
-          );
-        }
-        return;
+    final primaryClasses = classDeclarations
+        .where(
+          (declaration) =>
+              declaration.namePart.typeName.lexeme == expectedClassName,
+        )
+        .toList();
+
+    if (classDeclarations.length == 1) {
+      final declaration = classDeclarations.single;
+      final className = declaration.namePart.typeName.lexeme;
+      if (className != expectedClassName) {
+        _reportMustMatch(
+          declaration,
+          className: className,
+          fileName: fileName,
+          expectedClassName: expectedClassName,
+        );
       }
+      return;
+    }
 
-      // Multiple public classes
-      if (primaryClasses.isNotEmpty) {
-        // Warn on any classes not matching and not related to primary
-        for (final cls in classDeclarations.where(
-          (c) => c.name.lexeme != expectedClassName,
-        )) {
-          final isRelated = primaryClasses.any(
-            (primary) => cls.isRelatedTo(primary.name.lexeme),
-          );
-          if (!isRelated) {
-            reporter.atNode(
-              cls,
-              _code.copyWith(
-                problemMessage:
-                    'Class name ${cls.name.lexeme} does not match the file name "$fileName".',
-                correctionMessage:
-                    'Either rename it to "$expectedClassName" or separate into a new file.',
-              ),
-            );
-          }
-        }
-      } else {
-        // No primary class at all: warn on every class
-        for (final cls in classDeclarations) {
-          reporter.atNode(
-            cls,
-            _code.copyWith(
-              problemMessage:
-                  'Class name ${cls.name.lexeme} must match the file name "$fileName".',
-              correctionMessage: 'Rename the class to "$expectedClassName".',
-            ),
-          );
-        }
+    if (primaryClasses.isEmpty) {
+      for (final declaration in classDeclarations) {
+        _reportMustMatch(
+          declaration,
+          className: declaration.namePart.typeName.lexeme,
+          fileName: fileName,
+          expectedClassName: expectedClassName,
+        );
       }
-    });
+      return;
+    }
+
+    for (final declaration in classDeclarations) {
+      final className = declaration.namePart.typeName.lexeme;
+      if (className == expectedClassName) continue;
+
+      final isRelated = primaryClasses.any(
+        (primary) => declaration.isRelatedTo(primary.namePart.typeName.lexeme),
+      );
+      if (!isRelated) {
+        rule.reportAtNode(
+          declaration,
+          arguments: [
+            className,
+            'does not match',
+            fileName,
+            'Either rename it to "$expectedClassName" or separate into a new file.',
+          ],
+        );
+      }
+    }
+  }
+
+  void _reportMustMatch(
+    ClassDeclaration declaration, {
+    required String className,
+    required String fileName,
+    required String expectedClassName,
+  }) {
+    rule.reportAtNode(
+      declaration,
+      arguments: [
+        className,
+        'must match',
+        fileName,
+        'Rename the class to "$expectedClassName".',
+      ],
+    );
   }
 }

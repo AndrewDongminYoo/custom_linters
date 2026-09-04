@@ -1,5 +1,6 @@
 // 📦 Package imports:
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analysis_server_plugin/plugin.dart';
+import 'package:analysis_server_plugin/registry.dart';
 
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/src/rules/avoid_widget_operator_equals.dart';
@@ -8,18 +9,18 @@ import 'package:flutter_best_practices_lints/src/rules/prefer_media_query_partia
 import 'package:flutter_best_practices_lints/src/rules/prefer_widget_class_over_widget_helper.dart';
 import 'package:flutter_best_practices_lints/src/rules/single_class_per_file.dart';
 
-/// This is the entrypoint of our custom linter
-PluginBase createPlugin() => FlutterBestPracticesPlugin();
-
-/// A plugin class is used to list all the assists/lints defined by a plugin.
-class FlutterBestPracticesPlugin extends PluginBase {
-  /// We list all the custom warnings/infos/errors
+/// Registers the Flutter best-practice analysis rules.
+class FlutterBestPracticesPlugin extends Plugin {
   @override
-  List<LintRule> getLintRules(CustomLintConfigs configs) => <LintRule>[
-    const SingleClassPerFile(),
-    const MatchingClassAndFileName(),
-    const PreferWidgetClassOverWidgetHelper(),
-    const AvoidWidgetOperatorEquals(),
-    const PreferMediaQueryPartialMethods(),
-  ];
+  String get name => 'flutter_best_practices_lints';
+
+  @override
+  void register(PluginRegistry registry) {
+    registry
+      ..registerLintRule(SingleClassPerFile())
+      ..registerLintRule(MatchingClassAndFileName())
+      ..registerLintRule(PreferWidgetClassOverWidgetHelper())
+      ..registerLintRule(AvoidWidgetOperatorEquals())
+      ..registerLintRule(PreferMediaQueryPartialMethods());
+  }
 }

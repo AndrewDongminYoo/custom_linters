@@ -55,7 +55,7 @@
           >
         </li>
         <li class="self-crumb">
-          UseContextDirectlyForGoRouter.new const constructor
+          UseContextDirectlyForGoRouter.new constructor
         </li>
       </ol>
       <div class="self-name">UseContextDirectlyForGoRouter.new</div>
@@ -106,22 +106,13 @@
         </div>
 
         <section class="multi-line-signature">
-          const
           <span class="name">UseContextDirectlyForGoRouter</span>(<wbr />)
         </section>
 
         <section class="desc markdown">
           <p>
-            A custom lint rule that checks for the use of
-            <code>GoRouter.of(context).go()</code> instead of
-            <code>context.go()</code>.
-          </p>
-          <p>
-            This lint rule is part of the <code>go_router_linter</code> plugin,
-            which provides a set of custom lints for the Go Router library. The
-            purpose of this lint is to encourage the use of the more concise and
-            idiomatic <code>context.go()</code> method instead of the longer
-            <code>GoRouter.of(context).go()</code> form.
+            Reports <code>GoRouter.of(context).method()</code> calls when the
+            equivalent <code>BuildContext</code> helper is available.
           </p>
         </section>
 
@@ -129,7 +120,11 @@
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">const UseContextDirectlyForGoRouter() : super(code: _code);</code></pre>
+          ><code class="language-dart">UseContextDirectlyForGoRouter()
+  : super(
+      name: &#39;use_context_directly_for_go_router&#39;,
+      description: &#39;Prefers BuildContext go_router helpers.&#39;,
+    );</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -157,7 +152,7 @@
             >
           </li>
           <li class="self-crumb">
-            UseContextDirectlyForGoRouter.new const constructor
+            UseContextDirectlyForGoRouter.new constructor
           </li>
         </ol>
 
@@ -172,7 +167,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> go_router_linter 0.2.0 </span>
+      <span class="no-break"> go_router_linter 0.5.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

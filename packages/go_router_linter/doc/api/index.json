@@ -5,7 +5,7 @@
     "href": "go_router_linter/",
     "kind": 9,
     "packageRank": 0,
-    "desc": "go_router_linter"
+    "desc": "Analyzer diagnostics for route definitions and navigation calls that use go_router."
   },
   {
     "name": "AvoidHardcodedRoutes",
@@ -13,7 +13,7 @@
     "href": "go_router_linter/AvoidHardcodedRoutes-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A lint rule that checks for hardcoded route strings.",
+    "desc": "Detects hardcoded route paths and names in go_router APIs.",
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
@@ -26,7 +26,7 @@
     "href": "go_router_linter/AvoidHardcodedRoutes/AvoidHardcodedRoutes.html",
     "kind": 2,
     "packageRank": 0,
-    "desc": "A lint rule that checks for hardcoded route strings.",
+    "desc": "Detects hardcoded route paths and names in go_router APIs.",
     "enclosedBy": {
       "name": "AvoidHardcodedRoutes",
       "kind": 3,
@@ -34,13 +34,27 @@
     }
   },
   {
-    "name": "run",
-    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.run",
-    "href": "go_router_linter/AvoidHardcodedRoutes/run.html",
+    "name": "diagnosticCode",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.diagnosticCode",
+    "href": "go_router_linter/AvoidHardcodedRoutes/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "AvoidHardcodedRoutes",
+      "kind": 3,
+      "href": "go_router_linter/AvoidHardcodedRoutes-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "go_router_linter.AvoidHardcodedRoutes.registerNodeProcessors",
+    "href": "go_router_linter/AvoidHardcodedRoutes/registerNodeProcessors.html",
     "kind": 10,
     "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "Emits lints for a given file.",
+    "desc": "Registers node processors in the given registry.",
     "enclosedBy": {
       "name": "AvoidHardcodedRoutes",
       "kind": 3,
@@ -48,12 +62,12 @@
     }
   },
   {
-    "name": "LintCodeCopyWithExtension",
-    "qualifiedName": "go_router_linter.LintCodeCopyWithExtension",
-    "href": "go_router_linter/LintCodeCopyWithExtension.html",
-    "kind": 6,
+    "name": "AvoidNavigatorNamedRoutesWithGoRouter",
+    "qualifiedName": "go_router_linter.AvoidNavigatorNamedRoutesWithGoRouter",
+    "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter-class.html",
+    "kind": 3,
     "packageRank": 0,
-    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
+    "desc": "Reports Navigator named-route APIs in packages that use go_router.",
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
@@ -61,17 +75,44 @@
     }
   },
   {
-    "name": "copyWith",
-    "qualifiedName": "go_router_linter.LintCodeCopyWithExtension.copyWith",
-    "href": "go_router_linter/LintCodeCopyWithExtension/copyWith.html",
-    "kind": 10,
+    "name": "AvoidNavigatorNamedRoutesWithGoRouter.new",
+    "qualifiedName": "go_router_linter.AvoidNavigatorNamedRoutesWithGoRouter.AvoidNavigatorNamedRoutesWithGoRouter.new",
+    "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter/AvoidNavigatorNamedRoutesWithGoRouter.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "Reports Navigator named-route APIs in packages that use go_router.",
+    "enclosedBy": {
+      "name": "AvoidNavigatorNamedRoutesWithGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter-class.html"
+    }
+  },
+  {
+    "name": "diagnosticCode",
+    "qualifiedName": "go_router_linter.AvoidNavigatorNamedRoutesWithGoRouter.diagnosticCode",
+    "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter/diagnosticCode.html",
+    "kind": 16,
     "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
+    "desc": "The code to report for a violation.",
     "enclosedBy": {
-      "name": "LintCodeCopyWithExtension",
-      "kind": 6,
-      "href": "go_router_linter/LintCodeCopyWithExtension.html"
+      "name": "AvoidNavigatorNamedRoutesWithGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "go_router_linter.AvoidNavigatorNamedRoutesWithGoRouter.registerNodeProcessors",
+    "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "AvoidNavigatorNamedRoutesWithGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/AvoidNavigatorNamedRoutesWithGoRouter-class.html"
     }
   },
   {
@@ -80,7 +121,7 @@
     "href": "go_router_linter/MissingGoRouteNameProperty-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A lint rule that checks if GoRoute definitions include a name property.",
+    "desc": "Checks that GoRoute definitions include a name property.",
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
@@ -93,7 +134,7 @@
     "href": "go_router_linter/MissingGoRouteNameProperty/MissingGoRouteNameProperty.html",
     "kind": 2,
     "packageRank": 0,
-    "desc": "A lint rule that checks if GoRoute definitions include a name property.",
+    "desc": "Checks that GoRoute definitions include a name property.",
     "enclosedBy": {
       "name": "MissingGoRouteNameProperty",
       "kind": 3,
@@ -101,17 +142,85 @@
     }
   },
   {
-    "name": "run",
-    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.run",
-    "href": "go_router_linter/MissingGoRouteNameProperty/run.html",
-    "kind": 10,
-    "overriddenDepth": 1,
+    "name": "diagnosticCode",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.diagnosticCode",
+    "href": "go_router_linter/MissingGoRouteNameProperty/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "Emits lints for a given file.",
+    "desc": "The code to report for a violation.",
     "enclosedBy": {
       "name": "MissingGoRouteNameProperty",
       "kind": 3,
       "href": "go_router_linter/MissingGoRouteNameProperty-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "go_router_linter.MissingGoRouteNameProperty.registerNodeProcessors",
+    "href": "go_router_linter/MissingGoRouteNameProperty/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "MissingGoRouteNameProperty",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouteNameProperty-class.html"
+    }
+  },
+  {
+    "name": "MissingGoRouterErrorHandler",
+    "qualifiedName": "go_router_linter.MissingGoRouterErrorHandler",
+    "href": "go_router_linter/MissingGoRouterErrorHandler-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "Reports GoRouter constructor calls that define no errorBuilder or\nerrorPageBuilder.",
+    "enclosedBy": {
+      "name": "go_router_linter",
+      "kind": 9,
+      "href": "go_router_linter/"
+    }
+  },
+  {
+    "name": "MissingGoRouterErrorHandler.new",
+    "qualifiedName": "go_router_linter.MissingGoRouterErrorHandler.MissingGoRouterErrorHandler.new",
+    "href": "go_router_linter/MissingGoRouterErrorHandler/MissingGoRouterErrorHandler.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "Reports GoRouter constructor calls that define no errorBuilder or\nerrorPageBuilder.",
+    "enclosedBy": {
+      "name": "MissingGoRouterErrorHandler",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouterErrorHandler-class.html"
+    }
+  },
+  {
+    "name": "diagnosticCode",
+    "qualifiedName": "go_router_linter.MissingGoRouterErrorHandler.diagnosticCode",
+    "href": "go_router_linter/MissingGoRouterErrorHandler/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "MissingGoRouterErrorHandler",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouterErrorHandler-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "go_router_linter.MissingGoRouterErrorHandler.registerNodeProcessors",
+    "href": "go_router_linter/MissingGoRouterErrorHandler/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "MissingGoRouterErrorHandler",
+      "kind": 3,
+      "href": "go_router_linter/MissingGoRouterErrorHandler-class.html"
     }
   },
   {
@@ -125,6 +234,34 @@
       "name": "go_router_linter",
       "kind": 9,
       "href": "go_router_linter/"
+    }
+  },
+  {
+    "name": "isLocationRouteMethod",
+    "qualifiedName": "go_router_linter.RouteMethodExtension.isLocationRouteMethod",
+    "href": "go_router_linter/RouteMethodExtension/isLocationRouteMethod.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Whether this method accepts a location string as its first argument.",
+    "enclosedBy": {
+      "name": "RouteMethodExtension",
+      "kind": 6,
+      "href": "go_router_linter/RouteMethodExtension.html"
+    }
+  },
+  {
+    "name": "isNamedRouteMethod",
+    "qualifiedName": "go_router_linter.RouteMethodExtension.isNamedRouteMethod",
+    "href": "go_router_linter/RouteMethodExtension/isNamedRouteMethod.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Whether this method accepts a route name as its first argument.",
+    "enclosedBy": {
+      "name": "RouteMethodExtension",
+      "kind": 6,
+      "href": "go_router_linter/RouteMethodExtension.html"
     }
   },
   {
@@ -142,12 +279,26 @@
     }
   },
   {
+    "name": "isRouterHelperMethod",
+    "qualifiedName": "go_router_linter.RouteMethodExtension.isRouterHelperMethod",
+    "href": "go_router_linter/RouteMethodExtension/isRouterHelperMethod.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "Whether this method is available on the GoRouterHelper extension.",
+    "enclosedBy": {
+      "name": "RouteMethodExtension",
+      "kind": 6,
+      "href": "go_router_linter/RouteMethodExtension.html"
+    }
+  },
+  {
     "name": "UseContextDirectlyForGoRouter",
     "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter",
     "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
+    "desc": "Reports GoRouter.of(context).method() calls when the equivalent\nBuildContext helper is available.",
     "enclosedBy": {
       "name": "go_router_linter",
       "kind": 9,
@@ -160,7 +311,7 @@
     "href": "go_router_linter/UseContextDirectlyForGoRouter/UseContextDirectlyForGoRouter.html",
     "kind": 2,
     "packageRank": 0,
-    "desc": "A custom lint rule that checks for the use of GoRouter.of(context).go()\ninstead of context.go().",
+    "desc": "Reports GoRouter.of(context).method() calls when the equivalent\nBuildContext helper is available.",
     "enclosedBy": {
       "name": "UseContextDirectlyForGoRouter",
       "kind": 3,
@@ -168,13 +319,27 @@
     }
   },
   {
-    "name": "run",
-    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.run",
-    "href": "go_router_linter/UseContextDirectlyForGoRouter/run.html",
+    "name": "diagnosticCode",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.diagnosticCode",
+    "href": "go_router_linter/UseContextDirectlyForGoRouter/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "UseContextDirectlyForGoRouter",
+      "kind": 3,
+      "href": "go_router_linter/UseContextDirectlyForGoRouter-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "go_router_linter.UseContextDirectlyForGoRouter.registerNodeProcessors",
+    "href": "go_router_linter/UseContextDirectlyForGoRouter/registerNodeProcessors.html",
     "kind": 10,
     "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "Emits lints for a given file.",
+    "desc": "Registers node processors in the given registry.",
     "enclosedBy": {
       "name": "UseContextDirectlyForGoRouter",
       "kind": 3,
@@ -182,16 +347,20 @@
     }
   },
   {
-    "name": "createPlugin",
-    "qualifiedName": "go_router_linter.createPlugin",
-    "href": "go_router_linter/createPlugin.html",
-    "kind": 8,
+    "name": "main",
+    "qualifiedName": "main",
+    "href": "main/",
+    "kind": 9,
     "packageRank": 0,
-    "desc": "This is the entrypoint of our custom linter",
-    "enclosedBy": {
-      "name": "go_router_linter",
-      "kind": 9,
-      "href": "go_router_linter/"
-    }
+    "desc": ""
+  },
+  {
+    "name": "plugin",
+    "qualifiedName": "main.plugin",
+    "href": "main/plugin.html",
+    "kind": 20,
+    "packageRank": 0,
+    "desc": "The entrypoint loaded by the analyzer plugin host.",
+    "enclosedBy": { "name": "main", "kind": 9, "href": "main/" }
   }
 ]

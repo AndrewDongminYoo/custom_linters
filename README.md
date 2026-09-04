@@ -1,6 +1,6 @@
 # Custom Linters
 
-A monorepo for various custom lint rules that can enhance your Flutter and Dart code quality.
+A monorepo for analyzer plugins that improve Flutter and Dart code quality.
 Currently, this repository includes:
 
 - **[go_router_linter](./packages/go_router_linter)**: A set of lint rules for the `go_router` package, helping you maintain consistent and robust route definitions and navigation calls in your Flutter apps.
@@ -25,13 +25,11 @@ Currently, this repository includes:
    cd custom_linters
    ```
 
-2. **Install Melos (optional)**:
-
-   If you’re using Melos for managing your monorepo:
+2. **Bootstrap the workspace**:
 
    ```bash
-   dart pub global activate melos
-   melos bootstrap
+   dart pub get
+   dart run melos bootstrap
    ```
 
 3. **Navigate to a package**:
@@ -49,15 +47,18 @@ Currently, this repository includes:
 
 4. **Pub commands**:
    - Get dependencies: `dart pub get`
-   - Run tests: `dart pub test`
+   - Run tests: `dart test`
    - Analyze code: `dart analyze`
 
    Or use Melos commands (if configured), for example:
 
    ```bash
-   melos analyze -c 5
-   melos test
+   dart run melos run analyze
+   dart run melos run test
    ```
+
+Each package README documents its top-level official `plugins:` configuration.
+The nested example packages intentionally do not enable plugins because they are members of this pub workspace.
 
 ## Contributing
 

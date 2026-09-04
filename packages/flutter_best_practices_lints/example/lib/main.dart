@@ -8,7 +8,6 @@ void main() {
   runApp(const MyApp());
 }
 
-// expect_lint: matching_class_and_file_name
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

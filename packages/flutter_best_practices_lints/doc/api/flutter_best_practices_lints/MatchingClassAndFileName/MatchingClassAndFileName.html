@@ -58,9 +58,7 @@
             >MatchingClassAndFileName</a
           >
         </li>
-        <li class="self-crumb">
-          MatchingClassAndFileName.new const constructor
-        </li>
+        <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
       </ol>
       <div class="self-name">MatchingClassAndFileName.new</div>
       <form class="search navbar-right" role="search">
@@ -110,7 +108,6 @@
         </div>
 
         <section class="multi-line-signature">
-          const
           <span class="name">MatchingClassAndFileName</span>(<wbr />)
         </section>
 
@@ -133,7 +130,11 @@
           <h2><span>Implementation</span></h2>
           <pre
             class="language-dart"
-          ><code class="language-dart">const MatchingClassAndFileName() : super(code: _code);</code></pre>
+          ><code class="language-dart">MatchingClassAndFileName()
+  : super(
+      name: &#39;matching_class_and_file_name&#39;,
+      description: &#39;Matches the primary class name to its file name.&#39;,
+    );</code></pre>
         </section>
       </div>
       <!-- /.main-content -->
@@ -164,9 +165,7 @@
               >MatchingClassAndFileName</a
             >
           </li>
-          <li class="self-crumb">
-            MatchingClassAndFileName.new const constructor
-          </li>
+          <li class="self-crumb">MatchingClassAndFileName.new constructor</li>
         </ol>
 
         <h5>MatchingClassAndFileName class</h5>
@@ -180,7 +179,7 @@
       <!--/.sidebar-offcanvas-->
     </main>
     <footer>
-      <span class="no-break"> flutter_best_practices_lints 0.3.0 </span>
+      <span class="no-break"> flutter_best_practices_lints 0.6.0 </span>
     </footer>
 
     <script src="../../static-assets/highlight.pack.js?v1"></script>

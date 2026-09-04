@@ -5,18 +5,15 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.11.0
 resolution: workspace
 
 dependencies:
   flutter:
     sdk: flutter
-  go_router: ^17.2.3
+  go_router: 17.5.0
 
 dev_dependencies:
-  custom_lint: ^0.8.1
   flutter_lints: ^6.0.0
-  go_router_linter:
-    path: ../
 flutter:
   uses-material-design: true

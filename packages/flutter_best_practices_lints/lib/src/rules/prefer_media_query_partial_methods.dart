@@ -1,10 +1,10 @@
 // 📦 Package imports:
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
-
-// 🌎 Project imports:
-import 'package:flutter_best_practices_lints/src/extensions/lint_code_extension.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
 
 /// {@template prefer_media_query_partial_methods}
 /// Reports `MediaQuery.of(context).property` accesses that have a dedicated
@@ -14,14 +14,18 @@ import 'package:flutter_best_practices_lints/src/extensions/lint_code_extension.
 /// `MediaQueryData`, preventing unnecessary widget rebuilds when other
 /// fields change.
 /// {@endtemplate}
-class PreferMediaQueryPartialMethods extends DartLintRule {
+class PreferMediaQueryPartialMethods extends AnalysisRule {
   /// {@macro prefer_media_query_partial_methods}
-  const PreferMediaQueryPartialMethods() : super(code: _code);
+  PreferMediaQueryPartialMethods()
+    : super(
+        name: 'prefer_media_query_partial_methods',
+        description: 'Prefers specific MediaQuery accessors.',
+      );
 
   static const _code = LintCode(
-    name: 'prefer_media_query_partial_methods',
-    problemMessage:
-        'Use the specific MediaQuery accessor to avoid unnecessary rebuilds.',
+    'prefer_media_query_partial_methods',
+    'Use the specific MediaQuery accessor to avoid unnecessary rebuilds.',
+    correctionMessage: 'Use {0} instead.',
   );
 
   static const _propertyToReplacement = {
@@ -44,37 +48,44 @@ class PreferMediaQueryPartialMethods extends DartLintRule {
   };
 
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
+  LintCode get diagnosticCode => _code;
+
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
-    context.registry.addPropertyAccess((node) {
-      final target = node.target;
-      if (target is! MethodInvocation) return;
-      if (target.methodName.name != 'of') return;
+    registry.addPropertyAccess(this, _Visitor(this));
+  }
+}
 
-      final methodTarget = target.target;
-      if (methodTarget is! Identifier || methodTarget.name != 'MediaQuery') {
-        return;
-      }
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule);
 
-      final returnElement = target.staticType?.element;
-      final libraryUri = returnElement?.library?.uri.toString();
-      if (returnElement?.name != 'MediaQueryData' ||
-          libraryUri == null ||
-          !libraryUri.startsWith('package:flutter/')) {
-        return;
-      }
+  final PreferMediaQueryPartialMethods rule;
 
-      final property = node.propertyName.name;
-      final replacement = _propertyToReplacement[property];
-      if (replacement == null) return;
+  @override
+  void visitPropertyAccess(PropertyAccess node) {
+    final target = node.target;
+    if (target is! MethodInvocation || target.methodName.name != 'of') return;
 
-      reporter.atNode(
-        node,
-        _code.copyWith(correctionMessage: 'Use $replacement instead.'),
-      );
-    });
+    final methodTarget = target.target;
+    if (methodTarget is! Identifier || methodTarget.name != 'MediaQuery') {
+      return;
+    }
+
+    final returnElement = target.staticType?.element;
+    final libraryUri = returnElement?.library?.uri.toString();
+    if (returnElement?.name != 'MediaQueryData' ||
+        libraryUri == null ||
+        !libraryUri.startsWith('package:flutter/')) {
+      return;
+    }
+
+    final replacement = PreferMediaQueryPartialMethods
+        ._propertyToReplacement[node.propertyName.name];
+    if (replacement == null) return;
+
+    rule.reportAtNode(node, arguments: [replacement]);
   }
 }

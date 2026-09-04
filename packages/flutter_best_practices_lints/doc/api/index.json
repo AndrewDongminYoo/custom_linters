@@ -5,7 +5,61 @@
     "href": "flutter_best_practices_lints/",
     "kind": 9,
     "packageRank": 0,
-    "desc": "flutter_best_practices_lints"
+    "desc": "Analyzer diagnostics for Flutter project structure and widget usage."
+  },
+  {
+    "name": "AvoidWidgetOperatorEquals",
+    "qualifiedName": "flutter_best_practices_lints.AvoidWidgetOperatorEquals",
+    "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "Reports equality overrides on Flutter widget classes.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/"
+    }
+  },
+  {
+    "name": "AvoidWidgetOperatorEquals.new",
+    "qualifiedName": "flutter_best_practices_lints.AvoidWidgetOperatorEquals.AvoidWidgetOperatorEquals.new",
+    "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals/AvoidWidgetOperatorEquals.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "Reports equality overrides on Flutter widget classes.",
+    "enclosedBy": {
+      "name": "AvoidWidgetOperatorEquals",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals-class.html"
+    }
+  },
+  {
+    "name": "diagnosticCode",
+    "qualifiedName": "flutter_best_practices_lints.AvoidWidgetOperatorEquals.diagnosticCode",
+    "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "AvoidWidgetOperatorEquals",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "flutter_best_practices_lints.AvoidWidgetOperatorEquals.registerNodeProcessors",
+    "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "AvoidWidgetOperatorEquals",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/AvoidWidgetOperatorEquals-class.html"
+    }
   },
   {
     "name": "ClassDeclarationExtension",
@@ -110,7 +164,7 @@
     "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html",
     "kind": 3,
     "packageRank": 0,
-    "desc": "A plugin class is used to list all the assists/lints defined by a plugin.",
+    "desc": "Registers the Flutter best-practice analysis rules.",
     "enclosedBy": {
       "name": "flutter_best_practices_lints",
       "kind": 9,
@@ -131,13 +185,13 @@
     }
   },
   {
-    "name": "getLintRules",
-    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.getLintRules",
-    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/getLintRules.html",
-    "kind": 10,
-    "overriddenDepth": 1,
+    "name": "name",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.name",
+    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/name.html",
+    "kind": 16,
+    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "We list all the custom warnings/infos/errors",
+    "desc": "A user-visible name for this plugin, used for error-reporting and\ninsights-reporting purposes.",
     "enclosedBy": {
       "name": "FlutterBestPracticesPlugin",
       "kind": 3,
@@ -145,30 +199,17 @@
     }
   },
   {
-    "name": "LintCodeCopyWithExtension",
-    "qualifiedName": "flutter_best_practices_lints.LintCodeCopyWithExtension",
-    "href": "flutter_best_practices_lints/LintCodeCopyWithExtension.html",
-    "kind": 6,
-    "packageRank": 0,
-    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
-    "enclosedBy": {
-      "name": "flutter_best_practices_lints",
-      "kind": 9,
-      "href": "flutter_best_practices_lints/"
-    }
-  },
-  {
-    "name": "copyWith",
-    "qualifiedName": "flutter_best_practices_lints.LintCodeCopyWithExtension.copyWith",
-    "href": "flutter_best_practices_lints/LintCodeCopyWithExtension/copyWith.html",
+    "name": "register",
+    "qualifiedName": "flutter_best_practices_lints.FlutterBestPracticesPlugin.register",
+    "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin/register.html",
     "kind": 10,
-    "overriddenDepth": 0,
+    "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "An extension that provides a method for creating modified copies of a\nLintCode.",
+    "desc": "Registers analysis rules, quick fixes, and assists.",
     "enclosedBy": {
-      "name": "LintCodeCopyWithExtension",
-      "kind": 6,
-      "href": "flutter_best_practices_lints/LintCodeCopyWithExtension.html"
+      "name": "FlutterBestPracticesPlugin",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/FlutterBestPracticesPlugin-class.html"
     }
   },
   {
@@ -198,17 +239,139 @@
     }
   },
   {
-    "name": "run",
-    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.run",
-    "href": "flutter_best_practices_lints/MatchingClassAndFileName/run.html",
-    "kind": 10,
-    "overriddenDepth": 1,
+    "name": "diagnosticCode",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.diagnosticCode",
+    "href": "flutter_best_practices_lints/MatchingClassAndFileName/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "Ensures that public class names in PascalCase correspond to their\nsnake_case file names, helping maintain consistency between files\nand the primary class they contain.",
+    "desc": "The code to report for a violation.",
     "enclosedBy": {
       "name": "MatchingClassAndFileName",
       "kind": 3,
       "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "flutter_best_practices_lints.MatchingClassAndFileName.registerNodeProcessors",
+    "href": "flutter_best_practices_lints/MatchingClassAndFileName/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "MatchingClassAndFileName",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/MatchingClassAndFileName-class.html"
+    }
+  },
+  {
+    "name": "PreferMediaQueryPartialMethods",
+    "qualifiedName": "flutter_best_practices_lints.PreferMediaQueryPartialMethods",
+    "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "Reports MediaQuery.of(context).property accesses that have a dedicated\nstatic accessor (e.g. MediaQuery.sizeOf(context)).",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/"
+    }
+  },
+  {
+    "name": "PreferMediaQueryPartialMethods.new",
+    "qualifiedName": "flutter_best_practices_lints.PreferMediaQueryPartialMethods.PreferMediaQueryPartialMethods.new",
+    "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods/PreferMediaQueryPartialMethods.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "Reports MediaQuery.of(context).property accesses that have a dedicated\nstatic accessor (e.g. MediaQuery.sizeOf(context)).",
+    "enclosedBy": {
+      "name": "PreferMediaQueryPartialMethods",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+    }
+  },
+  {
+    "name": "diagnosticCode",
+    "qualifiedName": "flutter_best_practices_lints.PreferMediaQueryPartialMethods.diagnosticCode",
+    "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "PreferMediaQueryPartialMethods",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "flutter_best_practices_lints.PreferMediaQueryPartialMethods.registerNodeProcessors",
+    "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "PreferMediaQueryPartialMethods",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferMediaQueryPartialMethods-class.html"
+    }
+  },
+  {
+    "name": "PreferWidgetClassOverWidgetHelper",
+    "qualifiedName": "flutter_best_practices_lints.PreferWidgetClassOverWidgetHelper",
+    "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html",
+    "kind": 3,
+    "packageRank": 0,
+    "desc": "Reports private Widget _build... helpers.",
+    "enclosedBy": {
+      "name": "flutter_best_practices_lints",
+      "kind": 9,
+      "href": "flutter_best_practices_lints/"
+    }
+  },
+  {
+    "name": "PreferWidgetClassOverWidgetHelper.new",
+    "qualifiedName": "flutter_best_practices_lints.PreferWidgetClassOverWidgetHelper.PreferWidgetClassOverWidgetHelper.new",
+    "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper/PreferWidgetClassOverWidgetHelper.html",
+    "kind": 2,
+    "packageRank": 0,
+    "desc": "Reports private Widget _build... helpers.",
+    "enclosedBy": {
+      "name": "PreferWidgetClassOverWidgetHelper",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
+    }
+  },
+  {
+    "name": "diagnosticCode",
+    "qualifiedName": "flutter_best_practices_lints.PreferWidgetClassOverWidgetHelper.diagnosticCode",
+    "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
+    "packageRank": 0,
+    "desc": "The code to report for a violation.",
+    "enclosedBy": {
+      "name": "PreferWidgetClassOverWidgetHelper",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
+    }
+  },
+  {
+    "name": "registerNodeProcessors",
+    "qualifiedName": "flutter_best_practices_lints.PreferWidgetClassOverWidgetHelper.registerNodeProcessors",
+    "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
+    "packageRank": 0,
+    "desc": "Registers node processors in the given registry.",
+    "enclosedBy": {
+      "name": "PreferWidgetClassOverWidgetHelper",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/PreferWidgetClassOverWidgetHelper-class.html"
     }
   },
   {
@@ -238,13 +401,13 @@
     }
   },
   {
-    "name": "run",
-    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.run",
-    "href": "flutter_best_practices_lints/SingleClassPerFile/run.html",
-    "kind": 10,
-    "overriddenDepth": 1,
+    "name": "diagnosticCode",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.diagnosticCode",
+    "href": "flutter_best_practices_lints/SingleClassPerFile/diagnosticCode.html",
+    "kind": 16,
+    "overriddenDepth": 0,
     "packageRank": 0,
-    "desc": "Emits lints for a given file.",
+    "desc": "The code to report for a violation.",
     "enclosedBy": {
       "name": "SingleClassPerFile",
       "kind": 3,
@@ -252,16 +415,34 @@
     }
   },
   {
-    "name": "createPlugin",
-    "qualifiedName": "flutter_best_practices_lints.createPlugin",
-    "href": "flutter_best_practices_lints/createPlugin.html",
-    "kind": 8,
+    "name": "registerNodeProcessors",
+    "qualifiedName": "flutter_best_practices_lints.SingleClassPerFile.registerNodeProcessors",
+    "href": "flutter_best_practices_lints/SingleClassPerFile/registerNodeProcessors.html",
+    "kind": 10,
+    "overriddenDepth": 1,
     "packageRank": 0,
-    "desc": "This is the entrypoint of our custom linter",
+    "desc": "Registers node processors in the given registry.",
     "enclosedBy": {
-      "name": "flutter_best_practices_lints",
-      "kind": 9,
-      "href": "flutter_best_practices_lints/"
+      "name": "SingleClassPerFile",
+      "kind": 3,
+      "href": "flutter_best_practices_lints/SingleClassPerFile-class.html"
     }
+  },
+  {
+    "name": "main",
+    "qualifiedName": "main",
+    "href": "main/",
+    "kind": 9,
+    "packageRank": 0,
+    "desc": ""
+  },
+  {
+    "name": "plugin",
+    "qualifiedName": "main.plugin",
+    "href": "main/plugin.html",
+    "kind": 20,
+    "packageRank": 0,
+    "desc": "The entrypoint loaded by the analyzer plugin host.",
+    "enclosedBy": { "name": "main", "kind": 9, "href": "main/" }
   }
 ]

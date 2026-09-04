@@ -1,68 +1,71 @@
 // 📦 Package imports:
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
 
 /// {@template prefer_widget_class_over_widget_helper}
 /// Reports private `Widget _build...` helpers.
 /// {@endtemplate}
-class PreferWidgetClassOverWidgetHelper extends DartLintRule {
+class PreferWidgetClassOverWidgetHelper extends AnalysisRule {
   /// {@macro prefer_widget_class_over_widget_helper}
-  const PreferWidgetClassOverWidgetHelper() : super(code: _code);
+  PreferWidgetClassOverWidgetHelper()
+    : super(
+        name: 'prefer_widget_class_over_widget_helper',
+        description: 'Prefers widget classes over private Widget helpers.',
+      );
 
   static const _code = LintCode(
-    name: 'prefer_widget_class_over_widget_helper',
-    problemMessage: 'Prefer a widget class over private Widget helper methods.',
+    'prefer_widget_class_over_widget_helper',
+    'Prefer a widget class over private Widget helper methods.',
     correctionMessage:
         'Extract this reusable UI into a StatelessWidget or StatefulWidget.',
   );
 
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
-  ) {
-    context.registry.addCompilationUnit((node) {
-      for (final declaration in node.declarations) {
-        if (declaration is FunctionDeclaration) {
-          _checkFunctionDeclaration(declaration, reporter);
-        } else if (declaration is ClassDeclaration) {
-          for (final member in declaration.members) {
-            if (member is MethodDeclaration) {
-              _checkMethodDeclaration(member, reporter);
-            }
-          }
-        }
-      }
-    });
-  }
+  LintCode get diagnosticCode => _code;
 
-  void _checkFunctionDeclaration(
-    FunctionDeclaration node,
-    DiagnosticReporter reporter,
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
+    final visitor = _Visitor(this);
+    registry
+      ..addFunctionDeclaration(this, visitor)
+      ..addMethodDeclaration(this, visitor);
+  }
+}
+
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule);
+
+  final PreferWidgetClassOverWidgetHelper rule;
+
+  @override
+  void visitFunctionDeclaration(FunctionDeclaration node) {
+    if (node.parent is! CompilationUnit) return;
+
     if (_isPrivateWidgetBuildHelper(node.name.lexeme, node.returnType)) {
-      reporter.atNode(node, _code);
+      rule.reportAtNode(node);
     }
   }
 
-  void _checkMethodDeclaration(
-    MethodDeclaration node,
-    DiagnosticReporter reporter,
-  ) {
+  @override
+  void visitMethodDeclaration(MethodDeclaration node) {
+    if (node.parent?.parent is! ClassDeclaration) return;
     if (node.name.lexeme == 'build') return;
 
     if (_isPrivateWidgetBuildHelper(node.name.lexeme, node.returnType)) {
-      reporter.atNode(node, _code);
+      rule.reportAtNode(node);
     }
   }
 
   bool _isPrivateWidgetBuildHelper(String name, TypeAnnotation? returnType) {
-    return name.startsWith('_build') && _isWidgetReturnType(returnType);
-  }
-
-  bool _isWidgetReturnType(TypeAnnotation? returnType) {
-    return returnType is NamedType && returnType.name.lexeme == 'Widget';
+    return name.startsWith('_build') &&
+        returnType is NamedType &&
+        returnType.name.lexeme == 'Widget';
   }
 }

@@ -20,7 +20,6 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 
-  // expect_lint: avoid_widget_operator_equals
   @override
   bool operator ==(Object other) {
     return other is MyHomePage && other.title == title;
@@ -44,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // expect_lint: prefer_widget_class_over_widget_helper
   Widget _buildCounterText() {
     return Text('$_counter', style: Theme.of(context).textTheme.headlineMedium);
   }
@@ -100,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-// expect_lint: single_class_per_file, matching_class_and_file_name
 class MyHomePage2 {
   void exampleMethod() {
     debugPrint('Hello, world!');

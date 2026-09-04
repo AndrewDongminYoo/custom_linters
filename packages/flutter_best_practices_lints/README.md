@@ -1,106 +1,125 @@
 # Flutter Best Practices Lints
 
-`flutter_best_practices_lints` is a custom linting package designed to enhance code quality and maintain consistency in Flutter applications. By enforcing best practices in file structure and class naming, it helps keep your project organized, readable, and easy to navigate.
+`flutter_best_practices_lints` provides opt-in analyzer diagnostics for Flutter project structure and widget usage.
+Version `0.6.0` migrates the package from `custom_lint` to Dart's official analyzer plugin host.
 
-## Features
+## Requirements
 
-### Current Rules
+- Dart `>=3.11.0 <4.0.0`.
+- A stable Flutter SDK that includes a compatible Dart SDK.
+- A top-level `analysis_options.yaml` in the consuming package or pub workspace.
 
-#### 1. Single Class per File
+The only locally tested Flutter stable release is `3.47.2`, so it is both the oldest tested and current tested release.
+The minimum supported Flutter stable release is not established until the complete matrix passes.
+The tested dependency family resolves `analysis_server_plugin 0.3.22`, `analyzer 14.3.0`, and `analyzer_plugin 0.14.16`.
+Beta, dev, and master Flutter channels are unsupported.
 
-- **Lint Code:** `single_class_per_file`
-- **What it does:** Ensures that each file contains only one class declaration.
-  - Excludes Flutter `State` classes (i.e., classes ending with `State` and prefixed with `_`).
-  - Encourages better separation of concerns and organization.
+The `0.6.0` release candidate is unpublished while Flutter issue [#187999](https://github.com/flutter/flutter/issues/187999) reproduces in the required `flutter analyze` lane.
 
-<details>
-<summary>Example</summary>
+## Compatibility evidence
 
-**Bad (multiple classes in one file):**
+The release matrix below separates local evidence from lanes that have not run.
+`Blocked #187999` means that the command completed without reporting the expected plugin diagnostics.
 
-```dart
-class MyFirstClass {}
+| Operating system   | Flutter stable | Bundled Dart | Resolved official family                                                      | `dart analyze` | `flutter analyze` |
+| ------------------ | -------------- | ------------ | ----------------------------------------------------------------------------- | -------------- | ----------------- |
+| macOS 26.6.2 arm64 | 3.47.2         | 3.13.2       | `analysis_server_plugin 0.3.22`, `analyzer 14.3.0`, `analyzer_plugin 0.14.16` | Passed locally | Blocked #187999   |
+| macOS              | 3.44.0         | Not recorded | Not resolved                                                                  | Not run        | Not run           |
+| Linux              | 3.47.2         | Not recorded | Not resolved                                                                  | Not run        | Not run           |
+| Linux              | 3.44.0         | Not recorded | Not resolved                                                                  | Not run        | Not run           |
+| Windows            | 3.47.2         | Not recorded | Not resolved                                                                  | Not run        | Not run           |
+| Windows            | 3.44.0         | Not recorded | Not resolved                                                                  | Not run        | Not run           |
 
-class MySecondClass {}
+The GitHub Actions matrix defines the unverified lanes, but it has not been dispatched.
+No row other than the macOS `dart analyze` row is release evidence.
+
+## Installation
+
+Add the package as a development dependency:
+
+```yaml
+dev_dependencies:
+  flutter_best_practices_lints: ^0.6.0
 ```
 
-**Good (each class in its own file):**
+Add the plugin to the top-level `analysis_options.yaml` and enable each diagnostic explicitly:
 
-```dart
-// my_first_class.dart
-class MyFirstClass {}
-
-// my_second_class.dart
-class MySecondClass {}
+```yaml
+plugins:
+  flutter_best_practices_lints:
+    version: ^0.6.0
+    diagnostics:
+      matching_class_and_file_name: true
+      single_class_per_file: true
+      prefer_widget_class_over_widget_helper: true
+      avoid_widget_operator_equals: true
+      prefer_media_query_partial_methods: true
 ```
 
-</details>
+For local development, replace `version` with an absolute package path:
 
-#### 2. Matching Class and File Name
-
-- **Lint Code:** `matching_class_and_file_name`
-- **What it does:** Checks that the main class name (in PascalCase) matches the file name (in snake_case).
-  - Excludes private `State` classes (e.g., `_MyHomePageState`) and abstract classes.
-  - Helps keep your codebase consistent and files easy to discover.
-
-<details>
-<summary>Example</summary>
-
-**File:** `my_home_page.dart`
-**Bad (mismatched class name):**
-
-```dart
-class MyHomepage {}  // Should be `MyHomePage`
+```yaml
+plugins:
+  flutter_best_practices_lints:
+    path: /absolute/path/to/custom_linters/packages/flutter_best_practices_lints
+    diagnostics:
+      matching_class_and_file_name: true
+      single_class_per_file: true
+      prefer_widget_class_over_widget_helper: true
+      avoid_widget_operator_equals: true
+      prefer_media_query_partial_methods: true
 ```
 
-**Good (matching file and class name):**
+The official host does not load a `plugins:` block from an inner package's nested analysis options file.
+Place the block at the consumer package root or pub-workspace root.
+
+All diagnostics use `INFO` severity and remain disabled until listed under `diagnostics:`.
+Analyzer output shows the raw diagnostic code.
+Use the plugin-qualified form only in suppression comments:
 
 ```dart
+// ignore: flutter_best_practices_lints/prefer_media_query_partial_methods
+final size = MediaQuery.of(context).size;
+```
+
+The package does not define rule-specific options.
+
+## Rules
+
+### `single_class_per_file`
+
+Reports each additional public class in a `lib/` source file.
+It preserves the direct abstract relationship and private Flutter `State` exceptions.
+
+```dart
+class FirstClass {}
+
+class SecondClass {}
+```
+
+### `matching_class_and_file_name`
+
+Checks that a primary class name matches its snake-case file name.
+It preserves private-class, abstract-class, related-class, and private Flutter `State` handling.
+
+```dart
+// File: my_home_page.dart
 class MyHomePage {}
 ```
 
-</details>
+### `prefer_widget_class_over_widget_helper`
 
-#### 3. Prefer Widget Class Over Widget Helper
-
-- **Lint Code:** `prefer_widget_class_over_widget_helper`
-- **What it does:** Detects private `Widget _build...` helper functions and
-  methods. Extracting these helpers into widget classes keeps UI reusable and
-  gives Flutter better rebuild boundaries.
-
-<details>
-<summary>Example</summary>
-
-**Bad:**
+Reports private `_build...` functions and methods whose declared return type is `Widget`.
 
 ```dart
 Widget _buildHeader() => const Text('Header');
 ```
 
-**Good:**
+Extract the helper into a `StatelessWidget` or `StatefulWidget`.
 
-```dart
-class Header extends StatelessWidget {
-  const Header({super.key});
+### `avoid_widget_operator_equals`
 
-  @override
-  Widget build(BuildContext context) => const Text('Header');
-}
-```
-
-</details>
-
-#### 4. Avoid Widget operator ==
-
-- **Lint Code:** `avoid_widget_operator_equals`
-- **What it does:** Detects `operator ==` overrides in Flutter widget
-  subclasses. Widget equality overrides can make rebuild behavior more
-  expensive and surprising.
-
-<details>
-<summary>Example</summary>
-
-**Bad:**
+Reports `operator ==` overrides declared on direct Flutter `Widget`, `StatelessWidget`, or `StatefulWidget` subclasses.
 
 ```dart
 class MyButton extends StatelessWidget {
@@ -114,111 +133,43 @@ class MyButton extends StatelessWidget {
 }
 ```
 
-**Good:** Remove the equality override and rely on normal widget identity.
+Remove the equality override and rely on normal widget identity.
 
-</details>
+### `prefer_media_query_partial_methods`
 
-#### 5. Prefer Specific MediaQuery Accessors
-
-- **Lint Code:** `prefer_media_query_partial_methods`
-- **What it does:** Reports `MediaQuery.of(context).property` accesses that
-  have a dedicated static accessor (e.g. `MediaQuery.sizeOf(context)`).
-  The specific accessors subscribe only to the relevant slice of
-  `MediaQueryData`, so your widget only rebuilds when _that_ value changes —
-  not whenever any field of `MediaQueryData` changes. Requires Flutter 3.10+.
-
-<details>
-<summary>Example</summary>
-
-**Bad:**
+Reports supported `MediaQuery.of(context).property` expressions that have a dedicated static accessor.
 
 ```dart
 final size = MediaQuery.of(context).size;
 final padding = MediaQuery.of(context).padding;
 ```
 
-**Good:**
+Use the dedicated accessors:
 
 ```dart
 final size = MediaQuery.sizeOf(context);
 final padding = MediaQuery.paddingOf(context);
 ```
 
-Supported accessors: `sizeOf`, `paddingOf`, `viewInsetsOf`, `viewPaddingOf`,
-`textScalerOf`, `devicePixelRatioOf`, `platformBrightnessOf`, `orientationOf`,
-`gestureSettingsOf`, `displayFeaturesOf`, `alwaysUse24HourFormatOf`,
-`accessibleNavigationOf`, `boldTextOf`, `disableAnimationsOf`,
-`highContrastOf`, `invertColorsOf`.
+Supported accessors are `sizeOf`, `paddingOf`, `viewInsetsOf`, `viewPaddingOf`, `textScalerOf`, `devicePixelRatioOf`, `platformBrightnessOf`, `orientationOf`, `gestureSettingsOf`, `displayFeaturesOf`, `alwaysUse24HourFormatOf`, `accessibleNavigationOf`, `boldTextOf`, `disableAnimationsOf`, `highContrastOf`, and `invertColorsOf`.
 
-</details>
+## Development
 
-## Installation
+Run the rule tests with the Dart VM because `test_reflective_loader` uses `dart:mirrors`:
 
-To integrate `flutter_best_practices_lints` into your project, follow these steps:
-
-### 1. Add the Dependency
-
-In your `pubspec.yaml`, include `flutter_best_practices_lints` under `dev_dependencies`:
-
-```yaml
-dev_dependencies:
-  flutter_best_practices_lints: ^0.5.0
+```bash
+dart test
+dart analyze .
 ```
 
-### 2. Update `analysis_options.yaml`
+The workspace example intentionally does not enable `plugins:`.
+Use the repository's standalone consumer harness for a real host check:
 
-Enable the custom lint rules by adding or updating your `analysis_options.yaml`:
-
-```yaml
-analyzer:
-  plugins:
-    - custom_lint
-
-custom_lint:
-  rules:
-    - matching_class_and_file_name
-    - single_class_per_file
-    - prefer_widget_class_over_widget_helper
-    - avoid_widget_operator_equals
-    - prefer_media_query_partial_methods
+```bash
+dart run tool/verify_analyzer_plugins.dart --plugin flutter_best_practices_lints --source local --analyzer dart --repeat 3
 ```
-
-## Usage
-
-After configuring your project, the linter automatically checks your files and provides warnings or suggestions based on the defined rules.
-
-- When you have multiple classes in the same file, it will suggest splitting them.
-- When a class name doesn't match the file name (in `snake_case` → `PascalCase` format), it prompts you to rename either the class or the file.
-- When a private `Widget _build...` helper is found, it suggests extracting a
-  widget class.
-- When a widget overrides `operator ==`, it suggests removing the override.
-- When `MediaQuery.of(context).property` is used where a dedicated accessor
-  exists, it suggests the specific accessor (e.g. `MediaQuery.sizeOf(context)`).
-
-### Example Lint Warnings
-
-**Multiple classes warning:**
-
-```log
-lib/multiple_classes.dart:10:1 • A file should contain only one class declaration. • single_class_per_file • INFO
-```
-
-**Mismatched class and file name warning:**
-
-```log
-<!-- cSpell:ignore Mywidget -->
-lib/widgets/my_widget.dart:7:7 • Class name Mywidget must match the file name "my_widget" • matching_class_and_file_name • INFO
-```
-
-## Contributing
-
-Contributions are welcome! If you have ideas for new lint rules, improvements, or bug fixes, feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/AndrewDongminYoo/custom_linters).
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to the Dart and Flutter communities for their ongoing support and for sharing best practices.
-- Inspired by other linting tools like [`go_router_linter`](https://pub.dev/packages/go_router_linter) and [`custom_lint`](https://pub.dev/packages/custom_lint).
+This package is licensed under the MIT License.
+See [LICENSE](https://github.com/AndrewDongminYoo/custom_linters/blob/main/packages/flutter_best_practices_lints/LICENSE).
