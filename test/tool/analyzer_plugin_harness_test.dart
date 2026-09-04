@@ -262,11 +262,27 @@ void main() {
         switch (scenario) {
           case ConsumerScenario.violating:
             expect(fixture.expectedDiagnostics, hasLength(1));
+            expect(
+              fixture.expectedDiagnostics.single.message,
+              'Use the specific MediaQuery accessor to avoid unnecessary '
+              'rebuilds. Use MediaQuery.sizeOf(context) instead.',
+            );
           case ConsumerScenario.compliant:
           case ConsumerScenario.disabledRule:
             expect(fixture.expectedDiagnostics, isEmpty);
           case ConsumerScenario.qualifiedIgnore:
             expect(fixture.expectedDiagnostics, hasLength(1));
+            expect(
+              fixture.expectedDiagnostics.single.message,
+              'Use the specific MediaQuery accessor to avoid unnecessary '
+              'rebuilds. Use MediaQuery.sizeOf(context) instead.',
+            );
+            expect(
+              'MediaQuery.of(context).size'.allMatches(
+                fixture.files.values.single,
+              ),
+              hasLength(2),
+            );
             expect(
               fixture.files.values.single,
               contains(
@@ -529,7 +545,13 @@ info • Exact message. • lib/main.dart:4:3 • raw_code
       ];
 
       expect(
-        () => assertDiagnosticRecords(actual: actual, expected: expected),
+        () => assertDiagnosticRecords(
+          actual: actual,
+          expected: expected,
+          exitCode: 1,
+          stdout: 'raw analyzer stdout',
+          stderr: 'raw analyzer stderr',
+        ),
         throwsA(
           isA<HarnessFailure>()
               .having(
@@ -544,6 +566,17 @@ info • Exact message. • lib/main.dart:4:3 • raw_code
                   'HARNESS_ASSERTION_FAILED: missing diagnostic '
                   '__negative_control_missing_code__',
                 ),
+              )
+              .having((failure) => failure.exitCode, 'exitCode', 1)
+              .having(
+                (failure) => failure.stdout,
+                'stdout',
+                'raw analyzer stdout',
+              )
+              .having(
+                (failure) => failure.stderr,
+                'stderr',
+                'raw analyzer stderr',
               ),
         ),
       );

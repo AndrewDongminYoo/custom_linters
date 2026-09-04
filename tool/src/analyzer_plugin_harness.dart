@@ -385,6 +385,9 @@ final class ConsumerFixture {
 void assertDiagnosticRecords({
   required List<DiagnosticRecord> actual,
   required List<DiagnosticRecord> expected,
+  int? exitCode,
+  String stdout = '',
+  String stderr = '',
 }) {
   final remaining = List<DiagnosticRecord>.of(actual);
   for (final expectedRecord in expected) {
@@ -398,6 +401,9 @@ void assertDiagnosticRecords({
             'HARNESS_ASSERTION_FAILED: missing diagnostic '
             '${expectedRecord.code} at ${expectedRecord.path}:'
             '${expectedRecord.line}:${expectedRecord.column}',
+        exitCode: exitCode,
+        stdout: stdout,
+        stderr: stderr,
       );
     }
     remaining.removeAt(matchIndex);
@@ -409,6 +415,9 @@ void assertDiagnosticRecords({
       message:
           'HARNESS_ASSERTION_FAILED: unexpected diagnostic ${record.code} '
           'at ${record.path}:${record.line}:${record.column}',
+      exitCode: exitCode,
+      stdout: stdout,
+      stderr: stderr,
     );
   }
 }
@@ -570,6 +579,7 @@ ConsumerFixture generateConsumerFixture(
             sourceCase.source,
             sourceCase.diagnosticNeedle,
             problemMessage: sourceCase.problemMessage,
+            correctionMessage: sourceCase.correctionMessage,
           ),
         );
       }
@@ -592,6 +602,7 @@ ConsumerFixture generateConsumerFixture(
           sourceCase.diagnosticNeedle,
           occurrence: sourceCase.needleOccurrence,
           problemMessage: sourceCase.problemMessage,
+          correctionMessage: sourceCase.correctionMessage,
         ),
       );
   }
@@ -726,7 +737,13 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
               ...expected.skip(1),
             ];
           }
-          assertDiagnosticRecords(actual: records, expected: expected);
+          assertDiagnosticRecords(
+            actual: records,
+            expected: expected,
+            exitCode: result.exitCode,
+            stdout: result.stdout,
+            stderr: result.stderr,
+          );
           _assertAnalyzerExit(result, scenario);
 
           resolvedVersions ??= await _verifySyntheticPluginGraph(
@@ -1183,16 +1200,19 @@ DiagnosticRecord _expectedDiagnostic(
   String needle, {
   int occurrence = 0,
   String? problemMessage,
+  String? correctionMessage,
 }) {
   final offset = _indexOfOccurrence(source, needle, occurrence);
   final prefix = source.substring(0, offset);
   final line = '\n'.allMatches(prefix).length + 1;
   final lastNewline = prefix.lastIndexOf('\n');
   final column = offset - lastNewline;
+  final problem = problemMessage ?? _problemMessages[code]!;
+  final correction = correctionMessage ?? _correctionMessages[code];
   return DiagnosticRecord(
     code: code,
     severity: 'INFO',
-    message: problemMessage ?? _problemMessages[code]!,
+    message: correction == null ? problem : '$problem $correction',
     path: path,
     line: line,
     column: column,
@@ -1218,12 +1238,14 @@ final class _SourceCase {
     this.diagnosticNeedle, {
     this.needleOccurrence = 0,
     this.problemMessage,
+    this.correctionMessage,
   });
 
   final String source;
   final String diagnosticNeedle;
   final int needleOccurrence;
   final String? problemMessage;
+  final String? correctionMessage;
 }
 
 _SourceCase _violatingSource(String code) => switch (code) {
@@ -1236,6 +1258,7 @@ class ExtraClass {}
   'matching_class_and_file_name' => const _SourceCase(
     'class WrongName {}\n',
     'class WrongName {}',
+    correctionMessage: 'Rename the class to "MatchingClassAndFileName".',
   ),
   'prefer_widget_class_over_widget_helper' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
@@ -1249,13 +1272,17 @@ abstract class AvoidWidgetOperatorEquals extends StatelessWidget {
   bool operator ==(Object other) => identical(this, other);
 }
 ''', 'bool operator =='),
-  'prefer_media_query_partial_methods' => const _SourceCase('''
+  'prefer_media_query_partial_methods' => const _SourceCase(
+    '''
 import 'package:flutter/widgets.dart';
 
 void readMediaQuery(BuildContext context) {
   MediaQuery.of(context).size;
 }
-''', 'MediaQuery.of(context).size'),
+''',
+    'MediaQuery.of(context).size',
+    correctionMessage: 'Use MediaQuery.sizeOf(context) instead.',
+  ),
   'missing_go_route_name_property' => const _SourceCase('''
 // ignore_for_file: go_router_linter/avoid_hardcoded_routes
 
@@ -1267,7 +1294,8 @@ GoRoute buildRoute() => GoRoute(
   builder: (_, _) => const SizedBox.shrink(),
 );
 ''', 'GoRoute('),
-  'use_context_directly_for_go_router' => const _SourceCase('''
+  'use_context_directly_for_go_router' => const _SourceCase(
+    '''
 // ignore_for_file: go_router_linter/avoid_hardcoded_routes
 
 import 'package:flutter/widgets.dart';
@@ -1276,7 +1304,10 @@ import 'package:go_router/go_router.dart';
 void navigate(BuildContext context) {
   GoRouter.of(context).go('/home');
 }
-''', 'GoRouter.of(context).go'),
+''',
+    'GoRouter.of(context).go',
+    correctionMessage: 'Use context.go instead of GoRouter.of(context).go.',
+  ),
   'avoid_hardcoded_routes' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -1406,6 +1437,7 @@ class VisibleWrongName {}
     'class VisibleWrongName {}',
     problemMessage:
         'Class name VisibleWrongName must match the file name "matching_class_and_file_name".',
+    correctionMessage: 'Rename the class to "MatchingClassAndFileName".',
   ),
   'prefer_widget_class_over_widget_helper' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
@@ -1432,15 +1464,20 @@ abstract class SecondWidget extends StatelessWidget {
     'bool operator ==',
     needleOccurrence: 1,
   ),
-  'prefer_media_query_partial_methods' => const _SourceCase('''
+  'prefer_media_query_partial_methods' => const _SourceCase(
+    '''
 import 'package:flutter/widgets.dart';
 
 void readMediaQuery(BuildContext context) {
   // ignore: flutter_best_practices_lints/prefer_media_query_partial_methods
   MediaQuery.of(context).size;
-  MediaQuery.of(context).padding;
+  MediaQuery.of(context).size;
 }
-''', 'MediaQuery.of(context).padding'),
+''',
+    'MediaQuery.of(context).size',
+    needleOccurrence: 1,
+    correctionMessage: 'Use MediaQuery.sizeOf(context) instead.',
+  ),
   'missing_go_route_name_property' => const _SourceCase(
     '''
 // ignore_for_file: go_router_linter/avoid_hardcoded_routes
@@ -1457,7 +1494,8 @@ final routes = <GoRoute>[
     'GoRoute(',
     needleOccurrence: 1,
   ),
-  'use_context_directly_for_go_router' => const _SourceCase('''
+  'use_context_directly_for_go_router' => const _SourceCase(
+    '''
 // ignore_for_file: go_router_linter/avoid_hardcoded_routes
 
 import 'package:flutter/widgets.dart';
@@ -1468,7 +1506,10 @@ void navigate(BuildContext context) {
   GoRouter.of(context).go('/ignored');
   GoRouter.of(context).push('/visible');
 }
-''', 'GoRouter.of(context).push'),
+''',
+    'GoRouter.of(context).push',
+    correctionMessage: 'Use context.push instead of GoRouter.of(context).push.',
+  ),
   'avoid_hardcoded_routes' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -1525,6 +1566,27 @@ const _problemMessages = <String, String>{
       'Avoid Navigator named routes in projects that use go_router.',
   'missing_go_router_error_handler':
       'GoRouter should define an error handler for unknown routes.',
+};
+
+const _correctionMessages = <String, String>{
+  'single_class_per_file': 'Split the classes into separate files.',
+  'matching_class_and_file_name':
+      'Rename the class to "MatchingClassAndFileName".',
+  'prefer_widget_class_over_widget_helper':
+      'Extract this reusable UI into a StatelessWidget or StatefulWidget.',
+  'avoid_widget_operator_equals':
+      'Rely on Flutter widget identity and const constructors instead.',
+  'prefer_media_query_partial_methods':
+      'Use MediaQuery.sizeOf(context) instead.',
+  'missing_go_route_name_property': 'Add a `name` property to this GoRoute.',
+  'use_context_directly_for_go_router':
+      'Use context.go instead of GoRouter.of(context).go.',
+  'avoid_hardcoded_routes':
+      'Use a constant, enum, or a variable instead of a hardcoded string.',
+  'avoid_navigator_named_routes_with_go_router':
+      'Use go_router navigation APIs so routes stay declarative and deep-linkable.',
+  'missing_go_router_error_handler':
+      'Add an `errorBuilder` or `errorPageBuilder` argument.',
 };
 
 HarnessOptions parseHarnessOptions(List<String> arguments) {
