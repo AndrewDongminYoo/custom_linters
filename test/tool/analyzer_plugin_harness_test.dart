@@ -28,6 +28,7 @@ void main() {
         expect(options.plugin, expected);
         expect(options.source, PluginSource.local);
         expect(options.analyzer, AnalyzerSelector.all);
+        expect(options.timeout, const Duration(seconds: 120));
       }
 
       for (final (value, expected) in <(String, AnalyzerSelector)>[
@@ -213,6 +214,7 @@ void main() {
           isNot(contains('flutter_best_practices_lints:')),
         );
         expect(fixture.pubspecYaml, isNot(contains('go_router_linter:')));
+        expect(fixture.pubspecYaml, contains("sdk: '>=3.11.0 <4.0.0'"));
         expect(fixture.pubspecYaml, contains('go_router: 17.5.0'));
       },
     );
@@ -293,6 +295,37 @@ void main() {
       }
     });
 
+    test('keeps qualified-ignore coverage isolated across both plugins', () {
+      final options = parseHarnessOptions([
+        '--plugin',
+        'all',
+        '--source',
+        'local',
+      ]);
+      final fixture = generateConsumerFixture(
+        options,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.qualifiedIgnore,
+      );
+
+      expect(fixture.files, hasLength(10));
+      expect(fixture.expectedDiagnostics, hasLength(10));
+      expect(
+        fixture.expectedDiagnostics.map((diagnostic) => diagnostic.code),
+        containsAll(flutterDiagnosticCodes),
+      );
+      expect(
+        fixture.expectedDiagnostics.map((diagnostic) => diagnostic.code),
+        containsAll(goRouterDiagnosticCodes),
+      );
+      expect(
+        fixture.analysisOptionsYaml,
+        contains('  flutter_best_practices_lints:'),
+      );
+      expect(fixture.analysisOptionsYaml, contains('  go_router_linter:'));
+    });
+
     test('omits the disabled rule from diagnostics configuration', () {
       final options = parseHarnessOptions([
         '--plugin',
@@ -313,6 +346,93 @@ void main() {
         fixture.analysisOptionsYaml,
         isNot(contains('prefer_media_query_partial_methods: true')),
       );
+    });
+
+    test('suppresses fixture-only analyzer diagnostics', () {
+      final helperOptions = parseHarnessOptions([
+        '--plugin',
+        'flutter_best_practices_lints',
+        '--source',
+        'local',
+        '--diagnostic',
+        'prefer_widget_class_over_widget_helper',
+      ]);
+      final operatorOptions = parseHarnessOptions([
+        '--plugin',
+        'flutter_best_practices_lints',
+        '--source',
+        'local',
+        '--diagnostic',
+        'avoid_widget_operator_equals',
+      ]);
+      final helperViolating = generateConsumerFixture(
+        helperOptions,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.violating,
+      );
+      final helperQualifiedIgnore = generateConsumerFixture(
+        helperOptions,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.qualifiedIgnore,
+      );
+      final operatorViolating = generateConsumerFixture(
+        operatorOptions,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.violating,
+      );
+      final operatorQualifiedIgnore = generateConsumerFixture(
+        operatorOptions,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.qualifiedIgnore,
+      );
+
+      expect(
+        helperViolating
+            .files['lib/prefer_widget_class_over_widget_helper.dart'],
+        contains('// ignore: unused_element'),
+      );
+      expect(
+        operatorViolating.files['lib/avoid_widget_operator_equals.dart'],
+        contains('// ignore: invalid_override_of_non_virtual_member'),
+      );
+      expect(
+        helperQualifiedIgnore
+            .files['lib/prefer_widget_class_over_widget_helper.dart'],
+        contains(
+          '// ignore: unused_element, '
+          'flutter_best_practices_lints/prefer_widget_class_over_widget_helper',
+        ),
+      );
+      expect(
+        operatorQualifiedIgnore.files['lib/avoid_widget_operator_equals.dart'],
+        contains('// ignore: invalid_override_of_non_virtual_member'),
+      );
+    });
+
+    test('keeps compliant GoRoute fixtures free of cross-rule violations', () {
+      final options = parseHarnessOptions([
+        '--plugin',
+        'go_router_linter',
+        '--source',
+        'local',
+        '--diagnostic',
+        'missing_go_route_name_property',
+      ]);
+      final fixture = generateConsumerFixture(
+        options,
+        repositoryRoot: Directory.current.absolute,
+        consumerRoot: temporaryRoot,
+        scenario: ConsumerScenario.compliant,
+      );
+      final source = fixture.files['lib/missing_go_route_name_property.dart'];
+
+      expect(source, contains("const homeRouteName = 'home';"));
+      expect(source, contains('name: homeRouteName'));
+      expect(source, isNot(contains("name: 'home'")));
     });
 
     test('rejects consumer roots inside the workspace', () {

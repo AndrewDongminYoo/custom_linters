@@ -590,21 +590,22 @@ ConsumerFixture generateConsumerFixture(
     case ConsumerScenario.disabledRule:
       files['lib/$disabledCode.dart'] = _violatingSource(disabledCode!).source;
     case ConsumerScenario.qualifiedIgnore:
-      final code = selectedDiagnostics.first;
-      final sourceCase = _qualifiedIgnoreSource(code);
-      final path = 'lib/$code.dart';
-      files[path] = sourceCase.source;
-      expectedDiagnostics.add(
-        _expectedDiagnostic(
-          code,
-          path,
-          sourceCase.source,
-          sourceCase.diagnosticNeedle,
-          occurrence: sourceCase.needleOccurrence,
-          problemMessage: sourceCase.problemMessage,
-          correctionMessage: sourceCase.correctionMessage,
-        ),
-      );
+      for (final code in selectedDiagnostics) {
+        final sourceCase = _qualifiedIgnoreSource(code);
+        final path = 'lib/$code.dart';
+        files[path] = sourceCase.source;
+        expectedDiagnostics.add(
+          _expectedDiagnostic(
+            code,
+            path,
+            sourceCase.source,
+            sourceCase.diagnosticNeedle,
+            occurrence: sourceCase.needleOccurrence,
+            problemMessage: sourceCase.problemMessage,
+            correctionMessage: sourceCase.correctionMessage,
+          ),
+        );
+      }
   }
 
   return ConsumerFixture(
@@ -684,6 +685,11 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
       timeout: options.timeout,
     );
     _validateConsumerDependencies(options, consumerDependencies);
+    if (_packageNames(options.plugin).contains('go_router_linter')) {
+      log(
+        'HARNESS_DEPENDENCY: go_router=${consumerDependencies['go_router']}',
+      );
+    }
     log(
       'HARNESS_HOST: os=${Platform.operatingSystem} '
       'dart=${Platform.version.split(' ').first} '
@@ -1153,7 +1159,7 @@ String _consumerPubspec(Set<String> selectedPackages) {
     ..writeln('name: analyzer_plugin_consumer')
     ..writeln('publish_to: none')
     ..writeln('environment:')
-    ..writeln("  sdk: '>=3.10.0 <4.0.0'")
+    ..writeln("  sdk: '>=3.11.0 <4.0.0'")
     ..writeln('dependencies:')
     ..writeln('  flutter:')
     ..writeln('    sdk: flutter');
@@ -1263,12 +1269,14 @@ class ExtraClass {}
   'prefer_widget_class_over_widget_helper' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
 
+// ignore: unused_element
 Widget _buildHeader() => const SizedBox.shrink();
 ''', 'Widget _buildHeader()'),
   'avoid_widget_operator_equals' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
 
 abstract class AvoidWidgetOperatorEquals extends StatelessWidget {
+  // ignore: invalid_override_of_non_virtual_member
   bool operator ==(Object other) => identical(this, other);
 }
 ''', 'bool operator =='),
@@ -1364,10 +1372,11 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 const homeRoute = '/home';
+const homeRouteName = 'home';
 
 GoRoute buildRoute() => GoRoute(
   path: homeRoute,
-  name: 'home',
+  name: homeRouteName,
   builder: (_, _) => const SizedBox.shrink(),
 );
 ''',
@@ -1442,8 +1451,9 @@ class VisibleWrongName {}
   'prefer_widget_class_over_widget_helper' => const _SourceCase('''
 import 'package:flutter/widgets.dart';
 
-// ignore: flutter_best_practices_lints/prefer_widget_class_over_widget_helper
+// ignore: unused_element, flutter_best_practices_lints/prefer_widget_class_over_widget_helper
 Widget _buildIgnored() => const SizedBox.shrink();
+// ignore: unused_element
 Widget _buildVisible() => const SizedBox.shrink();
 ''', 'Widget _buildVisible()'),
   'avoid_widget_operator_equals' => const _SourceCase(
@@ -1453,11 +1463,12 @@ Widget _buildVisible() => const SizedBox.shrink();
 import 'package:flutter/widgets.dart';
 
 abstract class FirstWidget extends StatelessWidget {
-  // ignore: flutter_best_practices_lints/avoid_widget_operator_equals
+  // ignore: invalid_override_of_non_virtual_member, flutter_best_practices_lints/avoid_widget_operator_equals
   bool operator ==(Object other) => identical(this, other);
 }
 
 abstract class SecondWidget extends StatelessWidget {
+  // ignore: invalid_override_of_non_virtual_member
   bool operator ==(Object other) => identical(this, other);
 }
 ''',
@@ -1594,7 +1605,7 @@ HarnessOptions parseHarnessOptions(List<String> arguments) {
   String? sourceValue;
   var analyzer = AnalyzerSelector.all;
   var repeat = 1;
-  var timeout = const Duration(seconds: 600);
+  var timeout = const Duration(seconds: 120);
   var negativeControl = false;
   final packageVersions = <String, String>{};
   final requestedDiagnostics = <String>{};
