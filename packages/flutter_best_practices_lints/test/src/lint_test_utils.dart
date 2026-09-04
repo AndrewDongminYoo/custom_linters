@@ -4,24 +4,47 @@ import 'dart:io';
 // 📦 Package imports:
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart';
+import 'package:analyzer/error/error.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
-Future<List<String>> analyzeLintRule(
+// 🧪 Test imports:
+import 'package:test/test.dart';
+
+Future<List<Diagnostic>> analyzeLintRule(
   DartLintRule rule,
-  String source,
-) async {
+  String source, {
+  String relativePath = 'lib/main.dart',
+}) async {
   final directory = Directory('test').createTempSync('lint_test_');
 
   try {
-    final file = File('${directory.path}/main.dart')..writeAsStringSync(source);
+    final file = File(
+      _join(directory.path, relativePath.split('/')),
+    );
+    file.parent.createSync(recursive: true);
+    file.writeAsStringSync(source);
     final result = await _resolveFile(file.absolute.path);
-    final diagnostics = await rule.testRun(result);
-    return diagnostics
-        .map((diagnostic) => diagnostic.diagnosticCode.name)
-        .toList();
+    return await rule.testRun(result);
   } finally {
     directory.deleteSync(recursive: true);
   }
+}
+
+void expectLintDiagnostic(
+  Diagnostic diagnostic, {
+  required String code,
+  required String message,
+  required String? correctionMessage,
+  required int offset,
+  required int length,
+}) {
+  expect(diagnostic.diagnosticCode.name, code);
+  expect(diagnostic.diagnosticCode.severity, DiagnosticSeverity.INFO);
+  expect(diagnostic.message, message);
+  expect(diagnostic.correctionMessage, correctionMessage);
+  expect(diagnostic.offset, offset);
+  expect(diagnostic.length, length);
 }
 
 Future<ResolvedUnitResult> _resolveFile(String path) async {
