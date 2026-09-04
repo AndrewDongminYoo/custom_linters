@@ -33,7 +33,7 @@ The nested workspace examples contain no legacy host configuration and no top-le
 
 ## Current Local Verification
 
-The following checks passed on the release-candidate worktree:
+The following checks passed on the release-candidate working tree:
 
 - `dart format` reported no changes for package source, tests, examples, root harness source, and root harness tests.
 - `dart run melos run format:ci` checked all four workspace packages.
@@ -47,7 +47,7 @@ The following checks passed on the release-candidate worktree:
 - Scoped Trunk formatting removed generator whitespace, and clean staging plus `rsync --delete` removed stale legacy API pages.
 - Scoped Trunk checks passed for the workflow and all changed Markdown documentation.
 
-The initial publication dry runs exited successfully but reported expected dirty-worktree warnings and references to tracked files that this migration deletes.
+The initial publication dry runs exited successfully but reported expected dirty-working-tree warnings and references to tracked files that this migration deletes.
 After the code and package-documentation commits, `dart pub publish --dry-run` completed for `flutter_best_practices_lints 0.6.0` and `go_router_linter 0.5.0` with `Package has 0 warnings.`
 These dry runs close the local package-validation gate but do not authorize or complete publication.
 
