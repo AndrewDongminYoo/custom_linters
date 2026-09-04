@@ -13,6 +13,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   semantic_pull_request:
@@ -45,14 +46,77 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
-          flutter pub global activate melos
-          melos bootstrap
+          dart pub get
+          dart run melos bootstrap
 
       - name: ✨ Check Formatting
-        run: melos run format:ci
+        run: |
+          dart run melos run format:ci
+          dart format tool test/tool --set-exit-if-changed
 
       - name: 🕵️ Analyze
-        run: melos run analyze
+        run: |
+          dart run melos run analyze
+          dart analyze .
 
       - name: 🧪 Run Tests
-        run: melos run test:ci
+        run: |
+          dart run melos run test:ci
+          dart test test/tool/analyzer_plugin_harness_test.dart
+
+      - name: 🧩 Verify Dart Analyzer Plugin Host
+        run: dart run tool/verify_analyzer_plugins.dart --plugin all --source local --analyzer dart --repeat 3
+
+  analyzer-plugin-compatibility:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    name: plugin-host-${{ matrix.os }}-flutter-${{ matrix.flutter-version }}-${{ matrix.analyzer }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        flutter-version:
+          - 3.44.0
+          - 3.47.2
+        analyzer:
+          - dart
+          - flutter
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v7
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter-version }}
+          channel: stable
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: |
+          dart pub get
+          dart run melos bootstrap
+
+      - name: ✨ Check Formatting
+        run: |
+          dart run melos run format:ci
+          dart format tool test/tool --set-exit-if-changed
+
+      - name: 🕵️ Analyze
+        run: |
+          dart run melos run analyze
+          dart analyze .
+
+      - name: 🧪 Run Tests
+        run: |
+          dart run melos run test:ci
+          dart test test/tool/analyzer_plugin_harness_test.dart
+
+      - name: 🧩 Verify Analyzer Plugin Host
+        run: dart run tool/verify_analyzer_plugins.dart --plugin all --source local --analyzer ${{ matrix.analyzer }} --repeat 3
