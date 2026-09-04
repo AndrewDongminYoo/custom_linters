@@ -2,7 +2,7 @@
 
 <!-- cspell:ignore codesigning dogfood Dongmin namespaced pubspec pubspecs rroussel staticElement -->
 
-**Status:** Blocked by Phase 0
+**Status:** Implemented locally; publication blocked by the Flutter host gate
 **Date:** 2026-09-03
 **Account scope:** Personal repository owned by `AndrewDongminYoo`
 **Packages:** `flutter_best_practices_lints`, `go_router_linter`
@@ -32,8 +32,8 @@ The project will not maintain a dual-host adapter.
 The project will not merge the two lint packages.
 The project will not replace analyzer integration with a custom command-line tool.
 
-The project will migrate and release `flutter_best_practices_lints` first.
-The project will migrate and release `go_router_linter` only after the first package satisfies all release gates.
+The project will implement `flutter_best_practices_lints` first, then implement `go_router_linter` in the same dependency-consistent workspace transition.
+The project will still release `flutter_best_practices_lints` first and will not publish `go_router_linter` until the first package satisfies its publication and hosted-consumer gates.
 The legacy package versions will remain available for consumers that cannot move to the official host.
 
 This decision implements the recommendation accepted in ledger record L2.
@@ -493,7 +493,7 @@ The project may keep the spike for investigation, but it must not publish the mi
 
 ### 12.2 Phase 1: `flutter_best_practices_lints`
 
-Phase 1 migrates all five Flutter rules after Phase 0 passes.
+Phase 1 migrates all five Flutter rules after the operator explicitly approves the dependency-consistent workspace transition despite the known publication blocker.
 The target release is `0.6.0` because the consumer configuration and exported host APIs change.
 
 Phase 1 must update the following concerns:
@@ -510,7 +510,8 @@ Phase 1 must update the following concerns:
 - Package changelog.
 - Generated API documentation through the generator, if generated API documentation remains tracked.
 
-Phase 1 must not modify `go_router_linter` source behavior.
+The workspace cannot resolve official analyzer `14.x` beside the legacy `custom_lint` analyzer family.
+The transition therefore updates both package manifests and the root lockfile atomically, but it completes and verifies the Flutter rule implementation before changing go_router rule behavior.
 
 ### 12.3 Phase 2: First package release gate
 
@@ -527,7 +528,8 @@ The project must prepare a corrective patch or use the distribution channel's su
 
 ### 12.4 Phase 3: `go_router_linter`
 
-Phase 3 starts only after the first package passes its published-consumer verification.
+Phase 3 implementation starts after the Flutter implementation passes its local rule and standalone Dart-host checks.
+Phase 3 publication still starts only after the first package passes its publication and fresh hosted-consumer verification.
 The target release is `0.5.0`.
 
 Phase 3 repeats the Phase 1 and Phase 2 gates for the five go_router rules.

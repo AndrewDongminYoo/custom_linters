@@ -6,7 +6,7 @@
 
 **Goal:** Migrate `flutter_best_practices_lints` and then `go_router_linter` from `custom_lint` to the official analyzer plugin host without changing characterized rule behavior, except for the approved package-relative `lib/` boundary correction.
 
-**Architecture:** Use one official `Plugin` entrypoint and five independent `AnalysisRule` implementations in each package. Keep rule logic package-local. Verify the host through a root Dart harness that creates standalone consumers outside the workspace. Treat the Flutter package publication and fresh hosted-consumer result as a hard checkpoint before any go_router implementation work starts.
+**Architecture:** Use one official `Plugin` entrypoint and five independent `AnalysisRule` implementations in each package. Keep rule logic package-local. Verify the host through a root Dart harness that creates standalone consumers outside the workspace. Move both package manifests through one dependency-consistent analyzer-family transition, implement and verify the Flutter rules first, and preserve Flutter publication plus fresh hosted-consumer verification as the checkpoint before go_router publication.
 
 **Tech Stack:** Dart, Flutter, Melos, `analysis_server_plugin`, `analyzer`, `analyzer_testing`, `test_reflective_loader`, `test`, `pubspec_parse`, GitHub Actions on macOS, Linux, and Windows
 
@@ -15,14 +15,14 @@
 ## Execution Status
 
 Phase 0 failed on 2026-09-04 because Flutter `3.47.2` reproduced issue #187999 while the equivalent `dart analyze` matrix passed.
-Stop before Task 5 and use the recorded [Phase 0 evidence](../notes/2026-09-03-analysis-server-plugin-migration-evidence.md) before resuming this plan.
-The evidence also proves that Task 3's production-package side-by-side dependency step cannot resolve in the current single-resolution Dart workspace and that its official `AnalysisRuleTest` must run with `dart test` instead of `flutter test`.
-Treat the affected Task 3 steps as superseded until the dependency-consistent transition is refined and approved.
+The [Phase 0 evidence](../notes/2026-09-03-analysis-server-plugin-migration-evidence.md) also proves that the production packages cannot move through a side-by-side dependency state in this single-resolution Dart workspace and that official `AnalysisRuleTest` tests must run with `dart test` instead of `flutter test`.
+On 2026-09-04, the operator approved the refined dependency-consistent implementation of both packages while retaining issue #187999 as a publication blocker.
+This approval supersedes the implementation stop before Tasks 5, 8, and 9, but it does not authorize push, merge, tag, workflow dispatch, or publication.
 
 ## Global Constraints
 
-- Implement the Flutter package first.
-- Do not change `go_router_linter` source behavior until `flutter_best_practices_lints 0.6.0` passes the complete fresh hosted-consumer matrix.
+- Implement and locally verify the Flutter package rules before changing `go_router_linter` rule behavior.
+- Keep Flutter publication and fresh hosted-consumer verification as a hard checkpoint before go_router publication.
 - Do not publish either package without separate approval immediately before the publication command.
 - Treat a retraction as another separately approved external action.
 - Keep workspace example packages free of a top-level `plugins:` section.
@@ -47,7 +47,7 @@ Treat the affected Task 3 steps as superseded until the dependency-consistent tr
 - The real analyzer test precedent confirms `AnalysisRuleTest` with resolved elements plus a real standalone consumer process. Source: [`dart-analyzer.md`](../../../llm-wiki-dongminyu/wiki/entities/dart-analyzer.md) `[OUT_OF_SCOPE path: sibling personal repository]`.
 - The prior compatibility-unit precedent confirms that Flutter, Dart, analyzer, and plugin-host versions move through one tested matrix. Source: [`dart-analyzer.md`](../../../llm-wiki-dongminyu/wiki/entities/dart-analyzer.md) `[OUT_OF_SCOPE path: sibling personal repository]`.
 - The changelog precedent confirms that each breaking release must state the removed host API and exact consumer migration. Source: [`custom_linters--changelog.md`](../../../llm-wiki-dongminyu/wiki/sources/custom_linters--changelog.md) `[OUT_OF_SCOPE path: sibling personal repository]`.
-- Package-first publication gating followed by a second package migration: `[no precedent found]`.
+- One atomic analyzer-family transition followed by independent package publication gates: `[no precedent found]`.
 - Legacy characterization followed by staged local and hosted consumer validation: `[no precedent found]`.
 
 The planning Oracle lookup supplied no source pages for the last two topics and reported freshness as `UNVERIFIED`.
@@ -58,9 +58,8 @@ Treat those two execution patterns as new project precedent, not historical auth
 The repository versions and tags the two packages independently.
 Keep their implementation and release-history commits separate.
 
-- A commit may touch `packages/flutter_best_practices_lints/**` and the root lockfile that its manifest change regenerates.
-- A commit may touch `packages/go_router_linter/**` and the root lockfile that its manifest change regenerates.
-- No commit may touch both package directories.
+- Keep release documentation and generated API documentation in per-package commits.
+- One buildable migration commit may touch both packages' source, tests, manifests, example configuration, the root manifest, and the root lockfile because neither source-first nor manifest-first per-package commits can resolve and compile in this single-resolution workspace.
 - Root harness, CI, and migration-evidence changes use separate repository-level commits.
 - Stage explicit paths.
 - Do not use `git add -A`, `git add .`, or `git commit -- <pathspec>`.
@@ -646,7 +645,7 @@ git commit -m "docs: record analyzer plugin phase zero evidence"
 
 ## Task 5: Migrate `flutter_best_practices_lints` Atomically
 
-Start this task only after every Phase 0 gate passes.
+Start this task after the operator approves the refined dependency-consistent transition and preserves the failed Flutter lane as a publication blocker.
 
 **Files:**
 
@@ -925,7 +924,7 @@ git ls-remote --tags origin refs/tags/flutter_best_practices_lints@0.6.0
 
 ## Task 8: Characterize All Five go_router Rules on the Legacy Host
 
-Start only after Task 7.10 passes.
+Start after the Flutter package's local rule tests and standalone Dart-host checks pass.
 
 **Files:**
 
@@ -1340,7 +1339,7 @@ git diff --check
 git log --oneline --name-only --decorate -20
 ```
 
-Confirm that no commit mixes both package directories.
+Confirm that no commit mixes both package directories except for the dependency-consistent, buildable migration commit allowed by Commit Boundaries.
 Confirm that every package manifest change has the regenerated root lockfile in the same commit.
 Confirm that no coverage or temporary-consumer artifact is tracked.
 
@@ -1402,4 +1401,4 @@ Report local, CI, IDE, package metadata, and hosted-consumer evidence separately
 Name any unexecuted external action.
 Name the exact supported Flutter and Dart versions that the matrix proved.
 Name the exact resolved `analysis_server_plugin`, `analyzer`, `analyzer_plugin`, and `go_router` versions.
-If the migration remains blocked by issue #187999, report it as unpublished and leave `go_router_linter` on the legacy host.
+If publication remains blocked by issue #187999, report both migrated release candidates as unpublished and do not run hosted-consumer claims.
