@@ -2,7 +2,7 @@
 
 <!-- cspell:ignore codesigning dogfood Dongmin namespaced pubspec pubspecs rroussel staticElement -->
 
-**Status:** Proposed
+**Status:** Blocked by Phase 0
 **Date:** 2026-09-03
 **Account scope:** Personal repository owned by `AndrewDongminYoo`
 **Packages:** `flutter_best_practices_lints`, `go_router_linter`
@@ -20,6 +20,9 @@ The migration does not add lint rules, fixes, assists, or rule-specific options.
 The work starts with one representative rule in `flutter_best_practices_lints`.
 The first spike must prove that the official host works through `dart analyze`, `flutter analyze`, and one IDE on the supported Flutter stable versions.
 The project must not publish a migrated package if those host checks fail.
+The 2026-09-04 local Phase 0 run failed because Flutter `3.47.2` omitted a diagnostic that `dart analyze` reported from the same Candidate A plugin.
+The [Phase 0 evidence](../notes/2026-09-03-analysis-server-plugin-migration-evidence.md) records the exact commands, versions, timings, negative control, and stop decision.
+It also records that the planned side-by-side dependency transition cannot resolve inside the current single-resolution Dart workspace.
 
 ## 2. Decision
 

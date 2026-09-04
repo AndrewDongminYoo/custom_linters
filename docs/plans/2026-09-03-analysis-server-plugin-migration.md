@@ -12,6 +12,13 @@
 
 **Spec:** [`docs/specs/2026-09-03-analysis-server-plugin-migration.md`](../specs/2026-09-03-analysis-server-plugin-migration.md)
 
+## Execution Status
+
+Phase 0 failed on 2026-09-04 because Flutter `3.47.2` reproduced issue #187999 while the equivalent `dart analyze` matrix passed.
+Stop before Task 5 and use the recorded [Phase 0 evidence](../notes/2026-09-03-analysis-server-plugin-migration-evidence.md) before resuming this plan.
+The evidence also proves that Task 3's production-package side-by-side dependency step cannot resolve in the current single-resolution Dart workspace and that its official `AnalysisRuleTest` must run with `dart test` instead of `flutter test`.
+Treat the affected Task 3 steps as superseded until the dependency-consistent transition is refined and approved.
+
 ## Global Constraints
 
 - Implement the Flutter package first.
