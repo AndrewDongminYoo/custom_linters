@@ -27,23 +27,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       /// The route configuration.
-      // expect_lint: missing_go_router_error_handler
       routerConfig: GoRouter(
         routes: <RouteBase>[
-          // expect_lint: missing_go_route_name_property
           GoRoute(
-            // expect_lint: avoid_hardcoded_routes
             path: '/',
             builder: (BuildContext context, GoRouterState state) {
               return const HomeScreen();
             },
             routes: <RouteBase>[
               // ! GoRoute definition should include a `name` property. Add a `name` property to this GoRoute.
-              // expect_lint: missing_go_route_name_property
               GoRoute(
                 // ! Avoid hardcoded route paths. Use constants or enums for routes.
                 // ! Use a constant, enum, or a variable instead of a hardcoded string.
-                // expect_lint: avoid_hardcoded_routes
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {
                   return const DetailsScreen();
@@ -72,13 +67,11 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               // ! Use context.push instead of GoRouter.of(context).push.
-              // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
               onPressed: () => GoRouter.of(context).push('/details'),
               child: const Text('Go to the Details screen'),
             ),
             ElevatedButton(
               // ! Prefer go_router APIs over Navigator named routes.
-              // expect_lint: avoid_navigator_named_routes_with_go_router
               onPressed: () => Navigator.pushNamed(context, '/details'),
               child: const Text('Legacy named route'),
             ),
@@ -101,7 +94,6 @@ class DetailsScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           // ! Use context.go instead of GoRouter.of(context).go.
-          // expect_lint: use_context_directly_for_go_router, avoid_hardcoded_routes
           onPressed: () => GoRouter.of(context).go('/'),
           child: const Text('Go back to the Home screen'),
         ),

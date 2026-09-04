@@ -1,68 +1,56 @@
 // 📦 Package imports:
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/error/error.dart';
 
 /// {@template missing_go_route_name_property}
-/// A lint rule that checks if GoRoute definitions include a `name` property.
-///
-/// This rule is part of the custom lint rules for the GoRouter package.
-/// It ensures that all GoRoute definitions have a `name` property set,
-/// which is required for proper routing functionality.
+/// Checks that `GoRoute` definitions include a `name` property.
 /// {@endtemplate}
-class MissingGoRouteNameProperty extends DartLintRule {
+class MissingGoRouteNameProperty extends AnalysisRule {
   /// {@macro missing_go_route_name_property}
-  const MissingGoRouteNameProperty() : super(code: _code);
+  MissingGoRouteNameProperty()
+    : super(
+        name: 'missing_go_route_name_property',
+        description: 'Requires a name for each GoRoute definition.',
+      );
 
   static const _code = LintCode(
-    name: 'missing_go_route_name_property',
-    problemMessage: 'GoRoute definition should include a `name` property.',
+    'missing_go_route_name_property',
+    'GoRoute definition should include a `name` property.',
     correctionMessage: 'Add a `name` property to this GoRoute.',
   );
 
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
+  LintCode get diagnosticCode => _code;
+
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
-    // ignore: discarded_futures
-    resolver.getResolvedUnitResult().then((unit) {
-      unit.unit.visitChildren(_GoRouteVisitor(reporter, context));
-    });
+    registry.addInstanceCreationExpression(this, _Visitor(this));
   }
 }
 
-class _GoRouteVisitor extends RecursiveAstVisitor<void> {
-  _GoRouteVisitor(this.reporter, this.context);
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule);
 
-  final DiagnosticReporter reporter;
-  final CustomLintContext context;
+  final MissingGoRouteNameProperty rule;
 
   @override
   void visitInstanceCreationExpression(InstanceCreationExpression node) {
     final element = node.staticType?.element;
+    if (element is! ClassElement || element.name != 'GoRoute') return;
 
-    // Check if the class being instantiated is GoRoute
-    if (element is ClassElement && element.name == 'GoRoute') {
-      final arguments = node.argumentList.arguments;
-
-      // Check if any of the arguments has the name 'name'
-      final hasNameProperty = arguments.any((arg) {
-        if (arg is NamedExpression) {
-          return arg.name.label.name == 'name';
-        }
-        return false;
-      });
-
-      // If name property is missing, report an error
-      if (!hasNameProperty) {
-        reporter.atNode(node, MissingGoRouteNameProperty._code);
-      }
+    final hasName = node.argumentList.arguments.any(
+      (argument) => argument is NamedArgument && argument.name.lexeme == 'name',
+    );
+    if (!hasName) {
+      rule.reportAtNode(node);
     }
-
-    super.visitInstanceCreationExpression(node);
   }
 }

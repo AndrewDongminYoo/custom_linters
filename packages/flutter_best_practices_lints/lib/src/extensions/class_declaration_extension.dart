@@ -16,7 +16,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
   /// 2. Class name ends with `State`.
   /// 3. It extends a `State<T>` from Flutter's framework (library URI starts with `package:flutter/`).
   bool get isStateClass {
-    final className = name.lexeme;
+    final className = namePart.typeName.lexeme;
     // (1) Private classes end with 'State'
     if (!className.startsWith('_') || !className.endsWith('State')) {
       return false;
@@ -29,9 +29,7 @@ extension ClassDeclarationExtension on ClassDeclaration {
     final superclassNode = extendsClause!.superclass;
 
     // (4) Resolve its static type element
-    final superType = superclassNode.type;
-    if (superType == null) return false;
-    final superElement = superType.element;
+    final superElement = superclassNode.element;
     if (superElement == null) return false;
 
     // (5) Name must be exactly 'State'

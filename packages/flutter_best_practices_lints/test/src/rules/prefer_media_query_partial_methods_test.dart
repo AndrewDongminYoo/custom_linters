@@ -1,12 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
+// 📦 Package imports:
+import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
+import 'package:test_reflective_loader/test_reflective_loader.dart';
+
 // 🌎 Project imports:
-import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
+import 'package:flutter_best_practices_lints/src/rules/prefer_media_query_partial_methods.dart';
 
-// 🧪 Test imports:
-import 'package:test/test.dart';
-
-import '../lint_test_utils.dart';
-
-const _code = 'prefer_media_query_partial_methods';
 const _message =
     'Use the specific MediaQuery accessor to avoid unnecessary rebuilds.';
 const _replacements = <(String, String)>[
@@ -29,68 +29,71 @@ const _replacements = <(String, String)>[
 ];
 
 void main() {
-  group('PreferMediaQueryPartialMethods', () {
-    test('reports every supported MediaQuery property mapping', () async {
-      final accesses = [
-        for (final (property, _) in _replacements)
-          'MediaQuery.of(context).$property',
-      ];
-      final source =
-          '''
+  defineReflectiveSuite(() {
+    defineReflectiveTests(PreferMediaQueryPartialMethodsTest);
+  });
+}
+
+@reflectiveTest
+class PreferMediaQueryPartialMethodsTest extends AnalysisRuleTest {
+  @override
+  void setUp() {
+    newPackage('flutter').addFile('lib/widgets.dart', _flutterWidgetsStub);
+    rule = PreferMediaQueryPartialMethods();
+    super.setUp();
+  }
+
+  Future<void> test_reportsEverySupportedPropertyMapping() async {
+    final accesses = [
+      for (final (property, _) in _replacements)
+        'MediaQuery.of(context).$property',
+    ];
+    final source =
+        '''
 import 'package:flutter/widgets.dart';
 
 void readMediaQuery(BuildContext context) {
 ${accesses.map((access) => '  $access;').join('\n')}
 }
 ''';
-      final diagnostics = await analyzeLintRule(
-        const PreferMediaQueryPartialMethods(),
-        source,
-      );
 
-      expect(diagnostics, hasLength(_replacements.length));
-      for (final (index, replacement) in _replacements.indexed) {
-        final access = accesses[index];
-        expectLintDiagnostic(
-          diagnostics[index],
-          code: _code,
-          message: _message,
-          correctionMessage: 'Use ${replacement.$2} instead.',
-          offset: source.indexOf(access),
-          length: access.length,
-        );
-      }
-    });
+    await assertDiagnostics(source, [
+      for (final (index, replacement) in _replacements.indexed)
+        lint(
+          source.indexOf(accesses[index]),
+          accesses[index].length,
+          messageContainsAll: [_exact(_message)],
+          correctionContains: _exact('Use ${replacement.$2} instead.'),
+        ),
+    ]);
+  }
 
-    test('accepts an arbitrary MediaQuery.of argument expression', () async {
-      const source = '''
+  Future<void> test_acceptsArbitraryArgumentExpression() async {
+    const source = '''
 import 'package:flutter/widgets.dart';
 
-void readMediaQuery(BuildContext first, BuildContext second) {
-  MediaQuery.of(first.mounted ? first : second).size;
+void readMediaQuery(
+  BuildContext first,
+  BuildContext second,
+  bool condition,
+) {
+  MediaQuery.of(condition ? first : second).size;
 }
 ''';
-      const access = 'MediaQuery.of(first.mounted ? first : second).size';
-      final diagnostics = await analyzeLintRule(
-        const PreferMediaQueryPartialMethods(),
-        source,
-      );
+    const access = 'MediaQuery.of(condition ? first : second).size';
 
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: _message,
-        correctionMessage: 'Use MediaQuery.sizeOf(context) instead.',
-        offset: source.indexOf(access),
-        length: access.length,
-      );
-    });
+    await assertDiagnostics(source, [
+      lint(
+        source.indexOf(access),
+        access.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact('Use MediaQuery.sizeOf(context) instead.'),
+      ),
+    ]);
+  }
 
-    test('ignores non-Flutter MediaQueryData', () async {
-      final diagnostics = await analyzeLintRule(
-        const PreferMediaQueryPartialMethods(),
-        '''
+  Future<void> test_ignoresNonFlutterMediaQueryData() async {
+    await assertNoDiagnostics('''
 class MediaQueryData {
   Object get size => Object();
 }
@@ -102,16 +105,11 @@ class MediaQuery {
 void readMediaQuery(Object context) {
   MediaQuery.of(context).size;
 }
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('ignores unsupported, qualified, and dedicated accessors', () async {
-      final diagnostics = await analyzeLintRule(
-        const PreferMediaQueryPartialMethods(),
-        '''
+  Future<void> test_ignoresUnsupportedQualifiedAndDedicatedAccessors() async {
+    await assertNoDiagnostics('''
 import 'package:flutter/widgets.dart' as widgets;
 
 void readMediaQuery(widgets.BuildContext context) {
@@ -120,10 +118,38 @@ void readMediaQuery(widgets.BuildContext context) {
   widgets.MediaQuery.of(context).copyWith();
   widgets.MediaQuery.sizeOf(context);
 }
-''',
-      );
-
-      expect(diagnostics, isEmpty);
-    });
-  });
+''');
+  }
 }
+
+RegExp _exact(String value) => RegExp('^${RegExp.escape(value)}\$');
+
+const _flutterWidgetsStub = '''
+class BuildContext {}
+
+class MediaQueryData {
+  Object get size => Object();
+  Object get padding => Object();
+  Object get viewInsets => Object();
+  Object get viewPadding => Object();
+  Object get textScaler => Object();
+  Object get devicePixelRatio => Object();
+  Object get platformBrightness => Object();
+  Object get orientation => Object();
+  Object get gestureSettings => Object();
+  Object get displayFeatures => Object();
+  Object get alwaysUse24HourFormat => Object();
+  Object get accessibleNavigation => Object();
+  Object get boldText => Object();
+  Object get disableAnimations => Object();
+  Object get highContrast => Object();
+  Object get invertColors => Object();
+  Object get navigationMode => Object();
+  MediaQueryData copyWith() => this;
+}
+
+class MediaQuery {
+  static MediaQueryData of(Object context) => MediaQueryData();
+  static Object sizeOf(Object context) => Object();
+}
+''';

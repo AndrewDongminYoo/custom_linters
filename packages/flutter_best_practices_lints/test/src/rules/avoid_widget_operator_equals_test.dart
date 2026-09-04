@@ -1,17 +1,37 @@
+// ignore_for_file: non_constant_identifier_names
+
+// 📦 Package imports:
+import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
+import 'package:test_reflective_loader/test_reflective_loader.dart';
+
 // 🌎 Project imports:
-import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
+import 'package:flutter_best_practices_lints/src/rules/avoid_widget_operator_equals.dart';
 
-// 🧪 Test imports:
-import 'package:test/test.dart';
-
-import '../lint_test_utils.dart';
+const _message = 'Avoid overriding operator == on Widget classes.';
+const _correction =
+    'Rely on Flutter widget identity and const constructors instead.';
 
 void main() {
-  group('AvoidWidgetOperatorEquals', () {
-    test(
-      'reports equality overrides in direct Flutter widget subclasses',
-      () async {
-        const source = '''
+  defineReflectiveSuite(() {
+    defineReflectiveTests(AvoidWidgetOperatorEqualsTest);
+  });
+}
+
+@reflectiveTest
+class AvoidWidgetOperatorEqualsTest extends AnalysisRuleTest {
+  @override
+  void setUp() {
+    newPackage('flutter').addFile('lib/widgets.dart', '''
+abstract class Widget {}
+abstract class StatelessWidget extends Widget {}
+abstract class StatefulWidget extends Widget {}
+''');
+    rule = AvoidWidgetOperatorEquals();
+    super.setUp();
+  }
+
+  Future<void> test_reportsDirectFlutterWidgetSubclasses() async {
+    const source = '''
 import 'package:flutter/widgets.dart';
 
 abstract class DirectWidget extends Widget {
@@ -26,34 +46,25 @@ abstract class DirectStatefulWidget extends StatefulWidget {
   bool operator ==(Object other) => other is DirectStatefulWidget;
 }
 ''';
-        final diagnostics = await analyzeLintRule(
-          const AvoidWidgetOperatorEquals(),
-          source,
-        );
+    const declarations = [
+      'bool operator ==(Object other) => other is DirectWidget;',
+      'bool operator ==(Object other) => other is DirectStatelessWidget;',
+      'bool operator ==(Object other) => other is DirectStatefulWidget;',
+    ];
 
-        expect(diagnostics, hasLength(3));
-        for (final (index, declaration) in [
-          'bool operator ==(Object other) => other is DirectWidget;',
-          'bool operator ==(Object other) => other is DirectStatelessWidget;',
-          'bool operator ==(Object other) => other is DirectStatefulWidget;',
-        ].indexed) {
-          expectLintDiagnostic(
-            diagnostics[index],
-            code: 'avoid_widget_operator_equals',
-            message: 'Avoid overriding operator == on Widget classes.',
-            correctionMessage:
-                'Rely on Flutter widget identity and const constructors instead.',
-            offset: source.indexOf(declaration),
-            length: declaration.length,
-          );
-        }
-      },
-    );
+    await assertDiagnostics(source, [
+      for (final declaration in declarations)
+        lint(
+          source.indexOf(declaration),
+          declaration.length,
+          messageContainsAll: [_exact(_message)],
+          correctionContains: _exact(_correction),
+        ),
+    ]);
+  }
 
-    test('ignores same-named classes outside Flutter libraries', () async {
-      final diagnostics = await analyzeLintRule(
-        const AvoidWidgetOperatorEquals(),
-        '''
+  Future<void> test_ignoresSameNamedClassesOutsideFlutter() async {
+    await assertNoDiagnostics('''
 class Widget {}
 class StatelessWidget {}
 class StatefulWidget {}
@@ -69,16 +80,11 @@ class LocalStatelessWidget extends StatelessWidget {
 class LocalStatefulWidget extends StatefulWidget {
   bool operator ==(Object other) => other is LocalStatefulWidget;
 }
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('ignores indirect Flutter widget subclasses', () async {
-      final diagnostics = await analyzeLintRule(
-        const AvoidWidgetOperatorEquals(),
-        '''
+  Future<void> test_ignoresIndirectFlutterWidgetSubclasses() async {
+    await assertNoDiagnostics('''
 import 'package:flutter/widgets.dart';
 
 abstract class BaseWidget extends StatelessWidget {}
@@ -86,25 +92,18 @@ abstract class BaseWidget extends StatelessWidget {}
 class IndirectWidget extends BaseWidget {
   bool operator ==(Object other) => other is IndirectWidget;
 }
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('ignores direct widget subclasses without operator ==', () async {
-      final diagnostics = await analyzeLintRule(
-        const AvoidWidgetOperatorEquals(),
-        '''
+  Future<void> test_ignoresClassesWithoutEqualityOverride() async {
+    await assertNoDiagnostics('''
 import 'package:flutter/widgets.dart';
 
 abstract class PlainWidget extends Widget {}
 abstract class PlainStatelessWidget extends StatelessWidget {}
 abstract class PlainStatefulWidget extends StatefulWidget {}
-''',
-      );
-
-      expect(diagnostics, isEmpty);
-    });
-  });
+''');
+  }
 }
+
+RegExp _exact(String value) => RegExp('^${RegExp.escape(value)}\$');

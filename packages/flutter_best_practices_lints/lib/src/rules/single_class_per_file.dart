@@ -1,8 +1,10 @@
 // 📦 Package imports:
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:path/path.dart' as path;
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
+import 'package:analyzer/error/error.dart';
 
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/src/extensions/class_declaration_extension.dart';
@@ -13,63 +15,71 @@ import 'package:flutter_best_practices_lints/src/extensions/class_declaration_ex
 /// while the other extends or implements it (common for interface+impl),
 /// or when a StatefulWidget and its private State coexist.
 /// {@endtemplate}
-class SingleClassPerFile extends DartLintRule {
+class SingleClassPerFile extends AnalysisRule {
   /// {@macro single_class_per_file}
-  const SingleClassPerFile()
+  SingleClassPerFile()
     : super(
-        code: const LintCode(
-          name: 'single_class_per_file',
-          problemMessage:
-              'A file should contain only one public class declaration.',
-          correctionMessage: 'Split the classes into separate files.',
-        ),
+        name: 'single_class_per_file',
+        description: 'Enforces one public class declaration per file.',
       );
 
+  static const _code = LintCode(
+    'single_class_per_file',
+    'A file should contain only one public class declaration.',
+    correctionMessage: 'Split the classes into separate files.',
+  );
+
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
+  LintCode get diagnosticCode => _code;
+
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
-    // Only enforce for 'lib/' sources
-    final filePath = resolver.path;
-    if (!path.split(filePath).contains('lib')) return;
+    if (!context.isInLibDir) return;
 
-    context.registry.addCompilationUnit((node) {
-      final allClasses = node.declarations
-          .whereType<ClassDeclaration>()
-          .toList();
-      // Public classes do not start with '_'
-      final publicClasses = allClasses
-          .where((cls) => !cls.name.lexeme.startsWith('_'))
-          .toList();
+    registry.addCompilationUnit(this, _Visitor(this));
+  }
+}
 
-      if (publicClasses.length <= 1) return; // Zero or one public class is fine
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule);
 
-      // Allow exactly two if one is abstract and the other extends/implements it
-      if (publicClasses.length == 2) {
-        final first = publicClasses[0];
-        final second = publicClasses[1];
-        final firstIsAbstract = first.isAbstract;
-        final secondIsAbstract = second.isAbstract;
-        final firstUsedBySecond =
-            second.implementsInterface(first.name.lexeme) ||
-            second.extendsClass(first.name.lexeme);
-        final secondUsedByFirst =
-            first.implementsInterface(second.name.lexeme) ||
-            first.extendsClass(second.name.lexeme);
+  final SingleClassPerFile rule;
 
-        // If one class is an abstract definition and the other builds on it, allow both
-        if ((firstIsAbstract && firstUsedBySecond) ||
-            (secondIsAbstract && secondUsedByFirst)) {
-          return;
-        }
+  @override
+  void visitCompilationUnit(CompilationUnit node) {
+    final allClasses = node.declarations.whereType<ClassDeclaration>().toList();
+    final publicClasses = allClasses
+        .where(
+          (declaration) =>
+              !declaration.namePart.typeName.lexeme.startsWith('_'),
+        )
+        .toList();
+
+    if (publicClasses.length <= 1) return;
+
+    if (publicClasses.length == 2) {
+      final first = publicClasses[0];
+      final second = publicClasses[1];
+      final firstName = first.namePart.typeName.lexeme;
+      final secondName = second.namePart.typeName.lexeme;
+      final firstUsedBySecond =
+          second.implementsInterface(firstName) ||
+          second.extendsClass(firstName);
+      final secondUsedByFirst =
+          first.implementsInterface(secondName) ||
+          first.extendsClass(secondName);
+
+      if ((first.isAbstract && firstUsedBySecond) ||
+          (second.isAbstract && secondUsedByFirst)) {
+        return;
       }
+    }
 
-      // For any extra public classes beyond allowed, issue lint
-      for (var i = 1; i < publicClasses.length; i++) {
-        reporter.atNode(publicClasses[i], code);
-      }
-    });
+    for (var index = 1; index < publicClasses.length; index++) {
+      rule.reportAtNode(publicClasses[index]);
+    }
   }
 }

@@ -2,7 +2,6 @@
 // - matching_class_and_file_name
 // - single_class_per_file
 
-// expect_lint: matching_class_and_file_name
 /// A minimal abstract fake State class
 /// to simulate Flutter `State<T>` behavior in tests.
 abstract class State<T> {
@@ -16,8 +15,6 @@ abstract class State<T> {
 // - Two public classes: FakeStateClass and FakeInheritedState
 // - Class names do not match file name
 
-// expect_lint: single_class_per_file
 class FakeStateClass {}
 
-// expect_lint: single_class_per_file
 class FakeInheritedState extends State<FakeStateClass> {}

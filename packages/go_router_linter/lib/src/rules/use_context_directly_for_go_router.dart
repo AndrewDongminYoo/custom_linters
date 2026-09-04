@@ -1,60 +1,66 @@
 // 📦 Package imports:
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
 
 // 🌎 Project imports:
-import 'package:go_router_linter/src/extensions/lint_code_extension.dart';
 import 'package:go_router_linter/src/extensions/route_methods_extension.dart';
 
 /// {@template use_context_directly_for_go_router}
-/// A custom lint rule that checks for the use of `GoRouter.of(context).go()`
-/// instead of `context.go()`.
-///
-/// This lint rule is part of the `go_router_linter` plugin, which provides
-/// a set of custom lints for the Go Router library.
-/// The purpose of this lint is to encourage the use of the more concise
-/// and idiomatic `context.go()` method instead of
-/// the longer `GoRouter.of(context).go()` form.
+/// Reports `GoRouter.of(context).method()` calls when the equivalent
+/// `BuildContext` helper is available.
 /// {@endtemplate}
-class UseContextDirectlyForGoRouter extends DartLintRule {
+class UseContextDirectlyForGoRouter extends AnalysisRule {
   /// {@macro use_context_directly_for_go_router}
-  const UseContextDirectlyForGoRouter() : super(code: _code);
+  UseContextDirectlyForGoRouter()
+    : super(
+        name: 'use_context_directly_for_go_router',
+        description: 'Prefers BuildContext go_router helpers.',
+      );
 
-  /// Metadata about the warning that will show up in the IDE.
-  static const LintCode _code = LintCode(
-    name: 'use_context_directly_for_go_router',
-    problemMessage: 'Use GoRouterHelper extension.',
+  static const _code = LintCode(
+    'use_context_directly_for_go_router',
+    'Use GoRouterHelper extension.',
+    correctionMessage: 'Use {0}.{1} instead of GoRouter.of({0}).{1}.',
   );
 
   @override
-  void run(
-    CustomLintResolver resolver,
-    DiagnosticReporter reporter,
-    CustomLintContext context,
+  LintCode get diagnosticCode => _code;
+
+  @override
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
   ) {
-    context.registry.addMethodInvocation((node) {
-      if (node.methodName.name == 'of' &&
-          node.target is Identifier &&
-          (node.target! as Identifier).name == 'GoRouter' &&
-          node.argumentList.arguments.length == 1 &&
-          node.argumentList.arguments.first is SimpleIdentifier) {
-        final parent = node.parent;
-        if (parent is! MethodInvocation || parent.target != node) {
-          return;
-        }
+    registry.addMethodInvocation(this, _Visitor(this));
+  }
+}
 
-        final name = parent.methodName.name;
-        if (!name.isRouteMethod) {
-          return;
-        }
+class _Visitor extends SimpleAstVisitor<void> {
+  _Visitor(this.rule);
 
-        final contextName =
-            (node.argumentList.arguments.first as SimpleIdentifier).name;
-        final message =
-            'Use $contextName.$name instead of GoRouter.of($contextName).$name.';
-        reporter.atNode(parent, code.copyWith(correctionMessage: message));
-      }
-    });
+  final UseContextDirectlyForGoRouter rule;
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    final methodName = node.methodName.name;
+    if (!methodName.isRouteMethod) return;
+
+    final target = node.target;
+    if (target is! MethodInvocation || target.methodName.name != 'of') return;
+
+    final goRouterTarget = target.target;
+    if (goRouterTarget is! Identifier || goRouterTarget.name != 'GoRouter') {
+      return;
+    }
+
+    final arguments = target.argumentList.arguments;
+    if (arguments.length != 1 || arguments.single is! SimpleIdentifier) return;
+
+    final contextName = (arguments.single as SimpleIdentifier).name;
+    rule.reportAtNode(node, arguments: [contextName, methodName]);
   }
 }

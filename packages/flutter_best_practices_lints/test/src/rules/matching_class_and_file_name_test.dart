@@ -1,218 +1,166 @@
+// ignore_for_file: non_constant_identifier_names
+
+// 📦 Package imports:
+import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
+import 'package:test_reflective_loader/test_reflective_loader.dart';
+
 // 🌎 Project imports:
-import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
-
-// 🧪 Test imports:
-import 'package:test/test.dart';
-
-import '../lint_test_utils.dart';
-
-const _code = 'matching_class_and_file_name';
+import 'package:flutter_best_practices_lints/src/rules/matching_class_and_file_name.dart';
 
 void main() {
-  group('MatchingClassAndFileName', () {
-    test('allows a single class that matches the file name', () async {
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        'class HomePage {}',
-        relativePath: 'lib/home_page.dart',
-      );
+  defineReflectiveSuite(() {
+    defineReflectiveTests(MatchingClassAndFileNameTest);
+  });
+}
 
-      expect(diagnostics, isEmpty);
-    });
+@reflectiveTest
+class MatchingClassAndFileNameTest extends AnalysisRuleTest {
+  @override
+  void setUp() {
+    newPackage('flutter').addFile('lib/widgets.dart', '''
+abstract class Widget {}
+abstract class StatefulWidget extends Widget {}
+abstract class State<T extends StatefulWidget> {}
+''');
+    rule = MatchingClassAndFileName();
+    super.setUp();
+  }
 
-    test('reports a single class that does not match the file name', () async {
-      const source = 'class WrongName {}';
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        source,
-        relativePath: 'lib/home_page.dart',
-      );
+  Future<void> test_allowsMatchingSingleClass() async {
+    final path = _writeHomePage('class HomePage {}');
+    await assertNoDiagnosticsInFile(path);
+  }
 
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: 'Class name WrongName must match the file name "home_page".',
-        correctionMessage: 'Rename the class to "HomePage".',
-        offset: 0,
-        length: source.length,
-      );
-    });
+  Future<void> test_reportsMismatchingSingleClass() async {
+    const source = 'class WrongName {}';
 
-    test(
-      'reports only unrelated classes when a primary class exists',
-      () async {
-        const source = '''
+    final path = _writeHomePage(source);
+    await assertDiagnosticsInFile(path, [
+      lint(
+        0,
+        source.length,
+        messageContainsAll: [
+          _exact('Class name WrongName must match the file name "home_page".'),
+        ],
+        correctionContains: _exact('Rename the class to "HomePage".'),
+      ),
+    ]);
+  }
+
+  Future<void> test_reportsOnlyUnrelatedClassWhenPrimaryExists() async {
+    const source = '''
 class HomePage {}
 class HomePageChild extends HomePage {}
 class Helper {}
 ''';
-        const declaration = 'class Helper {}';
-        final diagnostics = await analyzeLintRule(
-          const MatchingClassAndFileName(),
-          source,
-          relativePath: 'lib/home_page.dart',
-        );
+    const helper = 'class Helper {}';
 
-        expect(diagnostics, hasLength(1));
-        expectLintDiagnostic(
-          diagnostics.single,
-          code: _code,
-          message:
-              'Class name Helper does not match the file name "home_page".',
-          correctionMessage:
-              'Either rename it to "HomePage" or separate into a new file.',
-          offset: source.indexOf(declaration),
-          length: declaration.length,
-        );
-      },
-    );
+    final path = _writeHomePage(source);
+    await assertDiagnosticsInFile(path, [
+      lint(
+        source.indexOf(helper),
+        helper.length,
+        messageContainsAll: [
+          _exact(
+            'Class name Helper does not match the file name "home_page".',
+          ),
+        ],
+        correctionContains: _exact(
+          'Either rename it to "HomePage" or separate into a new file.',
+        ),
+      ),
+    ]);
+  }
 
-    test(
-      'allows classes that directly extend or implement the primary',
-      () async {
-        final diagnostics = await analyzeLintRule(
-          const MatchingClassAndFileName(),
-          '''
+  Future<void> test_allowsDirectExtendsAndImplementsRelationships() async {
+    final path = _writeHomePage('''
 abstract class HomePage {}
 class HomePageChild extends HomePage {}
 class HomePageImplementation implements HomePage {}
-''',
-          relativePath: 'lib/home_page.dart',
-        );
+''');
+    await assertNoDiagnosticsInFile(path);
+  }
 
-        expect(diagnostics, isEmpty);
-      },
-    );
-
-    test(
-      'allows primary use in extends and implements type arguments',
-      () async {
-        final diagnostics = await analyzeLintRule(
-          const MatchingClassAndFileName(),
-          '''
+  Future<void> test_allowsPrimaryInClauseTypeArguments() async {
+    final path = _writeHomePage('''
 class HomePage {}
 abstract class IterableUse extends Iterable<HomePage> {}
 abstract class ComparableUse implements Comparable<HomePage> {}
-''',
-          relativePath: 'lib/home_page.dart',
-        );
+''');
+    await assertNoDiagnosticsInFile(path);
+  }
 
-        expect(diagnostics, isEmpty);
-      },
-    );
-
-    test('reports every class when no primary class exists', () async {
-      const source = '''
+  Future<void> test_reportsEveryClassWhenNoPrimaryExists() async {
+    const source = '''
 class FirstClass {}
 class SecondClass {}
 ''';
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        source,
-        relativePath: 'lib/home_page.dart',
-      );
+    const first = 'class FirstClass {}';
+    const second = 'class SecondClass {}';
 
-      expect(diagnostics, hasLength(2));
-      for (final (index, declaration) in [
-        'class FirstClass {}',
-        'class SecondClass {}',
-      ].indexed) {
-        final className = index == 0 ? 'FirstClass' : 'SecondClass';
-        expectLintDiagnostic(
-          diagnostics[index],
-          code: _code,
-          message:
-              'Class name $className must match the file name "home_page".',
-          correctionMessage: 'Rename the class to "HomePage".',
-          offset: source.indexOf(declaration),
-          length: declaration.length,
-        );
-      }
-    });
+    final path = _writeHomePage(source);
+    await assertDiagnosticsInFile(path, [
+      lint(
+        source.indexOf(first),
+        first.length,
+        messageContainsAll: [
+          _exact(
+            'Class name FirstClass must match the file name "home_page".',
+          ),
+        ],
+        correctionContains: _exact('Rename the class to "HomePage".'),
+      ),
+      lint(
+        source.indexOf(second),
+        second.length,
+        messageContainsAll: [
+          _exact(
+            'Class name SecondClass must match the file name "home_page".',
+          ),
+        ],
+        correctionContains: _exact('Rename the class to "HomePage".'),
+      ),
+    ]);
+  }
 
-    test('reports a private non-State class', () async {
-      const source = 'class _HomePage {}';
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        source,
-        relativePath: 'lib/home_page.dart',
-      );
+  Future<void> test_reportsPrivateNonStateClass() async {
+    const source = 'class _HomePage {}';
 
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: 'Class name _HomePage must match the file name "home_page".',
-        correctionMessage: 'Rename the class to "HomePage".',
-        offset: 0,
-        length: source.length,
-      );
-    });
+    final path = _writeHomePage(source);
+    await assertDiagnosticsInFile(path, [
+      lint(
+        0,
+        source.length,
+        messageContainsAll: [
+          _exact('Class name _HomePage must match the file name "home_page".'),
+        ],
+        correctionContains: _exact('Rename the class to "HomePage".'),
+      ),
+    ]);
+  }
 
-    test('ignores a private Flutter State class', () async {
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        '''
+  Future<void> test_ignoresPrivateFlutterStateClass() async {
+    final path = _writeHomePage('''
 import 'package:flutter/widgets.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {}
+class _HomePageState extends State<HomePage> {}
+''');
+    await assertNoDiagnosticsInFile(path);
+  }
 
-  @override
-  State<HomePage> createState() => _HomePageState();
+  Future<void> test_ignoresUnrelatedLibAncestor() async {
+    final path = '$testPackageRootPath/fixtures/lib/home_page.dart';
+    newFile(path, 'class WrongName {}');
+
+    await assertNoDiagnosticsInFile(path);
+  }
+
+  String _writeHomePage(String source) {
+    final path = '$testPackageLibPath/home_page.dart';
+    newFile(path, source);
+    return path;
+  }
 }
 
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
-}
-''',
-        relativePath: 'lib/home_page.dart',
-      );
-
-      expect(diagnostics, isEmpty);
-    });
-
-    test('reports under the package lib directory', () async {
-      const source = 'class WrongName {}';
-      final diagnostics = await analyzeLintRule(
-        const MatchingClassAndFileName(),
-        source,
-        relativePath: 'lib/home_page.dart',
-      );
-
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: 'Class name WrongName must match the file name "home_page".',
-        correctionMessage: 'Rename the class to "HomePage".',
-        offset: 0,
-        length: source.length,
-      );
-    });
-
-    test(
-      'records the legacy false positive for an unrelated lib ancestor',
-      () async {
-        const source = 'class WrongName {}';
-        final diagnostics = await analyzeLintRule(
-          const MatchingClassAndFileName(),
-          source,
-          relativePath: 'fixtures/lib/home_page.dart',
-        );
-
-        expect(diagnostics, hasLength(1));
-        expectLintDiagnostic(
-          diagnostics.single,
-          code: _code,
-          message: 'Class name WrongName must match the file name "home_page".',
-          correctionMessage: 'Rename the class to "HomePage".',
-          offset: 0,
-          length: source.length,
-        );
-      },
-    );
-  });
-}
+RegExp _exact(String value) => RegExp('^${RegExp.escape(value)}\$');

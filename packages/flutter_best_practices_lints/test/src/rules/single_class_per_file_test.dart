@@ -1,176 +1,140 @@
+// ignore_for_file: non_constant_identifier_names
+
+// 📦 Package imports:
+import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
+import 'package:test_reflective_loader/test_reflective_loader.dart';
+
 // 🌎 Project imports:
-import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
+import 'package:flutter_best_practices_lints/src/rules/single_class_per_file.dart';
 
-// 🧪 Test imports:
-import 'package:test/test.dart';
-
-import '../lint_test_utils.dart';
-
-const _code = 'single_class_per_file';
 const _message = 'A file should contain only one public class declaration.';
 const _correction = 'Split the classes into separate files.';
 
 void main() {
-  group('SingleClassPerFile', () {
-    test('allows one public class and any number of private classes', () async {
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        '''
+  defineReflectiveSuite(() {
+    defineReflectiveTests(SingleClassPerFileTest);
+  });
+}
+
+@reflectiveTest
+class SingleClassPerFileTest extends AnalysisRuleTest {
+  @override
+  void setUp() {
+    rule = SingleClassPerFile();
+    super.setUp();
+  }
+
+  Future<void> test_allowsOnePublicClassAndPrivateClasses() async {
+    await assertNoDiagnostics('''
 class PublicClass {}
 class _PrivateClass {}
 class _AnotherPrivateClass {}
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('reports each public class after the first', () async {
-      const source = '''
+  Future<void> test_reportsEachPublicClassAfterFirst() async {
+    const source = '''
 class FirstClass {}
 class SecondClass {}
 class ThirdClass {}
 ''';
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        source,
-      );
+    const second = 'class SecondClass {}';
+    const third = 'class ThirdClass {}';
 
-      expect(diagnostics, hasLength(2));
-      for (final (index, declaration) in [
-        'class SecondClass {}',
-        'class ThirdClass {}',
-      ].indexed) {
-        expectLintDiagnostic(
-          diagnostics[index],
-          code: _code,
-          message: _message,
-          correctionMessage: _correction,
-          offset: source.indexOf(declaration),
-          length: declaration.length,
-        );
-      }
-    });
+    await assertDiagnostics(source, [
+      lint(
+        source.indexOf(second),
+        second.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact(_correction),
+      ),
+      lint(
+        source.indexOf(third),
+        third.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact(_correction),
+      ),
+    ]);
+  }
 
-    test(
-      'reports a direct relationship when neither class is abstract',
-      () async {
-        const source = '''
+  Future<void> test_reportsDirectRelationshipWhenNeitherIsAbstract() async {
+    const source = '''
 class BaseClass {}
 class ChildClass extends BaseClass {}
 ''';
-        const declaration = 'class ChildClass extends BaseClass {}';
-        final diagnostics = await analyzeLintRule(
-          const SingleClassPerFile(),
-          source,
-        );
+    const declaration = 'class ChildClass extends BaseClass {}';
 
-        expect(diagnostics, hasLength(1));
-        expectLintDiagnostic(
-          diagnostics.single,
-          code: _code,
-          message: _message,
-          correctionMessage: _correction,
-          offset: source.indexOf(declaration),
-          length: declaration.length,
-        );
-      },
-    );
+    await assertDiagnostics(source, [
+      lint(
+        source.indexOf(declaration),
+        declaration.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact(_correction),
+      ),
+    ]);
+  }
 
-    test('allows an abstract class with its direct subclass', () async {
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        '''
+  Future<void> test_allowsAbstractClassWithDirectSubclass() async {
+    await assertNoDiagnostics('''
 abstract class BaseClass {}
 class ChildClass extends BaseClass {}
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('allows an abstract class with its direct implementation', () async {
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        '''
+  Future<void> test_allowsAbstractClassWithDirectImplementation() async {
+    await assertNoDiagnostics('''
 abstract class Contract {}
 class Implementation implements Contract {}
-''',
-      );
+''');
+  }
 
-      expect(diagnostics, isEmpty);
-    });
-
-    test('reports a non-direct relationship through a private class', () async {
-      const source = '''
+  Future<void> test_reportsNonDirectRelationshipThroughPrivateClass() async {
+    const source = '''
 abstract class BaseClass {}
 class _MiddleClass extends BaseClass {}
 class ChildClass extends _MiddleClass {}
 ''';
-      const declaration = 'class ChildClass extends _MiddleClass {}';
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        source,
-      );
+    const declaration = 'class ChildClass extends _MiddleClass {}';
 
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: _message,
-        correctionMessage: _correction,
-        offset: source.indexOf(declaration),
-        length: declaration.length,
-      );
-    });
+    await assertDiagnostics(source, [
+      lint(
+        source.indexOf(declaration),
+        declaration.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact(_correction),
+      ),
+    ]);
+  }
 
-    test('reports under the package lib directory', () async {
-      const source = '''
+  Future<void> test_reportsInsidePackageLibDirectory() async {
+    const source = '''
 class FirstClass {}
 class SecondClass {}
 ''';
-      const declaration = 'class SecondClass {}';
-      final diagnostics = await analyzeLintRule(
-        const SingleClassPerFile(),
-        source,
-        relativePath: 'lib/feature/main.dart',
-      );
+    const declaration = 'class SecondClass {}';
 
-      expect(diagnostics, hasLength(1));
-      expectLintDiagnostic(
-        diagnostics.single,
-        code: _code,
-        message: _message,
-        correctionMessage: _correction,
-        offset: source.indexOf(declaration),
-        length: declaration.length,
-      );
-    });
+    await assertDiagnostics(source, [
+      lint(
+        source.indexOf(declaration),
+        declaration.length,
+        messageContainsAll: [_exact(_message)],
+        correctionContains: _exact(_correction),
+      ),
+    ]);
+  }
 
-    test(
-      'records the legacy false positive for an unrelated lib ancestor',
-      () async {
-        const source = '''
+  Future<void> test_ignoresUnrelatedLibAncestor() async {
+    final path = '$testPackageRootPath/fixtures/lib/main.dart';
+    newFile(
+      path,
+      '''
 class FirstClass {}
 class SecondClass {}
-''';
-        const declaration = 'class SecondClass {}';
-        final diagnostics = await analyzeLintRule(
-          const SingleClassPerFile(),
-          source,
-          relativePath: 'fixtures/lib/main.dart',
-        );
-
-        expect(diagnostics, hasLength(1));
-        expectLintDiagnostic(
-          diagnostics.single,
-          code: _code,
-          message: _message,
-          correctionMessage: _correction,
-          offset: source.indexOf(declaration),
-          length: declaration.length,
-        );
-      },
+''',
     );
-  });
+
+    await assertNoDiagnosticsInFile(path);
+  }
 }
+
+RegExp _exact(String value) => RegExp('^${RegExp.escape(value)}\$');

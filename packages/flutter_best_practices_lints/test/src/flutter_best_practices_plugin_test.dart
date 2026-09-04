@@ -1,36 +1,19 @@
 // 📦 Package imports:
-import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:test/test.dart';
+import 'package:analysis_server_plugin/plugin.dart';
+import 'package:flutter_best_practices_lints/main.dart' as entrypoint;
 
 // 🌎 Project imports:
 import 'package:flutter_best_practices_lints/flutter_best_practices_lints.dart';
 
+// 🧪 Test imports:
+import 'package:test/test.dart';
+
 void main() {
-  group('FlutterBestPracticesLints', () {
-    test('can be instantiated', () {
-      expect(FlutterBestPracticesPlugin(), isNotNull);
-    });
-
-    test('creates plugin with correct rules', () {
-      final plugin = createPlugin();
-      expect(plugin, isA<PluginBase>());
-
-      final rules = plugin.getLintRules(
-        // ignore: invalid_use_of_internal_member
-        const CustomLintConfigs(
-          enableAllLintRules: true,
-          verbose: true,
-          debug: true,
-          rules: <String, LintOptions>{},
-        ),
-      );
-
-      expect(rules, hasLength(5));
-      expect(rules[0], isA<SingleClassPerFile>());
-      expect(rules[1], isA<MatchingClassAndFileName>());
-      expect(rules[2], isA<PreferWidgetClassOverWidgetHelper>());
-      expect(rules[3], isA<AvoidWidgetOperatorEquals>());
-      expect(rules[4], isA<PreferMediaQueryPartialMethods>());
+  group('FlutterBestPracticesPlugin', () {
+    test('exposes the official top-level plugin', () {
+      expect(entrypoint.plugin, isA<Plugin>());
+      expect(entrypoint.plugin, isA<FlutterBestPracticesPlugin>());
+      expect(entrypoint.plugin.name, 'flutter_best_practices_lints');
     });
   });
 }
