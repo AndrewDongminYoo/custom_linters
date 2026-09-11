@@ -1,0 +1,9 @@
+{
+  "version": "0.2",
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "import": [
+    "https://raw.githubusercontent.com/AndrewDongminYoo/quality-configs/v0.8.0/configs/cspell.config.yaml"
+  ],
+  "dictionaries": ["dart", "flutter", "softwareTerms"],
+  "words": ["endtemplate"]
+}
