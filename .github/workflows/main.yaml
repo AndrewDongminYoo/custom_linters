@@ -21,14 +21,12 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@bca17593224500d894e3fc7df09937ec603e35cd # v1.21.0
 
   spell-check:
-    if: ${{ !contains(fromJSON('["dependabot[bot]", "renovate[bot]", "snyk-bot", "allcontributors[bot]"]'), github.actor) }}
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@bca17593224500d894e3fc7df09937ec603e35cd # v1.21.0
     with:
       includes: "**/*.md"
       modified_files_only: false
 
   dart-package:
-    if: ${{ !contains(fromJSON('["dependabot[bot]", "renovate[bot]", "snyk-bot", "allcontributors[bot]"]'), github.actor) }}
     runs-on: ubuntu-latest
 
     steps:
