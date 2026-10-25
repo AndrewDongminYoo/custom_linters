@@ -18,7 +18,7 @@ on:
 jobs:
   semantic_pull_request:
     if: ${{ !contains(fromJSON('["dependabot[bot]", "renovate[bot]", "snyk-bot", "allcontributors[bot]"]'), github.actor) }}
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@bca17593224500d894e3fc7df09937ec603e35cd # v1.21.0
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@bf86fc749b907c6cc60e655f7f2ef619287b1b15 # v2.0.3
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@bca17593224500d894e3fc7df09937ec603e35cd # v1.21.0
