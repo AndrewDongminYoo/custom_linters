@@ -207,16 +207,13 @@ Future<_CapturedOutput> _captureOutput(Future<String> output) async {
   try {
     return _CapturedOutput(text: await output, closed: true);
   } on Object catch (error) {
-    return _CapturedOutput(
-      text: 'OUTPUT_STREAM_ERROR: $error',
-      closed: false,
-    );
+    return _CapturedOutput(text: 'OUTPUT_STREAM_ERROR: $error', closed: false);
   }
 }
 
 Future<List<int>> _descendantPids(int parentPid) async {
   if (Platform.isWindows) {
-    return _windowsDescendantPids(parentPid);
+    return await _windowsDescendantPids(parentPid);
   }
 
   final result = await Process.run('pgrep', ['-P', '$parentPid']);
@@ -272,22 +269,17 @@ Future<List<int>> _terminateProcessTree(
     process.kill();
   }
 
-  var survivors = await _waitForProcessesToExit(
-    [process.pid, ...descendants],
-    const Duration(seconds: 10),
-  );
+  var survivors = await _waitForProcessesToExit([
+    process.pid,
+    ...descendants,
+  ], const Duration(seconds: 10));
   if (survivors.isEmpty) {
     await process.exitCode;
     return const [];
   }
 
   if (Platform.isWindows) {
-    await Process.run('taskkill', [
-      '/PID',
-      '${process.pid}',
-      '/T',
-      '/F',
-    ]);
+    await Process.run('taskkill', ['/PID', '${process.pid}', '/T', '/F']);
   } else {
     for (final processId in descendants.where(survivors.contains)) {
       _killPid(processId, ProcessSignal.sigkill);
@@ -663,11 +655,7 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
       environment: environment,
       timeout: options.timeout,
     );
-    _logResult(
-      log,
-      command: 'flutter pub get',
-      result: resolution,
-    );
+    _logResult(log, command: 'flutter pub get', result: resolution);
     if (resolution.exitCode != 0) {
       throw HarnessFailure(
         kind: ProcessFailureKind.dependencyResolution,
@@ -686,9 +674,7 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
     );
     _validateConsumerDependencies(options, consumerDependencies);
     if (_packageNames(options.plugin).contains('go_router_linter')) {
-      log(
-        'HARNESS_DEPENDENCY: go_router=${consumerDependencies['go_router']}',
-      );
+      log('HARNESS_DEPENDENCY: go_router=${consumerDependencies['go_router']}');
     }
     log(
       'HARNESS_HOST: os=${Platform.operatingSystem} '
@@ -726,13 +712,9 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
                 'scenario=${scenario.name}',
           );
 
-          final records =
-              _parseAnalyzerResult(
-                    analyzer,
-                    result,
-                  )
-                  .map((record) => _relativeRecord(record, consumerRoot.path))
-                  .toList();
+          final records = _parseAnalyzerResult(analyzer, result)
+              .map((record) => _relativeRecord(record, consumerRoot.path))
+              .toList();
           var expected = fixture.expectedDiagnostics;
           if (options.negativeControl && analyzerRuns == 1) {
             expected = [
@@ -899,10 +881,7 @@ bool _looksLikePluginLoadFailure(String output) {
           lower.contains('plugin error'));
 }
 
-void _assertAnalyzerExit(
-  ProcessRunResult result,
-  ConsumerScenario scenario,
-) {
+void _assertAnalyzerExit(ProcessRunResult result, ConsumerScenario scenario) {
   final shouldSucceed =
       scenario == ConsumerScenario.compliant ||
       scenario == ConsumerScenario.disabledRule;
@@ -937,10 +916,7 @@ DiagnosticRecord _relativeRecord(DiagnosticRecord record, String consumerPath) {
       path = normalized.substring(consumerPath.length + 1);
     }
   }
-  return _copyDiagnostic(
-    record,
-    path: path.replaceAll(r'\', '/'),
-  );
+  return _copyDiagnostic(record, path: path.replaceAll(r'\', '/'));
 }
 
 bool _isAbsolutePath(String path) {
@@ -1660,9 +1636,7 @@ HarnessOptions parseHarnessOptions(List<String> arguments) {
         }
         packageVersions[package] = version;
       case '--diagnostic':
-        requestedDiagnostics.add(
-          _nextValue(arguments, ++index, argument),
-        );
+        requestedDiagnostics.add(_nextValue(arguments, ++index, argument));
       case '--negative-control':
         negativeControl = true;
       default:
@@ -1766,23 +1740,15 @@ int _positiveInt(String value, String option) {
 }
 
 Set<String> _packageNames(PluginSelector selector) => switch (selector) {
-  PluginSelector.flutterBestPracticesLints => {
-    'flutter_best_practices_lints',
-  },
+  PluginSelector.flutterBestPracticesLints => {'flutter_best_practices_lints'},
   PluginSelector.goRouterLinter => {'go_router_linter'},
-  PluginSelector.all => {
-    'flutter_best_practices_lints',
-    'go_router_linter',
-  },
+  PluginSelector.all => {'flutter_best_practices_lints', 'go_router_linter'},
 };
 
 Set<String> _diagnosticCodes(PluginSelector selector) => switch (selector) {
   PluginSelector.flutterBestPracticesLints => flutterDiagnosticCodes,
   PluginSelector.goRouterLinter => goRouterDiagnosticCodes,
-  PluginSelector.all => {
-    ...flutterDiagnosticCodes,
-    ...goRouterDiagnosticCodes,
-  },
+  PluginSelector.all => {...flutterDiagnosticCodes, ...goRouterDiagnosticCodes},
 };
 
 String _packageForDiagnostic(String code) {

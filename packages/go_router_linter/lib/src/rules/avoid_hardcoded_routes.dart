@@ -73,9 +73,12 @@ class _Visitor extends SimpleAstVisitor<void> {
   void visitInstanceCreationExpression(InstanceCreationExpression node) {
     final element = node.staticType?.element;
     if (element is! ClassElement ||
-        !{'GoRoute', 'GoRouter', 'ShellRoute', 'StatefulShellRoute'}.contains(
-          element.name,
-        )) {
+        !{
+          'GoRoute',
+          'GoRouter',
+          'ShellRoute',
+          'StatefulShellRoute',
+        }.contains(element.name)) {
       return;
     }
 

@@ -12,12 +12,7 @@ extension RouteMethodExtension on String {
 
   /// Whether this method accepts a location string as its first argument.
   bool get isLocationRouteMethod {
-    const routeMethods = {
-      'go',
-      'push',
-      'pushReplacement',
-      'replace',
-    };
+    const routeMethods = {'go', 'push', 'pushReplacement', 'replace'};
     return routeMethods.contains(this);
   }
 
@@ -35,10 +30,7 @@ extension RouteMethodExtension on String {
 
   /// Whether this method is available on the GoRouterHelper extension.
   bool get isRouterHelperMethod {
-    const routeMethods = {
-      'canPop',
-      'pop',
-    };
+    const routeMethods = {'canPop', 'pop'};
     return routeMethods.contains(this);
   }
 }

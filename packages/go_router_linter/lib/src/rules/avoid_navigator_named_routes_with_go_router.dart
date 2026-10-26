@@ -55,10 +55,7 @@ class AvoidNavigatorNamedRoutesWithGoRouter extends AnalysisRule {
 
     late final Pubspec pubspec;
     try {
-      pubspec = Pubspec.parse(
-        contents,
-        sourceUrl: Uri.file(pubspecFile.path),
-      );
+      pubspec = Pubspec.parse(contents, sourceUrl: Uri.file(pubspecFile.path));
     } on Object {
       return false;
     }

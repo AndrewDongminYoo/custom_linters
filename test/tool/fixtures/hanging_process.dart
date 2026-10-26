@@ -10,10 +10,10 @@ Future<void> main(List<String> arguments) async {
     await Future<void>.delayed(const Duration(days: 1));
   }
 
-  final child = await Process.start(
-    Platform.resolvedExecutable,
-    [Platform.script.toFilePath(), '--child'],
-  );
+  final child = await Process.start(Platform.resolvedExecutable, [
+    Platform.script.toFilePath(),
+    '--child',
+  ]);
   stdout
     ..writeln('ROOT_PID:$pid')
     ..writeln('CHILD_PID:${child.pid}');

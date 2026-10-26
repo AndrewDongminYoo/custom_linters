@@ -125,13 +125,10 @@ class SecondClass {}
 
   Future<void> test_ignoresUnrelatedLibAncestor() async {
     final path = '$testPackageRootPath/fixtures/lib/main.dart';
-    newFile(
-      path,
-      '''
+    newFile(path, '''
 class FirstClass {}
 class SecondClass {}
-''',
-    );
+''');
 
     await assertNoDiagnosticsInFile(path);
   }

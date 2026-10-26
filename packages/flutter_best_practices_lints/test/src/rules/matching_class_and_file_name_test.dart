@@ -61,9 +61,7 @@ class Helper {}
         source.indexOf(helper),
         helper.length,
         messageContainsAll: [
-          _exact(
-            'Class name Helper does not match the file name "home_page".',
-          ),
+          _exact('Class name Helper does not match the file name "home_page".'),
         ],
         correctionContains: _exact(
           'Either rename it to "HomePage" or separate into a new file.',
@@ -104,9 +102,7 @@ class SecondClass {}
         source.indexOf(first),
         first.length,
         messageContainsAll: [
-          _exact(
-            'Class name FirstClass must match the file name "home_page".',
-          ),
+          _exact('Class name FirstClass must match the file name "home_page".'),
         ],
         correctionContains: _exact('Rename the class to "HomePage".'),
       ),

@@ -542,15 +542,12 @@ warning • Windows message. • C:\work\consumer\lib\main.dart:12:7 • some_pl
         expect(() => parser(''), throwsFormatException);
       }
       expect(
-        () => parseDartAnalyzeOutput(
-          'info - lib/main.dart:4:3 - Missing code\n',
-        ),
+        () =>
+            parseDartAnalyzeOutput('info - lib/main.dart:4:3 - Missing code\n'),
         throwsFormatException,
       );
       expect(
-        () => parseFlutterAnalyzeOutput(
-          'info • Missing location and code\n',
-        ),
+        () => parseFlutterAnalyzeOutput('info • Missing location and code\n'),
         throwsFormatException,
       );
     });
@@ -568,9 +565,8 @@ info • Exact message. • lib/main.dart:4:3 • raw_code
 ''';
 
       expect(
-        () => parseDartAnalyzeOutput(
-          dartOutput.replaceFirst(' - raw_code', ''),
-        ),
+        () =>
+            parseDartAnalyzeOutput(dartOutput.replaceFirst(' - raw_code', '')),
         throwsFormatException,
       );
       expect(parseDartAnalyzeOutput(dartOutput), hasLength(1));
@@ -592,9 +588,7 @@ info • Exact message. • lib/main.dart:4:3 • raw_code
       final workingDirectory = Directory(
         '${temporaryRoot.path}${Platform.pathSeparator}working',
       )..createSync();
-      final fixture = File(
-        'test/tool/fixtures/hanging_process.dart',
-      ).absolute;
+      final fixture = File('test/tool/fixtures/hanging_process.dart').absolute;
 
       late HarnessProcessFailure failure;
       try {
