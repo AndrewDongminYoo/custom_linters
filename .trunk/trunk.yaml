@@ -25,16 +25,17 @@ lint:
     - grype
     - dart
   enabled:
-    - pinact@4.1.1!: { commands: [lint, upgrade] }
-    - osv-scanner@2.7.0
-    - shellcheck@0.11.0
-    - shfmt@3.14.1
     - actionlint@1.7.12
     - checkov@3.3.30
     - git-diff-check
     - markdownlint@0.50.0
+    - osv-scanner@2.7.0
     - oxipng@10.2.1
+    - pinact@4.1.1!:
+        commands: [lint, upgrade]
     - prettier@3.9.10
+    - shellcheck@0.11.0
+    - shfmt@3.14.1
     - svgo@4.1.0
     - trufflehog@3.99.7
     - yamllint@1.38.0
