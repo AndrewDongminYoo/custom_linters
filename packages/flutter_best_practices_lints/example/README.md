@@ -5,7 +5,7 @@ It is an inner package in this repository's pub workspace, so its committed `ana
 
 ## Requirements
 
-- Dart `>=3.11.0 <4.0.0`.
+- Dart `>=3.13.7 <4.0.0`.
 - A compatible stable Flutter SDK.
 
 ## Run the App
