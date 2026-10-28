@@ -1,50 +1,27 @@
 # Custom Lint Tests and Commits
 
-This guide documents the test helper pattern used by the custom lint packages
-and the commit granularity expected in this monorepo.
+This guide documents the current official analyzer rule tests and the commit granularity expected in this monorepo.
 
-## Temporary File Rule Tests
+## Analyzer Rule Tests
 
-Use `test/src/lint_test_utils.dart` for rule behavior tests instead of wiring a
-full example app for every case.
+Rule tests extend `AnalysisRuleTest` from `analyzer_testing` and use reflective suites from `test_reflective_loader`.
+Set the rule in `setUp()` before calling `super.setUp()`, then use `assertDiagnostics()` and `assertNoDiagnostics()` with inline Dart source.
+Diagnostic expectations can check offsets, complete messages and correction text.
 
-The shared `analyzeLintRule` helper should:
+See `packages/go_router_linter/test/src/rules/avoid_navigator_named_routes_with_go_router_test.dart` for dependency-sensitive rules and `packages/flutter_best_practices_lints/test/src/rules/avoid_widget_operator_equals_test.dart` for synthetic Flutter types.
 
-1. Create a temporary directory under `test/`.
-2. Write the inline Dart source to `main.dart`.
-3. Resolve the file with `AnalysisContextCollection`.
-4. Run the lint with `DartLintRule.testRun`.
-5. Delete the temporary directory in a `finally` block.
+## Test and Consumer Boundaries
 
-This keeps rule tests small while still exercising resolved analyzer behavior.
-
-## Flutter Test SDK Handling
-
-Do not call analyzer's `resolveFile` directly from these helpers.
-
-Under `flutter test`, `Platform.resolvedExecutable` can point at Flutter's
-engine Dart executable. Analyzer may then infer an invalid SDK path such as
-`bin/cache/artifacts/engine`, which fails in CI with missing
-`libraries.dart` or `engine/version` files.
-
-Instead, create an `AnalysisContextCollection` with an explicit SDK path:
-
-1. Prefer `DART_HOME` when present in CI.
-2. Fall back to `FLUTTER_ROOT/bin/cache/dart-sdk`.
-3. Fall back to `Platform.resolvedExecutable` only if it points to a valid SDK.
-
-Also reuse the `AnalysisContextCollection` per test isolate. Creating a new
-analysis context for every inline source can exceed the default 30-second test
-timeout when `melos run test:ci` runs both packages in parallel.
+Run package tests through `dart run melos run test:ci` from the workspace root.
+The removed temporary-file helper and its SDK-discovery workaround do not apply to the current official test architecture.
+Package rule tests do not establish that the analyzer host discovers the plugin.
+Run `dart test test/tool/analyzer_plugin_harness_test.dart` and the standalone consumer command from `CLAUDE.md` for that boundary.
+The nested workspace examples intentionally omit plugin configuration.
 
 ## Pubspec-Dependent Rules
 
-For rules that inspect package dependencies, pass a fake `Pubspec` into
-`analyzeLintRule`.
-
-Example: `go_router_linter` uses this for
-`avoid_navigator_named_routes_with_go_router`, so tests can verify that
-`Navigator.pushNamed` is reported only when `go_router` is present.
+For rules that inspect package dependencies, create the test package's manifest through the analyzer test resource provider.
+The `_writePubspec` helper in `avoid_navigator_named_routes_with_go_router_test.dart` creates that fixture, so tests can verify dependency, development-dependency and absent-dependency cases.
 
 ## Package-Level Commit Granularity
 
