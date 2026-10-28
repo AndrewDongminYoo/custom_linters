@@ -23,6 +23,7 @@ jobs:
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@bf86fc749b907c6cc60e655f7f2ef619287b1b15 # v2.0.3
     with:
+      config: cspell.json
       includes: "**/*.md"
       modified_files_only: false
 
@@ -33,24 +34,25 @@ jobs:
       - name: 📚 Git Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: 🎯 Setup Dart
-        uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+      - name: Test offline secret reader
+        run: python3 -B .trunk/configs/tests/test_trufflehog_to_sarif.py
 
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
+          flutter-version: 3.47.8
           channel: stable
           cache: true
 
       - name: 📦 Install Dependencies
         run: |
-          dart pub get
+          flutter pub get --enforce-lockfile
           dart run melos bootstrap
 
       - name: ✨ Check Formatting
         run: |
           dart run melos run format:ci
-          dart format tool test/tool --set-exit-if-changed
+          dart format --output=none tool test/tool --set-exit-if-changed
 
       - name: 🕵️ Analyze
         run: |
@@ -79,8 +81,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
         flutter-version:
-          - 3.44.0
-          - 3.47.2
+          - 3.47.8
         analyzer:
           - dart
           - flutter
@@ -98,13 +99,13 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
-          dart pub get
+          flutter pub get --enforce-lockfile
           dart run melos bootstrap
 
       - name: ✨ Check Formatting
         run: |
           dart run melos run format:ci
-          dart format tool test/tool --set-exit-if-changed
+          dart format --output=none tool test/tool --set-exit-if-changed
 
       - name: 🕵️ Analyze
         run: |

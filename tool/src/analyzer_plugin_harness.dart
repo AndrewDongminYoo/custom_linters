@@ -363,9 +363,8 @@ final class ConsumerFixture {
   Future<void> write() async {
     await root.create(recursive: true);
     await File(_joinPath(root.path, 'pubspec.yaml')).writeAsString(pubspecYaml);
-    await File(
-      _joinPath(root.path, 'analysis_options.yaml'),
-    ).writeAsString(analysisOptionsYaml);
+    await File(_joinPath(root.path, 'analysis_options.yaml'))
+        .writeAsString(analysisOptionsYaml);
     for (final entry in files.entries) {
       final file = File(_joinPath(root.path, entry.key));
       await file.parent.create(recursive: true);
@@ -1420,8 +1419,7 @@ class IgnoredWrongName {}
 class VisibleWrongName {}
 ''',
     'class VisibleWrongName {}',
-    problemMessage:
-        'Class name VisibleWrongName must match the file name "matching_class_and_file_name".',
+    problemMessage: 'Class name VisibleWrongName must match the file name "matching_class_and_file_name".',
     correctionMessage: 'Rename the class to "MatchingClassAndFileName".',
   ),
   'prefer_widget_class_over_widget_helper' => const _SourceCase('''
@@ -1570,8 +1568,7 @@ const _correctionMessages = <String, String>{
       'Use context.go instead of GoRouter.of(context).go.',
   'avoid_hardcoded_routes':
       'Use a constant, enum, or a variable instead of a hardcoded string.',
-  'avoid_navigator_named_routes_with_go_router':
-      'Use go_router navigation APIs so routes stay declarative and deep-linkable.',
+  'avoid_navigator_named_routes_with_go_router': 'Use go_router navigation APIs so routes stay declarative and deep-linkable.',
   'missing_go_router_error_handler':
       'Add an `errorBuilder` or `errorPageBuilder` argument.',
 };
