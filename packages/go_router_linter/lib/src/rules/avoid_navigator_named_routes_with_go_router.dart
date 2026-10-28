@@ -22,8 +22,7 @@ class AvoidNavigatorNamedRoutesWithGoRouter extends AnalysisRule {
   static const _code = LintCode(
     'avoid_navigator_named_routes_with_go_router',
     'Avoid Navigator named routes in projects that use go_router.',
-    correctionMessage:
-        'Use go_router navigation APIs so routes stay declarative and deep-linkable.',
+    correctionMessage: 'Use go_router navigation APIs so routes stay declarative and deep-linkable.',
   );
 
   @override
