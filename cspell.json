@@ -5,5 +5,5 @@
     "https://raw.githubusercontent.com/AndrewDongminYoo/quality-configs/v0.8.0/configs/cspell.config.yaml"
   ],
   "dictionaries": ["dart", "flutter", "softwareTerms"],
-  "words": ["endtemplate", "SARIF"]
+  "words": ["endtemplate", "pgrep", "SARIF", "taskkill", "tasklist"]
 }
