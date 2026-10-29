@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** Replaced the `custom_lint` host with Dart's official `analysis_server_plugin` host.
 - **Breaking:** Replaced the legacy `analyzer.plugins` and `custom_lint.rules` configuration with a top-level `plugins:` block.
 - **Breaking:** Diagnostics now require explicit activation under the plugin's `diagnostics:` map.
-- **Breaking:** Raised the minimum Dart SDK to `3.11.0` and moved to `analyzer >=14.3.0 <15.0.0` with `analysis_server_plugin >=0.3.22 <0.4.0`.
+- **Breaking:** Raised the minimum Dart SDK to `3.13.7` and moved to `analyzer ^14.6.0` with `analysis_server_plugin ^0.3.25`.
 - **Breaking:** Removed the legacy `createPlugin()` entrypoint and `LintCodeCopyWithExtension` API.
 - **Breaking:** Changed the public `FlutterBestPracticesPlugin` superclass and member surface from legacy `PluginBase` and `getLintRules()` to official `Plugin` and `register(PluginRegistry)`.
 - Normal plugin consumers do not instantiate `FlutterBestPracticesPlugin` or call its registration API directly.
@@ -22,9 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Compatibility evidence
 
-The only locally tested Flutter stable release is `3.47.2`, so it is both the oldest tested and current tested release.
+Current local Dart analyzer verification uses Flutter `3.47.8` with Dart `3.13.7` and resolves `analysis_server_plugin 0.3.25`, `analyzer 14.6.0`, and `analyzer_plugin 0.14.19`.
 The minimum supported Flutter stable release is not established.
-The tested dependency family resolves `analysis_server_plugin 0.3.22`, `analyzer 14.3.0`, and `analyzer_plugin 0.14.16`.
+The historical migration matrix below predates the current SDK constraint and dependency graph.
 
 | Operating system   | Flutter stable | Bundled Dart | `dart analyze` | `flutter analyze` |
 | ------------------ | -------------- | ------------ | -------------- | ----------------- |
@@ -35,8 +35,9 @@ The tested dependency family resolves `analysis_server_plugin 0.3.22`, `analyzer
 | Windows            | 3.47.2         | Not recorded | Not run        | Not run           |
 | Windows            | 3.44.0         | Not recorded | Not run        | Not run           |
 
-Publication remains blocked while Flutter issue [#187999](https://github.com/flutter/flutter/issues/187999) reproduces and while the remaining operating-system and SDK lanes are unverified.
-The GitHub Actions matrix has been authored but not dispatched.
+Publication remains blocked until the required Flutter analyzer and other operating-system lanes are verified.
+The historical Flutter `3.47.2` check encountered [#187999](https://github.com/flutter/flutter/issues/187999); the current Flutter analyzer lane has not been rerun.
+The current manual GitHub Actions matrix targets Flutter `3.47.8` and has not been dispatched for this refresh.
 Consumers that need the legacy host must stay on `0.5.x`.
 
 ## 0.5.0 - 2026-05-23

@@ -5,22 +5,23 @@ Version `0.5.0` migrates the package from `custom_lint` to Dart's official analy
 
 ## Requirements
 
-- Dart `>=3.11.0 <4.0.0`.
+- Dart `>=3.13.7 <4.0.0`.
 - A stable Flutter SDK that includes a compatible Dart SDK.
 - A top-level `analysis_options.yaml` in the consuming package or pub workspace.
 
-The only locally tested Flutter stable release is `3.47.2`, so it is both the oldest tested and current tested release.
+Current local Dart analyzer verification uses Flutter `3.47.8` with Dart `3.13.7` and resolves `analysis_server_plugin 0.3.25`, `analyzer 14.6.0`, and `analyzer_plugin 0.14.19`.
 The minimum supported Flutter stable release is not established until the complete matrix passes.
-The tested dependency family resolves `analysis_server_plugin 0.3.22`, `analyzer 14.3.0`, and `analyzer_plugin 0.14.16`.
 Beta, dev, and master Flutter channels are unsupported.
 
 The standalone migration consumer pins `go_router 17.5.0`.
 This evidence does not imply compatibility with a wider `go_router` range.
-The `0.5.0` release candidate is unpublished while Flutter issue [#187999](https://github.com/flutter/flutter/issues/187999) reproduces in the required `flutter analyze` lane.
+The `0.5.0` release candidate remains unpublished pending the required `flutter analyze` lane.
+The historical migration check encountered Flutter issue [#187999](https://github.com/flutter/flutter/issues/187999); that lane has not been rerun with the current SDK.
 
 ## Compatibility evidence
 
-The release matrix below separates local evidence from lanes that have not run.
+The historical migration matrix below predates the current Dart SDK constraint.
+It preserves earlier evidence and does not establish compatibility with the current dependency graph.
 `Blocked #187999` means that the command completed without reporting the expected plugin diagnostics.
 
 | Operating system   | Flutter stable | Bundled Dart | Resolved official family                                                      | `go_router`  | `dart analyze` | `flutter analyze` |
@@ -32,8 +33,8 @@ The release matrix below separates local evidence from lanes that have not run.
 | Windows            | 3.47.2         | Not recorded | Not resolved                                                                  | Not resolved | Not run        | Not run           |
 | Windows            | 3.44.0         | Not recorded | Not resolved                                                                  | Not resolved | Not run        | Not run           |
 
-The GitHub Actions matrix defines the unverified lanes, but it has not been dispatched.
-No row other than the macOS `dart analyze` row is release evidence.
+The current manual GitHub Actions matrix targets Flutter `3.47.8` on macOS, Linux and Windows with both analyzer commands.
+Those manual lanes have not been dispatched for this refresh, and local Dart analyzer success does not establish Flutter analyzer compatibility.
 
 ## Installation
 

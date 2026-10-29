@@ -13,10 +13,29 @@ plugins:
 runtimes:
   enabled:
     - go@1.21.0
-    - node@22.16.0
+    - node@22.23.4
     - python@3.14.4
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
+  definitions:
+    - name: cspell
+      files: [markdown]
+      commands:
+        - name: lint
+          run: cspell --config cspell.json --no-progress --no-summary --show-suggestions --no-cache ${target}
+    - name: pinact
+      commands:
+        - name: upgrade
+          enabled: true
+    - name: trufflehog
+      commands:
+        - name: lint
+          run: trufflehog filesystem --json --fail --no-verification --no-update ${target}
+          direct_configs:
+            - .trunk/configs/trufflehog_to_sarif.py
+          parser:
+            runtime: python
+            run: python3 .trunk/configs/trufflehog_to_sarif.py
   disabled:
     # trunk's sandboxed dart subprocess strips PUB_CACHE, so the analyzer
     # plugin falls back to the root-owned default ~/.pub-cache and fails
@@ -26,7 +45,8 @@ lint:
     - dart
   enabled:
     - actionlint@1.7.12
-    - checkov@3.3.30
+    - checkov@3.4.0
+    - cspell@10.4.0
     - git-diff-check
     - markdownlint@0.50.0
     - osv-scanner@2.7.0

@@ -1,5 +1,9 @@
 # Lint Package Modernization Plan
 
+Historical plan for the legacy `custom_lint` architecture.
+Its host APIs and default-enabled rule assumptions were superseded by the [official plugin migration](2026-09-03-analysis-server-plugin-migration.md).
+Use [CLAUDE.md](../../CLAUDE.md) and the [current test guide](../guides/custom-lint-tests-and-commits.md) for active development commands and test APIs.
+
 ## Summary
 
 Update both packages with small, default-enabled rules that follow current official Flutter/go_router guidance without duplicating `flutter_lints`. Current baseline tests pass with `dart test` in both packages.

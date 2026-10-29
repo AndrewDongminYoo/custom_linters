@@ -13,8 +13,8 @@ Currently, this repository includes:
   - [flutter_best_practices_lints](./packages/flutter_best_practices_lints): Contains the rules, tests, and example app for enforcing best practices in Flutter projects.
 - **`analysis_options.yaml`**
   - Root-level lint and analyzer settings for shared rules across packages.
-- **`melos.yaml`**
-  - Configuration file for managing multiple packages within this monorepo.
+- **`pubspec.yaml`**
+  - Declares the pub workspace and Melos scripts for managing packages within this monorepo.
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ Currently, this repository includes:
 2. **Bootstrap the workspace**:
 
    ```bash
-   dart pub get
+   flutter pub get --enforce-lockfile
    dart run melos bootstrap
    ```
 
@@ -46,7 +46,7 @@ Currently, this repository includes:
      ```
 
 4. **Pub commands**:
-   - Get dependencies: `dart pub get`
+   - Get dependencies from the workspace root: `flutter pub get --enforce-lockfile`
    - Run tests: `dart test`
    - Analyze code: `dart analyze`
 
@@ -59,6 +59,18 @@ Currently, this repository includes:
 
 Each package README documents its top-level official `plugins:` configuration.
 The nested example packages intentionally do not enable plugins because they are members of this pub workspace.
+
+The workspace requires Dart `^3.13.7` and CI uses Flutter `3.47.8`, which includes Dart `3.13.7`.
+Use the standalone consumer harness after changes to plugin dependencies or registration:
+
+```bash
+dart test test/tool/analyzer_plugin_harness_test.dart
+dart run tool/verify_analyzer_plugins.dart --plugin all --source local --analyzer dart --repeat 3
+```
+
+The harness checks exact diagnostics in disposable consumers outside the workspace, including violating, compliant, disabled-rule and qualified-ignore scenarios.
+Run `trunk check --all --no-fix --jobs=2` for the full quality scan.
+Local CSpell and CI both read `cspell.json` for Markdown files.
 
 ## Contributing
 
