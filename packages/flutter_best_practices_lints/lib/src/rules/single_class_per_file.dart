@@ -17,7 +17,7 @@ import 'package:flutter_best_practices_lints/src/extensions/class_declaration_ex
 /// {@endtemplate}
 class SingleClassPerFile extends AnalysisRule {
   /// {@macro single_class_per_file}
-  SingleClassPerFile()
+  new()
     : super(
         name: 'single_class_per_file',
         description: 'Enforces one public class declaration per file.',
@@ -44,7 +44,7 @@ class SingleClassPerFile extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final SingleClassPerFile rule;
 

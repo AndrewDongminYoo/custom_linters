@@ -21,7 +21,7 @@ import 'package:flutter_best_practices_lints/src/extensions/pascal_case_extensio
 /// {@endtemplate}
 class MatchingClassAndFileName extends AnalysisRule {
   /// {@macro matching_class_and_file_name}
-  MatchingClassAndFileName()
+  new()
     : super(
         name: 'matching_class_and_file_name',
         description: 'Matches the primary class name to its file name.',
@@ -48,7 +48,7 @@ class MatchingClassAndFileName extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule, this.context);
+  new(this.rule, this.context);
 
   final MatchingClassAndFileName rule;
   final RuleContext context;

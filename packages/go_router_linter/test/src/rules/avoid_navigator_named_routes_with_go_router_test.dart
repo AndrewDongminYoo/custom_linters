@@ -289,7 +289,7 @@ dependencies:
 }
 
 final class _OwningPackageFixtures {
-  const _OwningPackageFixtures({
+  const new({
     required this.withDependencyPath,
     required this.withoutDependencyPath,
     required this.diagnosticOffset,

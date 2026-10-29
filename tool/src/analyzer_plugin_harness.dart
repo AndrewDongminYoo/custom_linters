@@ -37,7 +37,7 @@ enum ProcessFailureKind {
 enum ConsumerScenario { violating, compliant, disabledRule, qualifiedIgnore }
 
 final class HarnessOptions {
-  const HarnessOptions({
+  const new({
     required this.plugin,
     required this.source,
     required this.analyzer,
@@ -59,17 +59,14 @@ final class HarnessOptions {
 }
 
 final class HarnessSummary {
-  const HarnessSummary({
-    required this.analyzerRuns,
-    required this.resolvedVersions,
-  });
+  const new({required this.analyzerRuns, required this.resolvedVersions});
 
   final int analyzerRuns;
   final Map<String, String> resolvedVersions;
 }
 
 final class DiagnosticRecord {
-  const DiagnosticRecord({
+  const new({
     required this.code,
     required this.severity,
     required this.message,
@@ -87,7 +84,7 @@ final class DiagnosticRecord {
 }
 
 final class ProcessRunResult {
-  const ProcessRunResult({
+  const new({
     required this.exitCode,
     required this.stdout,
     required this.stderr,
@@ -101,7 +98,7 @@ final class ProcessRunResult {
 }
 
 final class HarnessFailure implements Exception {
-  const HarnessFailure({
+  const new({
     required this.kind,
     required this.message,
     this.exitCode,
@@ -120,7 +117,7 @@ final class HarnessFailure implements Exception {
 }
 
 final class HarnessProcessFailure implements Exception {
-  const HarnessProcessFailure({
+  const new({
     required this.kind,
     required this.message,
     required this.stdout,
@@ -143,7 +140,7 @@ final class HarnessProcessFailure implements Exception {
 }
 
 final class AnalyzerProcessRunner {
-  const AnalyzerProcessRunner();
+  const new();
 
   Future<ProcessRunResult> run({
     required String executable,
@@ -197,7 +194,7 @@ final class AnalyzerProcessRunner {
 }
 
 final class _CapturedOutput {
-  const _CapturedOutput({required this.text, required this.closed});
+  const new({required this.text, required this.closed});
 
   final String text;
   final bool closed;
@@ -346,7 +343,7 @@ Future<bool> isProcessRunning(int processId) async {
 }
 
 final class ConsumerFixture {
-  const ConsumerFixture({
+  const new({
     required this.root,
     required this.pubspecYaml,
     required this.analysisOptionsYaml,
@@ -790,7 +787,7 @@ Future<void> _replaceFixture(ConsumerFixture fixture) async {
 }
 
 final class _AnalyzerCommand {
-  const _AnalyzerCommand({
+  const new({
     required this.executable,
     required this.arguments,
     required this.display,
@@ -1214,7 +1211,7 @@ int _indexOfOccurrence(String source, String needle, int occurrence) {
 }
 
 final class _SourceCase {
-  const _SourceCase(
+  const new(
     this.source,
     this.diagnosticNeedle, {
     this.needleOccurrence = 0,

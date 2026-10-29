@@ -15,7 +15,7 @@ import 'package:go_router_linter/src/extensions/route_methods_extension.dart';
 /// {@endtemplate}
 class UseContextDirectlyForGoRouter extends AnalysisRule {
   /// {@macro use_context_directly_for_go_router}
-  UseContextDirectlyForGoRouter()
+  new()
     : super(
         name: 'use_context_directly_for_go_router',
         description: 'Prefers BuildContext go_router helpers.',
@@ -40,7 +40,7 @@ class UseContextDirectlyForGoRouter extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final UseContextDirectlyForGoRouter rule;
 

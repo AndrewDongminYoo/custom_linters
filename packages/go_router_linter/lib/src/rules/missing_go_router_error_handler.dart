@@ -13,7 +13,7 @@ import 'package:analyzer/error/error.dart';
 /// {@endtemplate}
 class MissingGoRouterErrorHandler extends AnalysisRule {
   /// {@macro missing_go_router_error_handler}
-  MissingGoRouterErrorHandler()
+  new()
     : super(
         name: 'missing_go_router_error_handler',
         description: 'Requires an error handler for each GoRouter.',
@@ -38,7 +38,7 @@ class MissingGoRouterErrorHandler extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final MissingGoRouterErrorHandler rule;
 

@@ -15,7 +15,7 @@ import 'package:go_router_linter/src/extensions/route_methods_extension.dart';
 /// {@endtemplate}
 class AvoidHardcodedRoutes extends AnalysisRule {
   /// {@macro avoid_hardcoded_routes}
-  AvoidHardcodedRoutes()
+  new()
     : super(
         name: 'avoid_hardcoded_routes',
         description: 'Avoids hardcoded route paths and names.',
@@ -44,7 +44,7 @@ class AvoidHardcodedRoutes extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final AvoidHardcodedRoutes rule;
 
@@ -125,7 +125,7 @@ class _Visitor extends SimpleAstVisitor<void> {
 }
 
 class _RedirectStringVisitor extends RecursiveAstVisitor<void> {
-  _RedirectStringVisitor(this.rule);
+  new(this.rule);
 
   final AvoidHardcodedRoutes rule;
 

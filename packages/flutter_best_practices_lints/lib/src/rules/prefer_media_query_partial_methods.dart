@@ -16,7 +16,7 @@ import 'package:analyzer/error/error.dart';
 /// {@endtemplate}
 class PreferMediaQueryPartialMethods extends AnalysisRule {
   /// {@macro prefer_media_query_partial_methods}
-  PreferMediaQueryPartialMethods()
+  new()
     : super(
         name: 'prefer_media_query_partial_methods',
         description: 'Prefers specific MediaQuery accessors.',
@@ -60,7 +60,7 @@ class PreferMediaQueryPartialMethods extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final PreferMediaQueryPartialMethods rule;
 

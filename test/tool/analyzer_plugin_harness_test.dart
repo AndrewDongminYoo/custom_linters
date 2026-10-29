@@ -1,11 +1,16 @@
 // 🐦 Dart imports:
+
+// 🎯 Dart imports:
 import 'dart:io';
 
-// 🧪 Test imports:
+// 📦 Package imports:
 import 'package:test/test.dart';
 
 // 🌎 Project imports:
 import '../../tool/src/analyzer_plugin_harness.dart';
+
+// 🧪 Test imports:
+
 
 void main() {
   group('parseHarnessOptions', () {

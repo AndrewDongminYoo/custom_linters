@@ -12,7 +12,7 @@ import 'package:analyzer/error/error.dart';
 /// {@endtemplate}
 class MissingGoRouteNameProperty extends AnalysisRule {
   /// {@macro missing_go_route_name_property}
-  MissingGoRouteNameProperty()
+  new()
     : super(
         name: 'missing_go_route_name_property',
         description: 'Requires a name for each GoRoute definition.',
@@ -37,7 +37,7 @@ class MissingGoRouteNameProperty extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final MissingGoRouteNameProperty rule;
 

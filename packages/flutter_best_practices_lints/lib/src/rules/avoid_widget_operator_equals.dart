@@ -11,7 +11,7 @@ import 'package:analyzer/error/error.dart';
 /// {@endtemplate}
 class AvoidWidgetOperatorEquals extends AnalysisRule {
   /// {@macro avoid_widget_operator_equals}
-  AvoidWidgetOperatorEquals()
+  new()
     : super(
         name: 'avoid_widget_operator_equals',
         description: 'Avoids equality overrides on Flutter widget classes.',
@@ -37,7 +37,7 @@ class AvoidWidgetOperatorEquals extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final AvoidWidgetOperatorEquals rule;
 

@@ -11,7 +11,7 @@ import 'package:analyzer/error/error.dart';
 /// {@endtemplate}
 class PreferWidgetClassOverWidgetHelper extends AnalysisRule {
   /// {@macro prefer_widget_class_over_widget_helper}
-  PreferWidgetClassOverWidgetHelper()
+  new()
     : super(
         name: 'prefer_widget_class_over_widget_helper',
         description: 'Prefers widget classes over private Widget helpers.',
@@ -40,7 +40,7 @@ class PreferWidgetClassOverWidgetHelper extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final PreferWidgetClassOverWidgetHelper rule;
 

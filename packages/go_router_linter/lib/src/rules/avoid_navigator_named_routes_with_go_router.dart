@@ -13,7 +13,7 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 /// {@endtemplate}
 class AvoidNavigatorNamedRoutesWithGoRouter extends AnalysisRule {
   /// {@macro avoid_navigator_named_routes_with_go_router}
-  AvoidNavigatorNamedRoutesWithGoRouter()
+  new()
     : super(
         name: 'avoid_navigator_named_routes_with_go_router',
         description: 'Avoids Navigator named routes when go_router is used.',
@@ -65,7 +65,7 @@ class AvoidNavigatorNamedRoutesWithGoRouter extends AnalysisRule {
 }
 
 class _Visitor extends SimpleAstVisitor<void> {
-  _Visitor(this.rule);
+  new(this.rule);
 
   final AvoidNavigatorNamedRoutesWithGoRouter rule;
 
