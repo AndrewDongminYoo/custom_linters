@@ -59,6 +59,34 @@ class TruffleHogReaderTest(unittest.TestCase):
         self.assertEqual(self.location(results[0])["artifactLocation"]["uri"], filename)
         self.assertNotIn("region", self.location(results[0]))
 
+    def test_reported_source_line_selects_the_matching_occurrence(self):
+        filename = self.fixture("reported.txt", "header\nsynthetic-secret\nspacer\nsynthetic-secret\n")
+        finding = self.finding(filename)
+        finding["SourceMetadata"]["Data"]["Filesystem"]["line"] = 4
+        results = self.convert([finding])
+        self.assertEqual(self.location(results[0])["region"]["startLine"], 4)
+        self.assertEqual(self.location(results[0])["region"]["startColumn"], 1)
+
+    def test_reported_source_lines_can_arrive_out_of_order(self):
+        filename = self.fixture("reported-order.txt", "header\nsynthetic-secret\nspacer\nsynthetic-secret\n")
+        findings = [self.finding(filename), self.finding(filename)]
+        for finding, line in zip(findings, [4, 2]):
+            finding["SourceMetadata"]["Data"]["Filesystem"]["line"] = line
+        results = self.convert(findings)
+        self.assertEqual([
+            self.location(result)["region"]["startLine"] for result in results
+        ], [4, 2])
+
+    def test_invalid_or_wrong_reported_line_keeps_literal_fallback(self):
+        filename = self.fixture("reported-invalid.txt", "header\nsynthetic-secret\n")
+        for line in [None, True, False, 0, -1, "2", 99, 1, {}]:
+            with self.subTest(line=line):
+                finding = self.finding(filename)
+                finding["SourceMetadata"]["Data"]["Filesystem"]["line"] = line
+                result = self.convert([finding])[0]
+                self.assertEqual(self.location(result)["region"]["startLine"], 2)
+                self.assertEqual(self.location(result)["region"]["startColumn"], 1)
+
     def test_literal_location_is_one_based(self):
         filename = self.fixture("literal.txt", "header\nprefix synthetic-secret\n")
         results = self.convert([self.finding(filename)])
