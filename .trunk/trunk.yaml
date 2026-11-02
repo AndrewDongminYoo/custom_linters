@@ -37,12 +37,12 @@ lint:
             runtime: python
             run: python3 .trunk/configs/trufflehog_to_sarif.py
   disabled:
+    - dart
     # trunk's sandboxed dart subprocess strips PUB_CACHE, so the analyzer
     # plugin falls back to the root-owned default ~/.pub-cache and fails
     # with "Permission denied" setting up hosted-hashes. Use the project's
     # own `dart analyze` / `melos exec` (see CLAUDE.md) instead.
     - grype
-    - dart
   enabled:
     - actionlint@1.7.12
     - checkov@3.4.0
@@ -51,8 +51,7 @@ lint:
     - markdownlint@0.50.0
     - osv-scanner@2.7.0
     - oxipng@10.2.1
-    - pinact@4.1.1!:
-        commands: [lint, upgrade]
+    - pinact@4.1.1!
     - prettier@3.9.10
     - shellcheck@0.11.0
     - shfmt@3.14.1
