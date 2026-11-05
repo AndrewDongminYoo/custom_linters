@@ -1,10 +1,10 @@
 # Official Analyzer Plugin Migration Specification
 
-<!-- cspell:ignore codesigning dogfood Dongmin namespaced pubspec pubspecs rroussel staticElement -->
+<!-- cspell:ignore codesigning dogfood namespaced pubspec pubspecs rroussel staticElement -->
 
 **Status:** Implemented locally; publication blocked by the Flutter host gate
 **Date:** 2026-09-03
-**Account scope:** Personal repository owned by `AndrewDongminYoo`
+**Account scope:** Personal repository
 **Packages:** `flutter_best_practices_lints`, `go_router_linter`
 **Migration type:** Breaking host migration with rule-behavior compatibility
 
