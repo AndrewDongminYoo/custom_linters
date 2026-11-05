@@ -16,7 +16,7 @@
 
 Phase 0 failed on 2026-09-04 because Flutter `3.47.2` reproduced issue #187999 while the equivalent `dart analyze` matrix passed.
 The [Phase 0 evidence](../notes/2026-09-03-analysis-server-plugin-migration-evidence.md) also proves that the production packages cannot move through a side-by-side dependency state in this single-resolution Dart workspace and that official `AnalysisRuleTest` tests must run with `dart test` instead of `flutter test`.
-On 2026-09-04, the operator approved the refined dependency-consistent implementation of both packages while retaining issue #187999 as a publication blocker.
+On 2026-09-04, the refined dependency-consistent implementation of both packages was approved while retaining issue #187999 as a publication blocker.
 This approval supersedes the implementation stop before Tasks 5, 8, and 9, but it does not authorize push, merge, tag, workflow dispatch, or publication.
 
 ## Global Constraints
@@ -645,7 +645,7 @@ git commit -m "docs: record analyzer plugin phase zero evidence"
 
 ## Task 5: Migrate `flutter_best_practices_lints` Atomically
 
-Start this task after the operator approves the refined dependency-consistent transition and preserves the failed Flutter lane as a publication blocker.
+Start this task after the user approves the refined dependency-consistent transition and preserves the failed Flutter lane as a publication blocker.
 
 **Files:**
 
@@ -877,7 +877,7 @@ git status --short
 
 Present the exact merged SHA, all revalidated lane results, public package version `0.6.0`, and the exact publication command.
 Request explicit approval for `dart pub publish`.
-Name the later hosted `workflow_dispatch` as a separate external action and request approval for it before dispatch unless the operator explicitly approves both named actions together.
+Name the later hosted `workflow_dispatch` as a separate external action and request approval for it before dispatch unless the user explicitly approves both named actions together.
 
 - [ ] **Step 7.8: Publish only after approval**
 
@@ -1241,7 +1241,7 @@ git status --short
 
 Present the exact merged SHA, revalidated package and matrix results, public package version `0.5.0`, and exact publication command.
 Request explicit approval for this publication.
-Name the later hosted `workflow_dispatch` as a separate external action and request approval for it before dispatch unless the operator explicitly approves both named actions together.
+Name the later hosted `workflow_dispatch` as a separate external action and request approval for it before dispatch unless the user explicitly approves both named actions together.
 
 - [ ] **Step 12.7: Publish only after approval**
 

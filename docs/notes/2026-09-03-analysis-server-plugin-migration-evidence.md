@@ -3,7 +3,7 @@
 ## Current Decision
 
 **Result:** Both official-host release candidates are implemented locally, and publication remains blocked.
-On 2026-09-04, the operator approved one dependency-consistent migration of both workspace packages after the Phase 0 failure proved that an intermediate mixed analyzer-family state cannot resolve.
+On 2026-09-04, one dependency-consistent migration of both workspace packages was approved after the Phase 0 failure proved that an intermediate mixed analyzer-family state cannot resolve.
 This approval covered implementation only.
 It did not authorize push, merge, tag, workflow dispatch, or publication.
 
