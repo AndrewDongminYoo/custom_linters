@@ -89,7 +89,7 @@ This timing explains why a one-shot client can omit diagnostics even when the la
 
 Dart issue [#63813](https://github.com/dart-lang/sdk/issues/63813) is an open report of intermittent macOS Apple Silicon crashes while a fresh plugin AOT artifact is compiled and loaded.
 The integration matrix must include a cold plugin start and warm repeated starts.
-The integration harness must not delete or replace the operator's global plugin cache.
+The integration harness must not delete or replace the user's global plugin cache.
 
 Dart issue [#63098](https://github.com/dart-lang/sdk/issues/63098) tracks the absence of arbitrary rule-specific configuration in the official host.
 The current rules do not consume rule-specific options, so this limitation does not block this migration.
@@ -438,7 +438,7 @@ Each compatibility unit must use separate analyzer-command lanes for `dart analy
 The first integration run in each analyzer-command lane must start without a restored analyzer plugin AOT cache and is the cold run.
 The next two runs must reuse the same temporary consumer and cache and are the warm runs.
 Local workstation evidence counts as cold only when the harness proves that the relevant plugin AOT artifact did not exist before the run.
-The harness must never delete or replace the operator's global plugin cache or alter its location to manufacture a cold start.
+The harness must never delete or replace the user's global plugin cache or alter its location to manufacture a cold start.
 
 ### 11.5 `go_router` consumer dependency
 
@@ -493,7 +493,7 @@ The project may keep the spike for investigation, but it must not publish the mi
 
 ### 12.2 Phase 1: `flutter_best_practices_lints`
 
-Phase 1 migrates all five Flutter rules after the operator explicitly approves the dependency-consistent workspace transition despite the known publication blocker.
+Phase 1 migrates all five Flutter rules after the user explicitly approves the dependency-consistent workspace transition despite the known publication blocker.
 The target release is `0.6.0` because the consumer configuration and exported host APIs change.
 
 Phase 1 must update the following concerns:
@@ -635,9 +635,9 @@ Parallel analyzer execution may be considered only after a separate repeated-run
 ### 13.5 IDE smoke test
 
 The release candidate must be opened in one supported Dart or Flutter IDE integration.
-The operator must restart the Dart Analysis Server after changing the `plugins:` section.
-The operator must confirm that the selected positive fixture displays the raw rule code when the IDE exposes a code, the exact problem text, and the expected source range.
-The operator must confirm that the negative and disabled-rule fixtures do not report that diagnostic and that a plugin-qualified ignore suppresses it.
+The user must restart the Dart Analysis Server after changing the `plugins:` section.
+The user must confirm that the selected positive fixture displays the raw rule code when the IDE exposes a code, the exact problem text, and the expected source range.
+The user must confirm that the negative and disabled-rule fixtures do not report that diagnostic and that a plugin-qualified ignore suppresses it.
 The IDE check must observe the positive plugin diagnostic before it evaluates absence in another fixture and must not treat the first analysis-complete signal as sufficient evidence.
 The evidence must record the IDE name and version, host operating system, Flutter and Dart versions, and plugin source or exact version.
 
@@ -810,11 +810,11 @@ No row requires a new product decision unless its stated gate cannot pass.
 
 | ID  | Status  | Resolved requirement or decision                                                                                                                                                            | Source                                                                       |
 | --- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| L1  | Current | Investigate whether Flutter and analyzer changes make the current plugin host unsustainable, and use official documentation as the primary evidence.                                        | Operator request on 2026-09-03                                               |
-| L2  | Current | Document the recommended migration to the official analyzer plugin system as a detailed specification.                                                                                      | Operator request on 2026-09-03 after reviewing the recommendation            |
-| L3  | Current | Restore the five dependency constraint edits before documenting the migration baseline.                                                                                                     | Operator authorization on 2026-09-03                                         |
+| L1  | Current | Investigate whether Flutter and analyzer changes make the current plugin host unsustainable, and use official documentation as the primary evidence.                                        | Request on 2026-09-03                                                        |
+| L2  | Current | Document the recommended migration to the official analyzer plugin system as a detailed specification.                                                                                      | Request on 2026-09-03 after reviewing the recommendation                     |
+| L3  | Current | Restore the five dependency constraint edits before documenting the migration baseline.                                                                                                     | Authorization on 2026-09-03                                                  |
 | L4  | Current | Treat the exact legacy removal release as unknown and do not use it as the migration trigger.                                                                                               | Official documentation conflict identified during the accepted investigation |
-| L5  | Current | Apply all eight refinement findings for activation, severity, diagnostic identity, Windows, characterization, process reliability, public API, fixture modes, and exact go_router coverage. | Operator approval on 2026-09-03                                              |
+| L5  | Current | Apply all eight refinement findings for activation, severity, diagnostic identity, Windows, characterization, process reliability, public API, fixture modes, and exact go_router coverage. | Approval on 2026-09-03                                                       |
 
 ## 21. Traceability
 
