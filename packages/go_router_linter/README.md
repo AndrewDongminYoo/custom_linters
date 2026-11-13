@@ -33,7 +33,7 @@ It preserves earlier evidence and does not establish compatibility with the curr
 | Windows            | 3.47.2         | Not recorded | Not resolved                                                                  | Not resolved | Not run        | Not run           |
 | Windows            | 3.44.0         | Not recorded | Not resolved                                                                  | Not resolved | Not run        | Not run           |
 
-The current manual GitHub Actions matrix targets Flutter `3.47.8` on macOS, Linux and Windows with both analyzer commands.
+The current manual GitHub Actions matrix targets Flutter `3.50.0` on macOS, Linux and Windows with both analyzer commands.
 Those manual lanes have not been dispatched for this refresh, and local Dart analyzer success does not establish Flutter analyzer compatibility.
 
 ## Installation

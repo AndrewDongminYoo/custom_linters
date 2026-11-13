@@ -183,7 +183,7 @@ The `.github/workflows/main.yaml` pipeline runs:
 5. Tests (`dart run melos run test:ci` and the root harness unit tests)
 6. Standalone Dart analyzer plugin checks with three repetitions
 
-CI uses Flutter `3.47.8`, which includes Dart `3.13.7`.
+CI uses Flutter `3.50.0`, which includes Dart `3.14.0`.
 The manual compatibility job runs the same SDK on macOS, Linux and Windows with both the Dart and Flutter analyzer commands.
 Local Trunk uses CSpell `10.4.0` for Markdown and the root `cspell.json`, matching CI's configuration and file scope.
 TruffleHog performs a filesystem scan with `--no-verification --no-update` and uses `.trunk/configs/trufflehog_to_sarif.py` to retain decoded findings without printing secret values.
