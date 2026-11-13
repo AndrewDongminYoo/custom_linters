@@ -60,7 +60,7 @@ Currently, this repository includes:
 Each package README documents its top-level official `plugins:` configuration.
 The nested example packages intentionally do not enable plugins because they are members of this pub workspace.
 
-The workspace requires Dart `^3.13.7` and CI uses Flutter `3.47.8`, which includes Dart `3.13.7`.
+The workspace requires Dart `^3.13.7` and CI uses Flutter `3.50.0`, which includes Dart `3.14.0`.
 Use the standalone consumer harness after changes to plugin dependencies or registration:
 
 ```bash
