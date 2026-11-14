@@ -201,12 +201,12 @@ void main() {
           consumerRoot: temporaryRoot,
           scenario: ConsumerScenario.violating,
         );
-        final flutterPath = Directory(
-          '${Directory.current.path}/packages/flutter_best_practices_lints',
-        ).absolute.path;
-        final goRouterPath = Directory(
-          '${Directory.current.path}/packages/go_router_linter',
-        ).absolute.path;
+        final flutterPath = Directory.current.absolute.uri
+            .resolve('packages/flutter_best_practices_lints')
+            .toFilePath();
+        final goRouterPath = Directory.current.absolute.uri
+            .resolve('packages/go_router_linter')
+            .toFilePath();
 
         expect(fixture.analysisOptionsYaml, contains('path: $flutterPath'));
         expect(fixture.analysisOptionsYaml, contains('path: $goRouterPath'));
@@ -630,6 +630,47 @@ info • Exact message. • lib/main.dart:4:3 • raw_code
   });
 
   group('assertDiagnosticRecords', () {
+    test('matches the Flutter CLI sentence fragment exactly', () {
+      final records = parseFlutterAnalyzeOutput('''
+info • Exact message. Fix it • lib/main.dart:4:3 • raw_code
+1 issue found.
+''');
+      const expected = [
+        DiagnosticRecord(
+          code: 'raw_code',
+          severity: 'INFO',
+          message: 'Exact message.\nFix it.',
+          path: 'lib/main.dart',
+          line: 4,
+          column: 3,
+        ),
+      ];
+
+      expect(
+        () => assertDiagnosticRecords(
+          actual: records,
+          expected: expected,
+          analyzer: AnalyzerSelector.flutter,
+        ),
+        returnsNormally,
+      );
+      expect(
+        () => assertDiagnosticRecords(
+          actual: parseFlutterAnalyzeOutput('''
+info • Changed message. Fix it • lib/main.dart:4:3 • raw_code
+1 issue found.
+'''),
+          expected: expected,
+          analyzer: AnalyzerSelector.flutter,
+        ),
+        throwsA(isA<HarnessFailure>()),
+      );
+      expect(
+        () => assertDiagnosticRecords(actual: records, expected: expected),
+        throwsA(isA<HarnessFailure>()),
+      );
+    });
+
     const actual = [
       DiagnosticRecord(
         code: 'raw_code',

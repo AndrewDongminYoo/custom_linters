@@ -373,6 +373,7 @@ final class ConsumerFixture {
 void assertDiagnosticRecords({
   required List<DiagnosticRecord> actual,
   required List<DiagnosticRecord> expected,
+  AnalyzerSelector analyzer = AnalyzerSelector.dart,
   int? exitCode,
   String stdout = '',
   String stderr = '',
@@ -380,7 +381,7 @@ void assertDiagnosticRecords({
   final remaining = List<DiagnosticRecord>.of(actual);
   for (final expectedRecord in expected) {
     final matchIndex = remaining.indexWhere(
-      (actualRecord) => _sameDiagnostic(actualRecord, expectedRecord),
+      (actualRecord) => _sameDiagnostic(actualRecord, expectedRecord, analyzer),
     );
     if (matchIndex < 0) {
       throw HarnessFailure(
@@ -410,10 +411,25 @@ void assertDiagnosticRecords({
   }
 }
 
-bool _sameDiagnostic(DiagnosticRecord actual, DiagnosticRecord expected) {
+bool _sameDiagnostic(
+  DiagnosticRecord actual,
+  DiagnosticRecord expected,
+  AnalyzerSelector analyzer,
+) {
+  var expectedMessage = expected.message;
+  if (analyzer == AnalyzerSelector.flutter) {
+    // Flutter renders diagnostics as sentence fragments, without a final dot.
+    expectedMessage = expectedMessage.replaceAll('\n', ' ');
+    if (expectedMessage.endsWith('.')) {
+      expectedMessage = expectedMessage.substring(
+        0,
+        expectedMessage.length - 1,
+      );
+    }
+  }
   return actual.code == expected.code &&
       actual.severity == expected.severity &&
-      actual.message == expected.message &&
+      actual.message == expectedMessage &&
       actual.path == expected.path &&
       actual.line == expected.line &&
       actual.column == expected.column;
@@ -724,6 +740,7 @@ Future<HarnessSummary> runAnalyzerPluginHarness(
           assertDiagnosticRecords(
             actual: records,
             expected: expected,
+            analyzer: analyzer,
             exitCode: result.exitCode,
             stdout: result.stdout,
             stderr: result.stderr,
