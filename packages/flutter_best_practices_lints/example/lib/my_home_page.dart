@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
 
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+// 📦 Package imports:
+import 'package:material_ui/material_ui.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
